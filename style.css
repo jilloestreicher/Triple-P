@@ -880,7 +880,7 @@ p.error {
 /*========================================*/
 
 .service-area {
-    background: rgba(0, 0, 0, 0) url("img/bg/service-bg.jpg") no-repeat scroll center center;
+    background-color: #328ea8;
 }
 .single-service {
     margin-top: 100px;
@@ -907,7 +907,7 @@ p.error {
     transition: all 0.5s ease 0s
 }
 .single-service:hover .icon-title i {
-    color: #23527c
+    color: #23527c;
 }
 .single-service p {
     color: #fff;
@@ -982,7 +982,7 @@ p.error {
 }
 .hover-style .product-img a.main-img::after,
 .hover-style .team-img a.main-img::after {
-    background-color: #24273e;
+    background-color: white;
     content: "";
     height: 0;
     left: 0;
@@ -1378,7 +1378,7 @@ p.error {
 /*========================================*/
 
 .quick-book-area {
-    background: rgba(0, 0, 0, 0) linear-gradient(0deg, #24273e 50%, #fff 50%) repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) linear-gradient(0deg, #fff 50%, #fff 50%) repeat scroll 0 0;
 }
 .quick-book-area.light {
     background: rgba(0, 0, 0, 0) linear-gradient(0deg, #999 50%, #fff 50%) repeat scroll 0 0;
@@ -1440,9 +1440,9 @@ a.book-now-btn:hover {
 /*========================================*/
 
 .page-title-area {
-    padding: 150px 0px;
+    padding: 50px 0px;
     margin-top: 170px;
-    background-image: url(img/bg/page-bg.jpg);
+    
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -1587,7 +1587,7 @@ a.book-now-btn:hover {
     color: #ee2050;
 }
 .single-list-shop .product-text {
-    margin-top: 25px;
+    margin-top: 5px;
 }
 .cart-plus-minus {
     padding: 15px 0 30px;
@@ -2463,3 +2463,4 @@ a.book-now-btn:hover {
 .footer-copyright a:hover {
     text-decoration: underline;
 }
+
