@@ -3,15 +3,14 @@ CREATE TABLE accounts (
   FirstName         VARCHAR(20) NOT NULL,
   LastName          VARCHAR(25) NOT NULL,
   Password          VARCHAR(30) NOT NULL,
-  PaymentId         INT unsigned,
-  ShippingId        INT unsigned,
+  EmailList         Boolean NOT NULL,
   PhoneNumber       VARCHAR(15) NOT NULL,
   PRIMARY KEY       (EmailAddress)
 );
 
 CREATE TABLE trucks (
   TruckId           INT unsigned NOT NULL AUTO_INCREMENT,
-  ContactEmail      VARCHAR(40) NOT NULL,
+  EmailAddress      VARCHAR(40) NOT NULL,
   Brand             VARCHAR(25) NOT NULL,
   Picture           BLOB,
   TruckName         VARCHAR(40) NOT NULL,
@@ -21,12 +20,12 @@ CREATE TABLE trucks (
   TruckDescription  VARCHAR(200),
   Color             VARCHAR(20) NOT NULL,
   PRIMARY KEY       (TruckId),
-  FOREIGN KEY       (ContactEmail) REFERENCES accounts(EmailAddress) ON DELETE CASCADE
+  FOREIGN KEY       (EmailAddress) REFERENCES accounts(EmailAddress) ON DELETE CASCADE
 );
 
 CREATE TABLE trailers (
   TrailerId            INT unsigned NOT NULL AUTO_INCREMENT,
-  ContactEmail         VARCHAR(40) NOT NULL,
+  EmailAddress         VARCHAR(40) NOT NULL,
   Brand                VARCHAR(25) NOT NULL,
   Length               DOUBLE NOT NULL,
   Width                DOUBLE NOT NULL,
@@ -35,7 +34,7 @@ CREATE TABLE trailers (
   Color                VARCHAR(20) NOT NULL,
   TrailerDescription   VARCHAR(200),
   PRIMARY KEY          (TrailerId),
-  FOREIGN KEY          (ContactEmail) REFERENCES accounts(EmailAddress) ON DELETE CASCADE
+  FOREIGN KEY          (EmailAddress) REFERENCES accounts(EmailAddress) ON DELETE CASCADE
 );
 
 CREATE TABLE admins(
@@ -48,8 +47,8 @@ CREATE TABLE admins(
 
 CREATE TABLE parts(
   PartId            INT unsigned NOT NULL AUTO_INCREMENT,
-  Quantity          INT NOT NULL,
-  Price             DOUBLE NOT NULL,
+  QuantityOnHand    INT NOT NULL,
+  PriceUSD          DOUBLE NOT NULL,
   PartDescription   VARCHAR(200),
   Brand             VARCHAR(20) NOT NULL,
   Category          VARCHAR(30) NOT NULL,
@@ -73,6 +72,8 @@ CREATE TABLE paymentDetails (
   BillingState      VARCHAR(20) NOT NULL,
   BillingZIP        VARCHAR(15) NOT NULL,
   BillingPhone      VARCHAR(15) NOT NULL,
+  EmailAddress      VARCHAR(40) NOT NULL,
+  FOREIGN KEY       (EmailAddress) REFERENCES accounts(EmailAddress) ON DELETE SET NULL,
   PRIMARY KEY       (PaymentId)
 );
 
@@ -87,6 +88,9 @@ CREATE TABLE shippingDetails (
   ShippingState      VARCHAR(20) NOT NULL,
   ShippingZIP        VARCHAR(15) NOT NULL,
   ShippingPhone      VARCHAR(15) NOT NULL,
+  EmailAddress      VARCHAR(40) NOT NULL,
+  FOREIGN KEY       (EmailAddress) REFERENCES accounts(EmailAddress) ON DELETE SET NULL,
+  PRIMARY KEY       (ShippingId)
 );
 
 CREATE TABLE orders (
@@ -103,7 +107,7 @@ CREATE TABLE orders (
 CREATE TABLE orderedParts (
   OrderId           INT unsigned NOT NULL,
   PartId            INT unsigned NOT NULL,
-  Quantity          INT NOT NULL,
+  OrderedQuantity   INT NOT NULL,
   PRIMARY KEY       (OrderId, PartId),
   FOREIGN KEY       (OrderId) REFERENCES orders(OrderId) ON DELETE CASCADE,
   FOREIGN KEY       (PartId) REFERENCES parts(PartId) ON DELETE CASCADE,
