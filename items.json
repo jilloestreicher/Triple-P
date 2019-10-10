@@ -1,0 +1,30 @@
+{
+  "music": [
+    {
+      "id": 1,
+      "name": "1",
+      "price": 1299,
+      "imgName": "1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "album 2",
+      "price": 1499,
+      "imgName": "2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "album 3",
+      "price": 1499,
+      "imgName": "3.jpg"
+    }
+  ],
+  "merch": [
+    {
+      "id": 3,
+      "name": "test",
+      "price": 1999,
+      "imgName": "Album3.png"
+    }
+  ]
+}
