@@ -9,23 +9,51 @@ console.log(stripeSecretKey)
 console.log(stripePublicKey)
 
 const express = require('express')
+const mysql = require('mysql')
 const app = express()
 const fs = require("fs")
 const stripe = require('stripe')(stripeSecretKey)
 
 app.set('view engine', 'ejs')
 app.use(express.json())
-app.use(express.static('public'))
+app.use(express.static('Front End'))
+
+function getConnection(){
+    return mysql.createConnection({
+      host:'localhost',
+      user:'root',
+      password:'Capping2',
+      database:'acsas'
+    })
+}
+
 
 app.get('/shop', function(req,res){
 fs.readFile('items.json', function(error, data){
     if(error) {
       res.status(500).end()
     } else{
-        res.render('shop.ejs', {
+        
+        const connection = getConnection()
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah from parts;"
+        
+        
+        connection.query(queryString, (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              res.sendStatus(500);
+              res.end()
+              return
+            }
+            
+            console.log(result)
+            
+            res.render('shop.ejs', {
             stripePublicKey: stripePublicKey,
-            items: JSON.parse(data)
+            items: result
+            })
         })
+        
     }
 })
 })
