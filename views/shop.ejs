@@ -81,10 +81,6 @@
         </script>
     </head>
     <body>
-        <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-
         <!-- header area start -->
         <!-- header area start -->
         <header id="sticker">
@@ -104,10 +100,6 @@
                         </div>
                         <div class="col-md-5">
                             <div class="header-top-menu">
-
-                                <!-- top social start -->
-
-                                <!-- top social end -->
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
@@ -249,9 +241,6 @@
                 </div>
             </div>
             <!-- mainmenu area end -->
-            <!-- mobile menu area start -->
-
-            <!-- mobile menu area end -->
 
             <!-- slider area end -->
         </header>
@@ -263,14 +252,14 @@
                     <div class="col-md-12">
                         <!-- page title start -->
                         <div class="page-title">
-                            <h2>Trucks</h2>
+                            <h2>Parts</h2>
                         </div>
                         <!-- page title end -->
                         <!-- page title menu start -->
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="index.html">Home</a> <span> / </span> </li>
-                                <li><a href="shop.html">Trucks</a></li>
+                                <li><a href="shop.html">Parts</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -330,417 +319,62 @@
                 </div>
                 <!-- jsonjson -->
                 <div class="row">
-                <section class="container content-section">
-                            <h2 class="section-header">MUSIC</h2>
-                            <div class="shop-items">
-                                <% items.music.forEach(function(item){ %>
-                                    <div class="shop-item" data-item-id="<%= item.id %>">
-                                        <span class="shop-item-title"><%= item.name %></span>
-                                        <img class="shop-item-image" src="images/<%=item.imgName %>">
-                                        <div class="shop-item-details">
-                                            <span class="shop-item-price">$<%= item.price / 100 %></span>
-                                            <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                                        </div>
-                                    </div>
-                                <% }) %>
-                            </div>
-                        </section>
                     <!-- shop tab content start -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="gird">
-                            <!-- gird shop start -->
+                        <div role="tabpanel" class="tab-pane fade" id="gird">
+                            <!-- gird shop start 
                             <div class="gird-shop">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
+                                
+                                    
+                                    <section class="container content-section">
+                                        
+                                            <% items.forEach(function(item){ %>
+                                            <div class="col-md-3 col-sm-6">
+                                            <div class="single-product hover-style text-center" data-item-id="<%= item.id %>">
+                                                <div class="product-img">
+                                                    <!-- product-img 
+                                                    <a href="single-shop.html" class="main-img">
+                                                        <img src="../img/product/<%=item.imgName %>" style="width:250px;height:250px;">
+                                                    </a>
+                                                    <!-- product actions 
+                                                    <div class="product-action">
+                                                        <div class="action-btn">
+                                                            <button class="btn btn-primary shop-item-button" type="button"> ADD TO CART </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
+                                                <!-- product-info start 
+                                                <div class="product-info text-center">
+                                                    <div class="product-name">
+                                                        <a href="#"><%= item.name %></a>
+                                                    </div>
+                                                    <div class="truck-listing-info">
+                                                        <p>$<%= item.price / 100 %></p>
+                                                    </div>
                                                 </div>
-                                                
                                             </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
                                                 </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                   <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                   <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                   <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single shop start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="single-shop.html" class="main-img">
-                                                <img src="../img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            <!--
-                                            <div class="truck-listing-info">
-                                                <p>$ 1170</p>
-                                            </div>
-                                            -->
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single shop end -->
-                                </div>
-                            </div>
+                                            <% }) %>
+                                    </section>
                             <!-- gird shop end -->
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="list">
+                        <div role="tabpanel" class="tab-pane fade in active" id="list">
                             <!-- list shop start -->
                             <div class="list-shop">
                                 <!-- single list shop start -->
-                                <div class="single-list-shop">
+                                <% items.forEach(function(item){ %>
+                                <div class="single-list-shop" data-item-id="<%= item.id %>">
                                     <div class="col-md-3 col-sm-5">
                                         <!-- product img start -->
                                         <div class="product-img">
-                                            <a href="single-shop.html"><img src="../img/product/3.jpg" alt=""></a>
+                                            <a href="single-shop.html"><img src="../img/product/<%=item.imgName %>" style="width:250px;height:250px;"></a>
                                         </div>
                                         <!-- product img end -->
                                     </div>
                                     <div class="col-md-9 col-sm-7">
                                         <div class="single-product">
                                             <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
+                                                <a href="#"><%= item.name %></a>
                                             </div>
                                             
                                             <div class="price-rating">
@@ -750,289 +384,30 @@
                                                         <b>Year</b>: 2001 &nbsp;
                                                         <b>Drive</b>: Rear</p>
                                                 </div>
-                                                <!--
-                                                <div class="ratings pull-right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <span>(Based on 04 reviews)</span>
-                                                </div>
-                                                -->
                                             </div>
                                             
                                             <div class="product-text">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magnage aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequatese Duis aute irure dolor in reprehenderit in voluptate istadio</p>
+                                                <p><%= item.blah %></p>
                                             </div>
                                             <!-- cart plus minus start -->
                                             <div class="contact-info">
-                                                <label>Contact: Example@gmail.com</label>
+                                                <label>$<%= item.price %></label>
                                                 <!--
                                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
                                                 -->
-                                                
-                                                
-                                                
                                             </div>
                                             <!-- cart plus minus end -->
-                                            <!--
+                                            
                                             <div class="product-action">
                                                 <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-heart"></i> </button>
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
+                                                    <button class="text-button action-single-btn">Add to cart</button>
                                                 </div>
                                             </div>
-                                            -->
+                                            
                                         </div>
                                     </div>
                                 </div>
-                                <!-- single list shop end -->
-                                 <!-- single list shop start -->
-                                <div class="single-list-shop">
-                                    <div class="col-md-3 col-sm-5">
-                                        <!-- product img start -->
-                                        <div class="product-img">
-                                            <a href="single-shop.html"><img src="../img/product/3.jpg" alt=""></a>
-                                        </div>
-                                        <!-- product img end -->
-                                    </div>
-                                    <div class="col-md-9 col-sm-7">
-                                        <div class="single-product">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            
-                                            <div class="price-rating">
-                                                <div class="truck-details pull-left">
-                                                    <p><b>Brand</b>: Ford &nbsp;
-                                                        <b>Fuel Type</b>: Diesel &nbsp;
-                                                        <b>Year</b>: 2001 &nbsp;
-                                                        <b>Drive</b>: Rear</p>
-                                                </div>
-                                                <!--
-                                                <div class="ratings pull-right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <span>(Based on 04 reviews)</span>
-                                                </div>
-                                                -->
-                                            </div>
-                                            
-                                            <div class="product-text">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magnage aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequatese Duis aute irure dolor in reprehenderit in voluptate istadio</p>
-                                            </div>
-                                            <!-- cart plus minus start -->
-                                            <div class="contact-info">
-                                                <label>Contact: Example@gmail.com</label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
-                                                
-                                                
-                                                
-                                            </div>
-                                            <!-- cart plus minus end -->
-                                            <!--
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-heart"></i> </button>
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single list shop end -->
-                                 <!-- single list shop start -->
-                                <div class="single-list-shop">
-                                    <div class="col-md-3 col-sm-5">
-                                        <!-- product img start -->
-                                        <div class="product-img">
-                                            <a href="single-shop.html"><img src="../img/product/3.jpg" alt=""></a>
-                                        </div>
-                                        <!-- product img end -->
-                                    </div>
-                                    <div class="col-md-9 col-sm-7">
-                                        <div class="single-product">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            
-                                            <div class="price-rating">
-                                                <div class="truck-details pull-left">
-                                                    <p><b>Brand</b>: Ford &nbsp;
-                                                        <b>Fuel Type</b>: Diesel &nbsp;
-                                                        <b>Year</b>: 2001 &nbsp;
-                                                        <b>Drive</b>: Rear</p>
-                                                </div>
-                                                <!--
-                                                <div class="ratings pull-right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <span>(Based on 04 reviews)</span>
-                                                </div>
-                                                -->
-                                            </div>
-                                            
-                                            <div class="product-text">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magnage aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequatese Duis aute irure dolor in reprehenderit in voluptate istadio</p>
-                                            </div>
-                                            <!-- cart plus minus start -->
-                                            <div class="contact-info">
-                                                <label>Contact: Example@gmail.com</label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
-                                                
-                                                
-                                                
-                                            </div>
-                                            <!-- cart plus minus end -->
-                                            <!--
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-heart"></i> </button>
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single list shop end -->
-                                 <!-- single list shop start -->
-                                <div class="single-list-shop">
-                                    <div class="col-md-3 col-sm-5">
-                                        <!-- product img start -->
-                                        <div class="product-img">
-                                            <a href="single-shop.html"><img src="../img/product/3.jpg" alt=""></a>
-                                        </div>
-                                        <!-- product img end -->
-                                    </div>
-                                    <div class="col-md-9 col-sm-7">
-                                        <div class="single-product">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            
-                                            <div class="price-rating">
-                                                <div class="truck-details pull-left">
-                                                    <p><b>Brand</b>: Ford &nbsp;
-                                                        <b>Fuel Type</b>: Diesel &nbsp;
-                                                        <b>Year</b>: 2001 &nbsp;
-                                                        <b>Drive</b>: Rear</p>
-                                                </div>
-                                                <!--
-                                                <div class="ratings pull-right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <span>(Based on 04 reviews)</span>
-                                                </div>
-                                                -->
-                                            </div>
-                                            
-                                            <div class="product-text">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magnage aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequatese Duis aute irure dolor in reprehenderit in voluptate istadio</p>
-                                            </div>
-                                            <!-- cart plus minus start -->
-                                            <div class="contact-info">
-                                                <label>Contact: Example@gmail.com</label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
-                                                
-                                                
-                                                
-                                            </div>
-                                            <!-- cart plus minus end -->
-                                            <!--
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-heart"></i> </button>
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single list shop end -->
-                               < <!-- single list shop start -->
-                                <div class="single-list-shop">
-                                    <div class="col-md-3 col-sm-5">
-                                        <!-- product img start -->
-                                        <div class="product-img">
-                                            <a href="single-shop.html"><img src="../img/product/3.jpg" alt=""></a>
-                                        </div>
-                                        <!-- product img end -->
-                                    </div>
-                                    <div class="col-md-9 col-sm-7">
-                                        <div class="single-product">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder Truck</a>
-                                            </div>
-                                            
-                                            <div class="price-rating">
-                                                <div class="truck-details pull-left">
-                                                    <p><b>Brand</b>: Ford &nbsp;
-                                                        <b>Fuel Type</b>: Diesel &nbsp;
-                                                        <b>Year</b>: 2001 &nbsp;
-                                                        <b>Drive</b>: Rear</p>
-                                                </div>
-                                                <!--
-                                                <div class="ratings pull-right">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <span>(Based on 04 reviews)</span>
-                                                </div>
-                                                -->
-                                            </div>
-                                            
-                                            <div class="product-text">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magnage aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequatese Duis aute irure dolor in reprehenderit in voluptate istadio</p>
-                                            </div>
-                                            <!-- cart plus minus start -->
-                                            <div class="contact-info">
-                                                <label>Contact: Example@gmail.com</label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
-                                                
-                                                
-                                                
-                                            </div>
-                                            <!-- cart plus minus end -->
-                                            <!--
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-heart"></i> </button>
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                    <button class="icon-button action-single-btn"> <i class="fa fa-eye"></i> </button>
-                                                </div>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single list shop end -->
+                                <% }) %>
                             </div>
                             <!-- list shop end -->
                         </div>
