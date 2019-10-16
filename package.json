@@ -13,9 +13,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
-    "stripe": "^7.9.1"
+    "fs": "0.0.1-security",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.3",
+    "stripe": "^7.10.0"
   },
   "devDependencies": {
     "dotenv": "^8.1.0"
