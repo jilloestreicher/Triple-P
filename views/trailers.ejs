@@ -242,6 +242,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <form action="/searchTrailers" method="post">
+                                <input type="text" placeholder="Search.." name="searchBar">
+                                <button type="submit" value="search">Go</button>
+                            </form>
                         <!-- shop bar start -->
                         <div class="shop-bar">
                             <!-- shop tab bar start -->
@@ -290,44 +294,8 @@
                 <div class="row">
                     <!-- shop tab content start -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade" id="gird">
-                            <!-- gird shop start 
-                            <div class="gird-shop">
-                                
-                                    
-                                    <section class="container content-section">
-                                        
-                                            <% items.forEach(function(item){ %>
-                                            <div class="col-md-3 col-sm-6">
-                                            <div class="single-product hover-style text-center" data-item-id="<%= item.id %>">
-                                                <div class="product-img">
-                                                    <!-- product-img 
-                                                    <a href="single-shop.html" class="main-img">
-                                                        <img src="../img/product/<%=item.imgName %>" style="width:250px;height:250px;">
-                                                    </a>
-                                                    <!-- product actions 
-                                                    <div class="product-action">
-                                                        <div class="action-btn">
-                                                            <button class="btn btn-primary shop-item-button" type="button"> ADD TO CART </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- product-info start 
-                                                <div class="product-info text-center">
-                                                    <div class="product-name">
-                                                        <a href="#"><%= item.name %></a>
-                                                    </div>
-                                                    <div class="truck-listing-info">
-                                                        <p>$<%= item.price / 100 %></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                                </div>
-                                            <% }) %>
-                                    </section>
-                            <!-- gird shop end -->
-                        </div>
                         <div role="tabpanel" class="tab-pane fade in active" id="list">
+                           
                             <!-- list shop start -->
                             <div class="list-shop">
                                 <!-- single list shop start -->
