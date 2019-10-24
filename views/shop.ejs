@@ -82,7 +82,6 @@
     </head>
     <body>
         <!-- header area start -->
-        <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
                 <div class="container">
@@ -103,17 +102,14 @@
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
-
                                         <li> <input type="text" placeholder="Search..">
                                             <a href="#"> <i class="fa fa-shopping-cart"></i><span class="cart-quantity">(0)</span></a>
-
                                             <div class="cart-items">
                                                 <ul>
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
                                                                 <h3>subtotal  <span class="cart-total-price">$0</span></h3>
-
                                                             </div>
                                                         </div>
                                                     </li>
@@ -129,7 +125,6 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
                                         </li>
                                     </ul>
 
@@ -181,7 +176,7 @@
                                                     <span>
                                                         <a href="listing-details.html">Listing Details</a>
                                                         <a href="login.html">Login</a>
-                                                        <a href="manage-users.html">Admin - Manage Users</a>
+                                                        <a href="manage-users">Admin - Manage Users</a>
                                                         <a href="search-results.html">Search Results</a>
                                                     </span>
                                                     <span>
@@ -194,12 +189,8 @@
                                                 </div>
                                                 <!-- mega-menu end -->
                                             </li>
-                                            <li><a href="shop.html">Trucks</a></li>
-                                            <li><a href="trailers.html">Trailers</a></li>
-                                            <!-- single menu -->
-
-                                            <!-- single menu -->
-
+                                            <li><a href="trucks">Trucks</a></li>
+                                            <li><a href="trailers">Trailers</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -210,8 +201,6 @@
                 </div>
             </div>
             <!-- mainmenu area end -->
-
-            <!-- slider area end -->
         </header>
         <!-- header area end -->
         <!-- page title area start -->
@@ -227,8 +216,8 @@
                         <!-- page title menu start -->
                         <div class="page-title-menu">
                             <ul>
-                                <li><a href="index.html">Home</a> <span> / </span> </li>
-                                <li><a href="shop.html">Parts</a></li>
+                                <li><a href="index">Home</a> <span> / </span> </li>
+                                <li><a href="shop">Parts</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -267,12 +256,14 @@
                             <!-- shop sort start -->
                             <div class="sort-by width-33 pull-left text-center">
                                 <label>Sort By: </label>
-                                <select name="sort" >
-                                    <option value="#" selected >Name</option>
-                                    <option value="#">Brand</option>
-                                    <option value="#">Drive</option>
-                                    <option value="#">Fuel Type</option>
+                                <form action="/sort" method="post">
+                                <select name="sortlist">
+                                    <option value="name" selected >Name</option>
+                                    <option value="new">Newest</option>
+                                    <option value="price">Price</option>
                                 </select>
+                                <button type='submit'>Sort</button>
+                                </form>
                             </div>
                             <!-- shop sort end -->
                             <!-- shop show product start -->
@@ -294,43 +285,6 @@
                 <div class="row">
                     <!-- shop tab content start -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade" id="gird">
-                            <!-- gird shop start 
-                            <div class="gird-shop">
-                                
-                                    
-                                    <section class="container content-section">
-                                        
-                                            <% items.forEach(function(item){ %>
-                                            <div class="col-md-3 col-sm-6">
-                                            <div class="single-product hover-style text-center" data-item-id="<%= item.id %>">
-                                                <div class="product-img">
-                                                    <!-- product-img 
-                                                    <a href="single-shop.html" class="main-img">
-                                                        <img src="../img/product/<%=item.imgName %>" style="width:250px;height:250px;">
-                                                    </a>
-                                                    <!-- product actions 
-                                                    <div class="product-action">
-                                                        <div class="action-btn">
-                                                            <button class="btn btn-primary shop-item-button" type="button"> ADD TO CART </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- product-info start 
-                                                <div class="product-info text-center">
-                                                    <div class="product-name">
-                                                        <a href="#"><%= item.name %></a>
-                                                    </div>
-                                                    <div class="truck-listing-info">
-                                                        <p>$<%= item.price / 100 %></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                                </div>
-                                            <% }) %>
-                                    </section>
-                            <!-- gird shop end -->
-                        </div>
                         <div role="tabpanel" class="tab-pane fade in active" id="list">
                             <!-- list shop start -->
                             <div class="list-shop">

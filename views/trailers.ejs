@@ -82,7 +82,6 @@
     </head>
     <body>
         <!-- header area start -->
-        <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
                 <div class="container">
@@ -181,7 +180,7 @@
                                                     <span>
                                                         <a href="listing-details.html">Listing Details</a>
                                                         <a href="login.html">Login</a>
-                                                        <a href="manage-users.html">Admin - Manage Users</a>
+                                                        <a href="manage-users">Admin - Manage Users</a>
                                                         <a href="search-results.html">Search Results</a>
                                                     </span>
                                                     <span>
@@ -194,12 +193,8 @@
                                                 </div>
                                                 <!-- mega-menu end -->
                                             </li>
-                                            <li><a href="shop.html">Trucks</a></li>
-                                            <li><a href="trailers.html">Trailers</a></li>
-                                            <!-- single menu -->
-
-                                            <!-- single menu -->
-
+                                            <li><a href="trucks">Trucks</a></li>
+                                            <li><a href="trailers">Trailers</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -210,8 +205,6 @@
                 </div>
             </div>
             <!-- mainmenu area end -->
-
-            <!-- slider area end -->
         </header>
         <!-- header area end -->
         <!-- page title area start -->
@@ -267,12 +260,16 @@
                             <!-- shop sort start -->
                             <div class="sort-by width-33 pull-left text-center">
                                 <label>Sort By: </label>
-                                <select name="sort" >
-                                    <option value="#" selected >Name</option>
-                                    <option value="#">Brand</option>
-                                    <option value="#">Drive</option>
-                                    <option value="#">Fuel Type</option>
+                                <form action="/sortTrailers" method="post">
+                                <select name="sortlist">
+                                    <option value="name" selected >Name</option>
+                                    <option value="new">Newest</option>
+                                    <option value="length">Length</option>
+                                    <option value="width">Width</option>
                                 </select>
+                                <button type='submit'>Sort</button>
+                                </form>
+                            </div>
                             </div>
                             <!-- shop sort end -->
                             <!-- shop show product start -->
@@ -295,7 +292,6 @@
                     <!-- shop tab content start -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="list">
-                           
                             <!-- list shop start -->
                             <div class="list-shop">
                                 <!-- single list shop start -->
@@ -313,7 +309,6 @@
                                             <div class="product-name">
                                                 <a href="#" class="shop-item-title"><%= item.name %></a>
                                             </div>
-                                            
                                             <div class="price-rating">
                                                 <div class="truck-details pull-left">
                                                     <p><b>Brand</b>: <%= item.brand %> &nbsp;
@@ -321,21 +316,13 @@
                                                         <b>Width</b>: <%= item.width %></p>
                                                 </div>
                                             </div>
-                                            
-                                            
                                             <div class="product-text">
                                                 <p><%= item.blah %></p>
                                             </div>
                                             <!-- cart plus minus start -->
                                             <div class="contact-info">
                                                 <label class="shop-item-price"><%= item.email %></label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
                                             </div>
-                                            <!-- cart plus minus end -->
-                                            
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +351,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
         <!-- shop area end -->
         <!-- quick book area start -->
         <div class="quick-book-area">
@@ -389,7 +376,6 @@
         </div>
         <!-- quick book area end -->
         <!-- footer top start -->
-        <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
                 <div class="row">
@@ -397,11 +383,7 @@
                         <!-- single footer start -->
                         <div class="single-footer-top">
                             <div class="footer-about-us">
-                                <!-- small logo start -->
-                                <!-- <a href="index.html" class="footer-logo"> <img src="img/logo.png" alt=""> </a>  -->
-                                <!-- small logo end -->
                                 <!-- address start -->
-
                                 <div class="footer-address">
                                     <p> <span> ADDRESS: </span>Rico Rico Arizona </p>
                                     <p>USA 85648</p>
@@ -428,10 +410,11 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Shop Parts</a></li>
-                                    <li><a href="#">Shop Trucks & Trailers</a></li>
+                                    <li><a href="index">Home</a></li>
+                                    <li><a href="about-us.html">About Us</a></li>
+                                    <li><a href="shop">Shop Parts</a></li>
+                                    <li><a href="trucks">Shop Trucks</a></li>
+                                    <li><a href="trailers">Shop Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
@@ -451,11 +434,8 @@
                         <!-- footer social start -->
                         <div class="footer-social">
                             <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
                             </ul>
                         </div>
                         <!-- footer social end -->
