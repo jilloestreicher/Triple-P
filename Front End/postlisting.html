@@ -76,11 +76,6 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
-        <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-
-        <!-- header area start -->
         <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
@@ -97,19 +92,22 @@
                             </div>
                             <!-- welcome message end -->
                         </div>
+                        <div class="col-md-3">
+                            <!-- Search Bar -->
+                            <div class="header-top-menu">
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
+                            </div>
+                        </div>
                         <div class="col-md-5">
                             <div class="header-top-menu">
-
-                                <!-- top social start -->
-
-                                <!-- top social end -->
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
-
-                                        <li> <input type="text" placeholder="Search..">
-                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(2)</a>
-
+                                        <li> 
+                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(1)</a>
                                             <div class="cart-items">
                                                 <ul>
                                                     <!-- single cart item start -->
@@ -122,34 +120,14 @@
                                                         </div>
                                                         <!-- cart item info -->
                                                         <div class="cart-info">
-                                                            <a href="#" class="cart-item-name">
-                                                                Three Ball Bearing
-                                                            </a>
+                                                            <a href="#" class="cart-item-name">Placeholder</a>
                                                             <p class="quantity">quantity: <strong> 1</strong></p>
                                                             <p class="price">price: <strong> $ 320</strong></p>
                                                             <button class="remove"><i class="fa fa-trash-o"></i></button>
                                                         </div>
                                                     </li>
                                                     <!-- single cart item end -->
-                                                    <!-- single cart item start -->
-                                                    <li>
-                                                        <!-- cart item img -->
-                                                        <div class="cart-item-img">
-                                                            <a href="#">
-                                                                <img src="img/product/2.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <!-- cart item info -->
-                                                        <div class="cart-info">
-                                                            <a href="#" class="cart-item-name">
-                                                                Car Exhaust Pipe
-                                                            </a>
-                                                            <p class="quantity">quantity: <strong> 2</strong></p>
-                                                            <p class="price">price: <strong> $ 441</strong></p>
-                                                            <button class="remove"><i class="fa fa-trash-o"></i></button>
-                                                        </div>
-                                                    </li>
-                                                    <!-- single cart item end -->
+                                                    
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
@@ -171,7 +149,6 @@
                                             </div>
                                         </li>
                                     </ul>
-
                                 </div>
                                 <!-- cart menu end -->
                             </div>
@@ -187,7 +164,7 @@
                             <div class="col-md-3 col-sm-2">
                                 <!-- logo start -->
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="index">
                                         <img src="img/logo.png" alt="" height="100" width="200">
                                     </a>
                                 </div>
@@ -199,7 +176,7 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index.html">Home</a></li>
+                                            <li class="has-sub"><a href="index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="about-us.html">About us</a></li>
                                             <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
@@ -220,7 +197,7 @@
                                                     <span>
                                                         <a href="listing-details.html">Listing Details</a>
                                                         <a href="login.html">Login</a>
-                                                        <a href="manage-users.html">Admin - Manage Users</a>
+                                                        <a href="manage-users">Admin - Manage Users</a>
                                                         <a href="search-results.html">Search Results</a>
                                                     </span>
                                                     <span>
@@ -233,12 +210,8 @@
                                                 </div>
                                                 <!-- mega-menu end -->
                                             </li>
-                                            <li><a href="shop.html">Trucks</a></li>
-                                            <li><a href="trailers.html">Trailers</a></li>
-                                            <!-- single menu -->
-
-                                            <!-- single menu -->
-
+                                            <li><a href="trucks">Trucks</a></li>
+                                            <li><a href="trailers">Trailers</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -249,11 +222,6 @@
                 </div>
             </div>
             <!-- mainmenu area end -->
-            <!-- mobile menu area start -->
-
-            <!-- mobile menu area end -->
-
-            <!-- slider area end -->
         </header>
         <!-- header area end -->
         <!-- page title area start -->
@@ -269,7 +237,7 @@
                         <!-- page title menu start -->
                         <div class="page-title-menu">
                             <ul>
-                                <li><a href="index.html">Home</a> <span> / </span> </li>
+                                <li><a href="index">Home</a> <span> / </span> </li>
                                 <li><a href="postlisting.html">Post a Listing</a></li>
                             </ul>
                         </div>
@@ -279,16 +247,16 @@
             </div>
         </div>
         <!-- page title area end -->
-        <!-- checkout area start -->
+        <!-- post area start -->
         <div class="checkout-area section-padding">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- client address start -->
+                        <!-- cpost listing start -->
                         <div class="client-address">
                             <!-- section title start -->
                             <div class="section-small-title">
-                                <h3>Item Details</h3>
+                                <h3>Listing Details</h3>
                             </div>
                             <!-- section title start -->
                             <!-- client address form -->
@@ -297,9 +265,6 @@
                                     <!-- input title -->
                                     <p>Title</p>
                                     <input type="text" name="truck_name">
-                                    <!--input condition-->
-                                    <p>Condition</p>
-                                    <input type="text">
                                     <!-- input brand -->
                                     <p>Brand</p>
                                     <input type="text" name="truck_brand">
@@ -309,12 +274,6 @@
                                     <!-- input fuel type -->
                                     <p>Fuel Type</p>
                                     <input type="text" name="truck_fuel">
-                                    <!-- input engine -->
-                                    <p>Engine</p>
-                                    <input type="text">
-                                    <!-- input transmission -->
-                                    <p>Transmission</p>
-                                    <input type="text">
                                     <!-- input drive -->
                                     <p>Drive</p>
                                     <input type="text" name="truck_drive">
@@ -324,23 +283,16 @@
                                     <!-- add pictures -->
                                     <p>Pictures</p>
                                     <input type="text">
-                                    
                                     <button type="submit" value="list">Post listing</button>
                                 </form>
                             </div>
                         </div>
-                        <!-- client address end -->
-                    </div>
-                        <!-- payment method start -->
-                        <!-- shopping button start -->
-                        
-                        <!-- shopping button end -->
+                        <!-- post listing end -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- checkout area end -->
-        <!-- footer top start -->
+        <!-- post area end -->
         <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
@@ -349,11 +301,7 @@
                         <!-- single footer start -->
                         <div class="single-footer-top">
                             <div class="footer-about-us">
-                                <!-- small logo start -->
-                                <!-- <a href="index.html" class="footer-logo"> <img src="img/logo.png" alt=""> </a>  -->
-                                <!-- small logo end -->
                                 <!-- address start -->
-
                                 <div class="footer-address">
                                     <p> <span> ADDRESS: </span>Rio Rico Arizona </p>
                                     <p>USA 85648</p>
@@ -380,18 +328,17 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="index">Home</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="shop">Shop Parts</a></li>
-                                    <li><a href="shop.html">Shop Trucks</a></li>
-                                    <li><a href="trailers.html">Shop Trailers</a></li>
+                                    <li><a href="trucks">Shop Trucks</a></li>
+                                    <li><a href="trailers">Shop Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
                         </div>
                         <!-- single footer end -->
                     </div>
-
                 </div>
             </div>
         </div>
@@ -404,11 +351,8 @@
                         <!-- footer social start -->
                         <div class="footer-social">
                             <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
                             </ul>
                         </div>
                         <!-- footer social end -->
