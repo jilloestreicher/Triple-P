@@ -76,11 +76,6 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
-        <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-
-        <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
                 <div class="container">
@@ -96,24 +91,22 @@
                             </div>
                             <!-- welcome message end -->
                         </div>
-                        <div class="col-md-7">
-                            <form action="/search" method="post">
-                                <input type="text" placeholder="Search.." name="searchBar">
-                                <button type="submit" value="search">Go</button>
-                            </form>
+                        <div class="col-md-3">
+                            <!-- Search Bar -->
+                            <div class="header-top-menu">
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="header-top-menu">
-
-                                <!-- top social start -->
-                                            
-                                <!-- top social end -->
-                               <!-- cart menu start -->
+                                <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
                                         <li> 
-                                            
-                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(2)</a>
+                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(1)</a>
                                             <div class="cart-items">
                                                 <ul>
                                                     <!-- single cart item start -->
@@ -126,34 +119,14 @@
                                                         </div>
                                                         <!-- cart item info -->
                                                         <div class="cart-info">
-                                                            <a href="#" class="cart-item-name">
-                                                                Three Ball Bearing
-                                                            </a>
+                                                            <a href="#" class="cart-item-name">Placeholder</a>
                                                             <p class="quantity">quantity: <strong> 1</strong></p>
                                                             <p class="price">price: <strong> $ 320</strong></p>
                                                             <button class="remove"><i class="fa fa-trash-o"></i></button>
                                                         </div>
                                                     </li>
                                                     <!-- single cart item end -->
-                                                    <!-- single cart item start -->
-                                                    <li>
-                                                        <!-- cart item img -->
-                                                        <div class="cart-item-img">
-                                                            <a href="#">
-                                                                <img src="img/product/2.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <!-- cart item info -->
-                                                        <div class="cart-info">
-                                                            <a href="#" class="cart-item-name">
-                                                                Car Exhaust Pipe
-                                                            </a>
-                                                            <p class="quantity">quantity: <strong> 2</strong></p>
-                                                            <p class="price">price: <strong> $ 441</strong></p>
-                                                            <button class="remove"><i class="fa fa-trash-o"></i></button>
-                                                        </div>
-                                                    </li>
-                                                    <!-- single cart item end -->
+                                                    
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
@@ -175,7 +148,6 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    
                                 </div>
                                 <!-- cart menu end -->
                             </div>
@@ -191,7 +163,7 @@
                             <div class="col-md-3 col-sm-2">
                                 <!-- logo start -->
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="index">
                                         <img src="img/logo.png" alt="" height="100" width="200">
                                     </a>
                                 </div>
@@ -203,7 +175,7 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index.html">Home</a></li>
+                                            <li class="has-sub"><a href="index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="about-us.html">About us</a></li>
                                             <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
@@ -224,7 +196,7 @@
                                                     <span>
                                                         <a href="listing-details.html">Listing Details</a>
                                                         <a href="login.html">Login</a>
-                                                        <a href="manage-users.html">Admin - Manage Users</a>
+                                                        <a href="manage-users">Admin - Manage Users</a>
                                                         <a href="search-results.html">Search Results</a>
                                                     </span>
                                                     <span>
@@ -237,10 +209,8 @@
                                                 </div>
                                                 <!-- mega-menu end -->
                                             </li>
-                                            <li><a href="shop.html">Trucks</a></li>
-                                            <li><a href="trailers.html">Trailers</a></li>
-                                            <!-- single menu -->
-                                            <!-- single menu -->
+                                            <li><a href="trucks">Trucks</a></li>
+                                            <li><a href="trailers">Trailers</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -251,9 +221,6 @@
                 </div>
             </div>
             <!-- mainmenu area end -->
-            <!-- mobile menu area start -->
-            <!-- mobile menu area end -->
-            <!-- slider area end -->
         </header>
         <div class="slider-area">
             <!-- slider images start -->
@@ -299,7 +266,6 @@
                         <!-- section title start -->
                         <div class="section-heading text-center">
                             <h3>Featured Parts</h3>
-                            
                         </div>
                         <!-- section title end -->
                     </div>
@@ -314,795 +280,88 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="tab1">
                             
+                            <!-- TODO: PROPERLY QUERY:
+                                 FOR NEWEST ARRIVAL, GET THE BIGGEST ID
+                                 FOR BEST SELLING, CHECK HOW MANY ORDERS IT IS IN -->
+                            
                             <div class="row">
                                 <% items.forEach(function(item){ %>
-                                
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="single-list-shop" data-item-id="<%= item.id %>">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="../img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="single-list-shop" data-item-id="<%= item.id %>">
+                                        <!-- single product start -->
+                                            <div class="single-product hover-style text-center">
+                                                <div class="product-img">
+                                                    <!-- product-img -->
+                                                    <a href="listing-details.html" class="main-img">
+                                                        <img src="../img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
+                                                    </a>
+                                                    <!-- product actions -->
+                                                    <div class="product-action">
+                                                        <div class="action-btn">
+                                                            <button class="text-button action-single-btn"> add to cart</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <!-- product-info start -->
+                                                <div class="product-info text-center">
+                                                    <div class="product-name">
+                                                        <a href="#"><%= item.name %></a>
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <p>$<%= item.price / 100 %></p>
+                                                    </div>
+                                                </div>
+                                                <!-- product-info start -->
                                             </div>
+                                            <!-- single product end -->
                                         </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#"><%= item.name %></a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$<%= item.price / 100 %></p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
                                     </div>
                                 <% }) %>
-                                
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tab3">
                             <div class="row">
                                 <% items.forEach(function(item){ %>
-                                
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="single-list-shop" data-item-id="<%= item.id %>">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="../img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="single-list-shop" data-item-id="<%= item.id %>">
+                                            <!-- single product start -->
+                                            <div class="single-product hover-style text-center">
+                                                <div class="product-img">
+                                                    <!-- product-img -->
+                                                    <a href="listing-details.html" class="main-img">
+                                                        <img src="../img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
+                                                    </a>
+                                                    <!-- product actions -->
+                                                    <div class="product-action">
+                                                        <div class="action-btn">
+                                                            <button class="text-button action-single-btn"> add to cart</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <!-- product-info start -->
+                                                <div class="product-info text-center">
+                                                    <div class="product-name">
+                                                        <a href="#"><%= item.name %></a>
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <p>$<%= item.price / 100 %></p>
+                                                    </div>
+                                                </div>
+                                                <!-- product-info start -->
                                             </div>
+                                        <!-- single product end -->
                                         </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#"><%= item.name %></a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$<%= item.price / 100 %></p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
                                     </div>
                                 <% }) %>
-                                
                             </div>
                         </div>
                     </div>
                     <br></br>
                     <br></br>
-
-                        <h2><center>Categories</center></h2>
-            <br></br>
-
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="tab1">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/2.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/1.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab2">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/5.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/6.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/7.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/8.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab3">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/4.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/1.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/2.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br></br>
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="tab1">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/2.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/1.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab2">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/5.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/6.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/7.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/8.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                               
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab3">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/4.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 1170</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/1.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 320</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/2.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 950</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <!-- single product start -->
-                                    <div class="single-product hover-style text-center">
-                                        <div class="product-img">
-                                            <!-- product-img -->
-                                            <a href="listing-details.html" class="main-img">
-                                                <img src="img/product/3.jpg" alt="">
-                                            </a>
-                                            <!-- product actions -->
-                                            <div class="product-action">
-                                                <div class="action-btn">
-                                                    <button class="text-button action-single-btn"> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                        <div class="product-info text-center">
-                                            <div class="product-name">
-                                                <a href="#">Placeholder</a>
-                                            </div>
-                                            <div class="product-price">
-                                                <p>$ 220.50</p>
-                                            </div>
-                                        </div>
-                                        <!-- product-info start -->
-                                    </div>
-                                    <!-- single product end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         <!-- shop area end -->
-
         <!-- blog area start -->
         <div class="blog-area section-padding">
             <div class="container">
@@ -1117,43 +376,46 @@
                 </div>
                 <div class="row">
                     <!-- blog slider start -->
+                    
+                    <!-- TODO: FIX QUERY FOR NEWLY ADDED LISTINGDATE IN DB -->
+                    
                     <div class="blog-slider owl-preview-2">
                         <% listings.forEach(function(truck){ %>
-                        <div class="col-md-12">
-                            <div class="single-list-shop" data-item-id="<%= truck.id %>">
-                            <!-- single blog start -->
-                            <div class="listing-details">
-                                <!-- blog img start -->
-                                <div class="blog-img">
-                                    <a href="listing-details.html">
-                                        <img src="img/blog/1.jpg" alt="">
-                                        <span class="post-date">
-                                            19 <br> Sept
-                                        </span>
-                                    </a>
+                            <div class="col-md-12">
+                                <div class="single-list-shop" data-item-id="<%= truck.id %>">
+                                    <!-- single blog start -->
+                                    <div class="listing-details">
+                                        <!-- blog img start -->
+                                        <div class="blog-img">
+                                            <a href="listing-details.html">
+                                                <img src="img/blog/1.jpg" alt="">
+                                                <span class="post-date">
+                                                    19 <br> Sept
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <!-- blog img end -->
+                                        <!-- blog content start -->
+                                        <div class="blog-info">
+                                            <!-- post title -->
+                                            <a href="listing-details.html" class="blog-title"> <%= truck.name %> </a>
+                                            <!-- post info -->
+                                            <p class="post-info">
+                                                <span> <i class="icofont icofont-user"></i> <%= truck.email %></span>
+                                                <span class="pull-right"> <i class="icofont icofont-comment"></i> $37,800 </span>
+                                            </p>
+                                            <!-- post summary -->
+                                            <p class="post-summary">
+                                                <%= truck.blah %>
+                                            </p>
+                                            <!-- read post button -->
+                                            <a href="listing-details.html" class="read-post"> See Listing </a>
+                                        </div>
+                                        <!-- blog content end -->
+                                    </div>
+                                <!-- single blog start -->
                                 </div>
-                                <!-- blog img end -->
-                                <!-- blog content start -->
-                                <div class="blog-info">
-                                    <!-- post title -->
-                                    <a href="listing-details.html" class="blog-title"> <%= truck.name %> </a>
-                                    <!-- post info -->
-                                    <p class="post-info">
-                                        <span> <i class="icofont icofont-user"></i> <%= truck.email %></span>
-                                        <span class="pull-right"> <i class="icofont icofont-comment"></i> $37,800 </span>
-                                    </p>
-                                    <!-- post summary -->
-                                    <p class="post-summary">
-                                        <%= truck.blah %>
-                                    </p>
-                                    <!-- read post button -->
-                                    <a href="listing-details.html" class="read-post"> See Listing </a>
-                                </div>
-                                <!-- blog content end -->
                             </div>
-                            <!-- single blog start -->
-                        </div>
-                        </div>
                         <% }) %>
                     </div>
                     <!-- blog slider end -->
@@ -1231,8 +493,6 @@
             </div>
         </div>
         <!-- service area end -->
-
-
         <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
@@ -1241,11 +501,7 @@
                         <!-- single footer start -->
                         <div class="single-footer-top">
                             <div class="footer-about-us">
-                                <!-- small logo start -->
-                              <!-- <a href="index.html" class="footer-logo"> <img src="img/logo.png" alt=""> </a>  -->
-                                <!-- small logo end -->
                                 <!-- address start -->
-
                                 <div class="footer-address">
                                     <p> <span> ADDRESS: </span>Rico Rico Arizona </p>
                                     <p>USA 85648</p>
@@ -1272,18 +528,17 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="index">Home</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="shop">Shop Parts</a></li>
-                                    <li><a href="shop.html">Shop Trucks</a></li>
-                                    <li><a href="trailers.html">Shop Trailers</a></li>
+                                    <li><a href="trucks">Shop Trucks</a></li>
+                                    <li><a href="trailers">Shop Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
                         </div>
                         <!-- single footer end -->
                     </div>
-
                 </div>
             </div>
         </div>
@@ -1296,11 +551,8 @@
                         <!-- footer social start -->
                         <div class="footer-social">
                             <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
                             </ul>
                         </div>
                         <!-- footer social end -->
