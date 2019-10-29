@@ -169,4 +169,37 @@ router.get('/manage-users', function(req,res){
         
 })
 
+router.get('/parts/:id', (req, res) =>{
+    console.log("Finding part with id: " + req.params.id)
+    
+    //Establish connection to DB
+    const connection = getConnection()
+    
+    const partId = req.params.id
+    
+    //? allows us to fill in with a different value
+    const queryString = "SELECT PartId as id, ItemName as name, PartDescription as blah, PriceUSD as price, Brand as brand, Picture as imgName FROM parts WHERE PartId = ?"
+    
+    //Query DB. First param is query, second is callback
+    //[] is used for filling in the ?
+    connection.query(queryString, [partId], (err, result, fields) => {
+        
+        //check if we succesfully queried
+        if(err){
+            console.log("Failed to query: " +err)
+            res.sendStatus(500);
+            res.end()
+            return
+        }
+        console.log("Sucessfully queried parts")
+        
+        res.render('shop-details.ejs', {
+            items: result
+        })
+        
+    })
+    //ending response
+    
+})
+
 module.exports = router
