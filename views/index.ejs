@@ -126,7 +126,7 @@
                                                         </div>
                                                     </li>
                                                     <!-- single cart item end -->
-                                                    
+                                            
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
@@ -230,9 +230,6 @@
             <!-- slider images end -->
             <!-- slider 1 direction -->
             <div id="slider-direction-1" class="t-cn slider-direction">
-                <!-- slider progress start -->
-                
-                <!-- slider progress end -->
                 <!-- slider caption start -->
                 <div class="slider-caption">
                     <div class="container">
@@ -281,8 +278,7 @@
                         <div role="tabpanel" class="tab-pane fade in active" id="tab1">
                             
                             <!-- TODO: PROPERLY QUERY:
-                                 FOR NEWEST ARRIVAL, GET THE BIGGEST ID
-                                 FOR BEST SELLING, CHECK HOW MANY ORDERS IT IS IN -->
+                                 FOR NEWEST ARRIVAL, GET THE BIGGEST ID -->
                             
                             <div class="row">
                                 <% items.forEach(function(item){ %>
@@ -319,6 +315,10 @@
                                 <% }) %>
                             </div>
                         </div>
+                        
+                         <!-- TODO: PROPERLY QUERY:
+                                 FOR TOP SELLING, QUERY ORDERS TO FIND MOST POPULAR ITEM -->
+                        
                         <div role="tabpanel" class="tab-pane fade" id="tab3">
                             <div class="row">
                                 <% items.forEach(function(item){ %>
@@ -356,14 +356,14 @@
                             </div>
                         </div>
                     </div>
-                    <br></br>
-                    <br></br>
+                    <br>
+                    <br>
                 </div>
             </div>
         </div>
         <!-- shop area end -->
-        <!-- blog area start -->
-        <div class="blog-area section-padding">
+        <!-- listing area start -->
+        <div class="listing-area section-padding">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -375,30 +375,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <!-- blog slider start -->
+                    <!-- listing slider start -->
                     
-                    <!-- TODO: FIX QUERY FOR NEWLY ADDED LISTINGDATE IN DB -->
+                    <!-- TODO: FIX QUERY FOR NEWLY ADDED LISTING DATE IN DB -->
                     
-                    <div class="blog-slider owl-preview-2">
+                    <div class="listing-slider owl-preview-2">
                         <% listings.forEach(function(truck){ %>
                             <div class="col-md-12">
                                 <div class="single-list-shop" data-item-id="<%= truck.id %>">
-                                    <!-- single blog start -->
+                                    <!-- single listing start -->
                                     <div class="listing-details">
-                                        <!-- blog img start -->
-                                        <div class="blog-img">
+                                        <!-- listing img start -->
+                                        <div class="listing-img">
                                             <a href="listing-details.html">
-                                                <img src="img/blog/1.jpg" alt="">
+                                                <img src="img/listing/1.jpg" alt="">
                                                 <span class="post-date">
                                                     19 <br> Sept
                                                 </span>
                                             </a>
                                         </div>
-                                        <!-- blog img end -->
-                                        <!-- blog content start -->
-                                        <div class="blog-info">
+                                        <!-- listing img end -->
+                                        <!-- listing content start -->
+                                        <div class="listing-info">
                                             <!-- post title -->
-                                            <a href="listing-details.html" class="blog-title"> <%= truck.name %> </a>
+                                            <a href="listing-details.html" class="listing-title"> <%= truck.name %> </a>
                                             <!-- post info -->
                                             <p class="post-info">
                                                 <span> <i class="icofont icofont-user"></i> <%= truck.email %></span>
@@ -411,18 +411,18 @@
                                             <!-- read post button -->
                                             <a href="listing-details.html" class="read-post"> See Listing </a>
                                         </div>
-                                        <!-- blog content end -->
+                                        <!-- listing content end -->
                                     </div>
-                                <!-- single blog start -->
+                                <!-- single listing start -->
                                 </div>
                             </div>
                         <% }) %>
                     </div>
-                    <!-- blog slider end -->
+                    <!-- listing slider end -->
                 </div>
             </div>
         </div>
-        <!-- blog area end -->
+        <!-- listing area end -->
         <!-- quick book area start -->
         <div class="quick-book-area">
             <div class="container">

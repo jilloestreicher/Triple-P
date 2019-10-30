@@ -303,26 +303,13 @@
                                             <div class="product-name">
                                                 <a href="/parts/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
                                             </div>
-                                            <!--
-                                            <div class="price-rating">
-                                                <div class="truck-details pull-left">
-                                                    <p><b>Brand</b>: Ford &nbsp;
-                                                        <b>Fuel Type</b>: Diesel &nbsp;
-                                                        <b>Year</b>: 2001 &nbsp;
-                                                        <b>Drive</b>: Rear</p>
-                                                </div>
-                                            </div>
-                                            -->
-                                            
+                                           
                                             <div class="product-text">
                                                 <p><%= item.blah %></p>
                                             </div>
                                             <!-- cart plus minus start -->
                                             <div class="contact-info">
                                                 <label class="shop-item-price">$<%= item.price / 100 %></label>
-                                                <!--
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                                -->
                                             </div>
                                             <!-- cart plus minus end -->
                                             
@@ -331,7 +318,6 @@
                                                     <button class="btn btn-primary shop-item-button" type="button">Add to cart</button>
                                                 </div>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -360,6 +346,8 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- TEMPORARY CODE FOR TESTING STRIPE API CHECKOUT -->
             <section class="container content-section">
                                      <h2 class="section-header">CART</h2>
                                      <div class="cart-row">
@@ -375,6 +363,8 @@
                                      </div>
                                      <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
                                  </section>
+            <!-- TEMPORARY CODE END, REMOVE WHEN CART SESSIONS ARE WORKING -->
+            
         </div>
         <!-- shop area end -->
         <!-- quick book area start -->
@@ -400,7 +390,6 @@
         </div>
         <!-- quick book area end -->
         <!-- footer top start -->
-        <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
                 <div class="row">
@@ -408,9 +397,6 @@
                         <!-- single footer start -->
                         <div class="single-footer-top">
                             <div class="footer-about-us">
-                                <!-- small logo start -->
-                                <!-- <a href="index.html" class="footer-logo"> <img src="img/logo.png" alt=""> </a>  -->
-                                <!-- small logo end -->
                                 <!-- address start -->
 
                                 <div class="footer-address">
