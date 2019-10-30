@@ -1,9 +1,12 @@
-require('dotenv').config({ path: '.env' })
+//Retrieve stripe keys from the .env file
 
+require('dotenv').config({ path: '.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 console.log(stripeSecretKey)
 console.log(stripePublicKey)
+
+//Require necessary node modules
 
 const express = require('express')
 const mysql = require('mysql')
@@ -12,11 +15,15 @@ const app = express()
 const fs = require("fs")
 const stripe = require('stripe')(stripeSecretKey)
 
+//Set up the express engine
+
 app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.static('./Front End'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static('./static/'));
+
+//Set up the routes
 
 const searchRouter = require('./routes/search.js')
 app.use(searchRouter)
@@ -24,6 +31,8 @@ const loadRouter = require('./routes/shop-load.js')
 app.use(loadRouter)
 const createRouter = require('./routes/create.js')
 app.use(createRouter)
+
+//Connecto to DB
 
 function getConnection(){
     return mysql.createConnection({
@@ -34,13 +43,17 @@ function getConnection(){
     })
 }
 
+
+//Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
+    
+  //Pull the item information from the items.json file
   fs.readFile('items.json', function(error, data) {
     if (error) {
       res.status(500).end()
     } else {
       const itemsJson = JSON.parse(data)
-      const itemsArray = itemsJson.music.concat(itemsJson.merch)
+      const itemsArray = itemsJson.parts.concat(itemsJson.merch)
       let total = 0
       req.body.items.forEach(function(item) {
         const itemJson = itemsArray.find(function(i) {
@@ -49,6 +62,7 @@ app.post('/purchase', function(req, res) {
         total = total + itemJson.price * item.quantity
       })
 
+      //Send a charge to Stripe
       stripe.charges.create({
         amount: total,
         source: req.body.stripeTokenId,
