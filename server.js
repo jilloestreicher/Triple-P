@@ -78,4 +78,46 @@ app.post('/purchase', function(req, res) {
   })
 })
 
+app.post('/loginCheck', function(req, res) {
+        var username = req.body.username
+        var password = req.body.password
+
+        var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
+
+        getConnection().query(queryString, [username, password], (err,results, field) =>{
+           if(err){
+              console.log("Failed to query: " +err)
+              console.log(results)
+              res.sendStatus(500);
+              res.end()
+              return
+            }
+
+            //HERE
+            if(results.length === 0 || results == null){
+                console.log("Failed Login");
+            }else{
+                console.log("Successful Login");
+                cname = "logged in"
+                setCookie(cname, username)
+                checkCookie();
+            }
+             //create login cookie
+                function setCookie(cname, username) {
+                  document.cookie = cname + "=" + username + "; path=/";
+                }
+                function checkCookie() {
+                  var user = getCookie("username");
+                  if (user != "") {
+                   alert("Welcome again " + user);
+                   window.location.replace("index.html")
+                  } else {
+                    alert("Cookie Error");
+                  }
+                }
+
+            res.end()
+        })
+    })
+
 app.listen(3000)
