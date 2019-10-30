@@ -113,9 +113,9 @@
     });
 
 /*========================================*/
-/*  blog-slider
+/*  listing-slider
 /*========================================*/
-    $(".blog-slider").owlCarousel({
+    $(".listing-slider").owlCarousel({
         autoPlay: false,
         slideSpeed:2000,
         pagination:false,
