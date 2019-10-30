@@ -165,15 +165,15 @@
         padding: 20px;
         top: -720px;
     }
-    .single-blog {
+    .single-listing {
         margin-bottom: 30px;
     }
-    .blog-sidebar,
+    .listing-sidebar,
     .shop-sidebar {
         overflow: hidden;
         margin-top: 20px;
     }
-    .blog-sidebar.blog-left {
+    .listing-sidebar.listing-left {
         margin-bottom: 30px;
         margin-top: 0px;
     }
@@ -333,7 +333,7 @@
         margin-top: 0px;
         padding: 60px 0;
     }
-    .single-blog {
+    .single-listing {
         margin-bottom: 30px;
     }
     .page-title h2 {
@@ -342,26 +342,26 @@
     .about-social ul li a {
         padding-right: 25px;
     }
-    .all-blog-posts .single-blog .blog-img,
-    .all-blog-posts .single-blog .blog-info {
+    .all-listing-posts .single-listing .listing-img,
+    .all-listing-posts .single-listing .listing-info {
         width: 100%;
         padding-left: 0;
     }
-    .blog-sidebar {
+    .listing-sidebar {
         overflow: hidden;
         margin-top: 20px;
     }
-    .blog-sidebar.blog-left {
+    .listing-sidebar.listing-left {
         margin-bottom: 30px;
         margin-top: 0px;
     }
-    .all-blog-posts .single-blog .blog-info .blog-title {
+    .all-listing-posts .single-listing .listing-info .listing-title {
         margin-top: 5px;
     }
     .toolbar-bottom ul li a {
         margin: 0px;
     }
-    .blog-info .post-info span {
+    .listing-info .post-info span {
         font-size: 11px;
     }
     .item-img a {
@@ -445,7 +445,7 @@
     .product-img .main-img img {
         width: 100%;
     }
-    .single-blog .blog-img img {
+    .single-listing .listing-img img {
         width: 100%;
     }
 }
