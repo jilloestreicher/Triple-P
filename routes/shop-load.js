@@ -202,4 +202,70 @@ router.get('/parts/:id', (req, res) =>{
     
 })
 
+router.get('/trucks/:id', (req, res) =>{
+    console.log("Finding truck with id: " + req.params.id)
+    
+    //Establish connection to DB
+    const connection = getConnection()
+    
+    const truckId = req.params.id
+    
+    //? allows us to fill in with a different value
+    const queryString = "SELECT TruckId as id, TruckName as name, TruckDescription as blah, EmailAddress as email, Brand as brand, DriveType as drive, KMPerHour as km, FuelType as fuel, Color as color, Picture as imgName FROM trucks WHERE TruckId = ?"
+    
+    //Query DB. First param is query, second is callback
+    //[] is used for filling in the ?
+    connection.query(queryString, [truckId], (err, result, fields) => {
+        
+        //check if we succesfully queried
+        if(err){
+            console.log("Failed to query: " +err)
+            res.sendStatus(500);
+            res.end()
+            return
+        }
+        console.log("Sucessfully queried trucks")
+        
+        res.render('listing-details.ejs', {
+            items: result
+        })
+        
+    })
+    //ending response
+    
+})
+
+router.get('/trailers/:id', (req, res) =>{
+    console.log("Finding trailer with id: " + req.params.id)
+    
+    //Establish connection to DB
+    const connection = getConnection()
+    
+    const trailerId = req.params.id
+    
+    //? allows us to fill in with a different value
+    const queryString = "SELECT TrailerId as id, TrailerName as name, TrailerDescription as blah, EmailAddress as email, Brand as brand, Length as length, Width as width, Color as color, Picture as imgName FROM trailers WHERE TrailerId = ?"
+    
+    //Query DB. First param is query, second is callback
+    //[] is used for filling in the ?
+    connection.query(queryString, [truckId], (err, result, fields) => {
+        
+        //check if we succesfully queried
+        if(err){
+            console.log("Failed to query: " +err)
+            res.sendStatus(500);
+            res.end()
+            return
+        }
+        console.log("Sucessfully queried trailers")
+        
+        res.render('trailer-details.ejs', {
+            items: result
+        })
+        
+    })
+    //ending response
+    
+})
+
 module.exports = router
