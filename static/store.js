@@ -1,3 +1,12 @@
+/*
+ * File: store.js
+ * Authors: TripleP (Alex Smith, Herbert Glaser, Kaitlyn Dominguez)
+ * Version: 1.2
+ *
+ * Contains code for handling checkout, editing cart contents,
+ * and preparing information for Stripe API.
+ */
+
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
