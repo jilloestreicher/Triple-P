@@ -1,3 +1,13 @@
+/*
+ * File: server.js
+ * Authors: TripleP (Alex Smith, Herbert Glaser, Kaitlyn Dominguez)
+ * Version: 1.2
+ *
+ * Main file for the ACSAS NodeJS API. Contains some API calls but not
+ * all of them, which are distributed in their respective routes.
+ */
+
+
 //Retrieve stripe keys from the .env file
 
 require('dotenv').config({ path: '.env' })
@@ -48,6 +58,9 @@ function getConnection(){
 app.post('/purchase', function(req, res) {
     
   //Pull the item information from the items.json file
+    
+  //TODO: Possibly pull this from user's cart!!
+    
   fs.readFile('items.json', function(error, data) {
     if (error) {
       res.status(500).end()
