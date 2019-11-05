@@ -75,12 +75,12 @@
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="https://checkout.stripe.com/checkout.js" defer></script>
-        <script src="../static/store.js" defer></script>
+        <script src="store.js" defer></script>
         <script>
             var stripePublicKey = '<%= stripePublicKey %>'
         </script>
     </head>
-    <body>
+    <body onload="populateCart()">
         <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
@@ -117,7 +117,7 @@
                                                     <li>
                                                         <div class="cart-btns">
                                                             <span class="default-btn">
-                                                                <a href="../public/cart.html">view cart</a>
+                                                                <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
                                                                 <a href="../public/checkout.html">checkout</a>
