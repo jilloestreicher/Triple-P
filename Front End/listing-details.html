@@ -74,8 +74,9 @@
         <!-- modernizr js
         ============================================ -->
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="store.js" defer</script>
     </head>
-    <body>
+    <body onload="populateCart()">
         <!-- header area start -->
         <header id="sticker">
             <div class="header-top">
@@ -111,34 +112,20 @@
                                             <div class="cart-items">
                                                 <ul>
                                                     <!-- single cart item start -->
-                                                    <li>
-                                                        <!-- cart item img -->
-                                                        <div class="cart-item-img">
-                                                            <a href="#">
-                                                                <img src="img/product/1.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <!-- cart item info -->
-                                                        <div class="cart-info">
-                                                            <a href="#" class="cart-item-name">Placeholder</a>
-                                                            <p class="quantity">quantity: <strong> 1</strong></p>
-                                                            <p class="price">price: <strong> $ 320</strong></p>
-                                                            <button class="remove"><i class="fa fa-trash-o"></i></button>
-                                                        </div>
-                                                    </li>
+                                                   
                                                     <!-- single cart item end -->
                                                     
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
-                                                                <h3>subtotal <span class="pull-right"> $ 661 </span> </h3>
+                                                                <h3>subtotal  <span class="cart-total-price">$0</span></h3>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="cart-btns">
                                                             <span class="default-btn">
-                                                                <a href="cart.html">view cart</a>
+                                                                <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
                                                                 <a href="checkout.html">checkout</a>
