@@ -1,18 +1,16 @@
-/*
- * File: store.js
- * Authors: TripleP (Alex Smith, Herbert Glaser, Kaitlyn Dominguez)
- * Version: 1.2
- *
- * Contains code for handling checkout, editing cart contents,
- * and preparing information for Stripe API.
- */
-
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
     ready()
 }
-
+function CheckBrowser() {
+    if ('localStorage' in window && window['localStorage'] !== null) {
+        // We can use localStorage object to store data.
+        return true;
+    } else {
+            return false;
+    }
+}
 function ready() {
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')
     for (var i = 0; i < removeCartItemButtons.length; i++) {
@@ -90,6 +88,9 @@ function purchaseClicked() {
 
 function removeCartItem(event) {
     var buttonClicked = event.target
+    var key = buttonClicked.parentElement.parentElement.id;
+
+    var deleteItem = localStorage.removeItem(key)
     buttonClicked.parentElement.parentElement.remove()
     updateCartTotal()
 }
@@ -110,6 +111,13 @@ function addToCartClicked(event) {
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
     var id = shopItem.dataset.itemId
+    var full = {
+            "title": title,
+            "price": price,
+            "imageSrc": imageSrc,
+            "id": id
+        }
+    localStorage.setItem(id, JSON.stringify(full))
     addItemToCart(title, price, imageSrc, id)
     updateCartTotal()
 }
@@ -160,4 +168,60 @@ function updateCartTotal() {
     total = Math.round(total * 100)/100
     document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + total
 
+}
+function populateCart() {
+    if (CheckBrowser()) {
+        var key = "";
+
+        var i = 0;
+        //For a more advanced feature, you can set a cap on max items in the cart.
+        for (i = 0; i <= localStorage.length-1; i++) {
+            key = localStorage.key(i);
+            if (key == "lsid"){
+
+
+            }
+            else{
+            keyer = localStorage.getItem(key);
+            var parser = JSON.parse(keyer);
+            console.log(parser.title+"  "+parser.price);
+            var cartRow = document.createElement('div')
+            cartRow.setAttribute("id", key);
+                cartRow.classList.add('cart-row')
+                cartRow.dataset.itemId = parser.id;
+                var cartItems = document.getElementsByClassName('cart-items')[0]
+                var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+               /* for (var i = 0; i < cartItemNames.length; i++) {
+                     if (cartItemNames[i].innerText == key[0]) {
+                        alert('This item is already added to the cart')
+                     return;
+                     }
+                 }
+                 */
+                 var cartRowContents = `
+                         <div class="cart-item cart-column">
+                             <img class="cart-item-image" src="${parser.imageSrc}" width="100" height="100">
+                             <span class="cart-item-title">${parser.title}</span>
+                         </div>
+                         <span class="cart-price cart-column">${parser.price}</span>
+                         <div class="cart-quantity cart-column">
+                             <input class="cart-quantity-input" type="number" value="1">
+                             <button class="btn btn-danger" type="button">REMOVE</button>
+                         </div>`
+                     cartRow.innerHTML = cartRowContents
+                     cartItems.append(cartRow)
+                     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
+                     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+                     updateCartTotal();
+}
+        }
+
+    } else {
+        alert('Cannot save shopping list as your browser does not support HTML 5');
+    }
+}
+
+function ClearAll() {
+    localStorage.clear();
+    location.reload();
 }
