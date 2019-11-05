@@ -1,3 +1,12 @@
+/*
+ * File: server.js
+ * Authors: TripleP (Alex Smith, Herbert Glaser, Kaitlyn Dominguez)
+ * Version: 1.2
+ *
+ * Main store javascript with stripe and cart functionality
+ */
+
+
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
