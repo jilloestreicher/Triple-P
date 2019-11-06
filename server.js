@@ -25,8 +25,6 @@ const app = express()
 const fs = require("fs")
 const stripe = require('stripe')(stripeSecretKey)
 const cookies = require('cookies')
-const JSAlert = require('js-alert')
-
 
 //Set up the express engine
 
@@ -44,9 +42,6 @@ const loadRouter = require('./routes/shop-load.js')
 app.use(loadRouter)
 const createRouter = require('./routes/create.js')
 app.use(createRouter)
-
-//Define attempts for login
-var attempts = 3;
 
 //Connect to DB
 
@@ -98,67 +93,152 @@ app.post('/purchase', function(req, res) {
 })
 
 app.post('/loginCheck', function(req, res) {
-        var username = req.body.username
-        var password = req.body.password
+    var username = req.body.username
+    var password = req.body.password
+    var loggedOn
 
-        var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
+    var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
 
-        getConnection().query(queryString, [username, password], (err,results, field) =>{
-           if(err){
-              console.log("Failed to query: " +err)
-              console.log(results)
-              //res.sendStatus(500);
-              //res.end()
-              return
-           }
-           if(results.length === 0 || results == null){
-                console.log("Failed Login")
-                JSAlert.alert("Failed Login")
-            }else{
-                console.log("Successful Login");
+    getConnection().query(queryString, [username, password], (err,results, field) =>{
+        if(err){
+          console.log("Failed to query: " +err)
+          console.log(results)
+          //res.sendStatus(500);
+          //res.end()
+          return
+        }
+        if(results.length === 0 || results == null){
+            console.log("Failed Login")
+        }else{
+            console.log("Successful Login");
 
-                //cookie
-                // Create a cookies object
-                var keys = ['log on']
-                 var c = new cookies(req, res, { keys: keys })
-                //set cookie value
-                 c.set('Logon', new Date().toISOString(), { signed: true })
-                 console.log("Cookie is set");
+            //create a cookie with a half-hour expiration date
+            var keys = ['log on']
+            var c = new cookies(req, res, { keys: keys })
+            res.cookie("login", username, {expire: 1800000 + Date.now()});
 
-                 /*var cname = "logged in";
-                 setCookie(cname, username);
-                 console.log("setCookie executed");
-                 checkCookie(); */
+            //all file headers must show My Account instead of Login
+            fs.readFile('views/index.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("index replaced!")
+                fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                });
+             });
+            fs.readFile('views/listing-details.ejs', 'utf8', function (err,data) {
+               if (err) return console.log(err);
+               var result = data.replace(/login/g, 'my-account');
+               //console.log("listing-details replaced!")
+               fs.writeFile('views/listing-details.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+               });
+            });
+            fs.readFile('views/manage-users.ejs', 'utf8', function (err,data) {
+               if (err) return console.log(err);
+               var result = data.replace(/login/g, 'my-account');
+               //console.log("manage-users replaced!")
+               fs.writeFile('views/manage-users.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+               });
+            });
+            fs.readFile('views/shop.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("shop replaced!")
+                fs.writeFile('views/shop.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/shop-details.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("shop-details replaced!")
+                fs.writeFile('views/shop-details.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/trailer-details.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trailer-details replaced!")
+                 fs.writeFile('views/trailer-details.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                 });
+             });
+            fs.readFile('views/trailers.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trailers replaced!")
+                fs.writeFile('views/trailers.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/trucks.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trucks replaced!")
+                fs.writeFile('views/trucks.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('Front End/about-us.html', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("about-us replaced!")
+                fs.writeFile('about-us.html', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
 
-                const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-                const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+            //redirect user back to the home page
+            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
+            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
 
-                getConnection().query(itemString, (err,result,fields) =>{
-                    getConnection().query(truckString, (err,trucks,fields) =>{
-                        res.render('index.ejs', {
-                                       items: result,
-                                       listings: trucks
-                                   })
+            getConnection().query(itemString, (err,result,fields) =>{
+                getConnection().query(truckString, (err,trucks,fields) =>{
+                    res.render('index.ejs', {
+                        items: result,
+                        listings: trucks
                     })
                 })
-            }
+            })
+        }
+
+        //if the user is not logged in, display log in button
+        if(!loggedOn){
+            console.log("undefined")
+        }else{
+            console.log("logged on")
+            // res.send({success: true, message: '<li> <p> <a href="my-account.html">My Account</a></p></li>'});
+        }
+    })
+})
+
+app.post('/logout', function(req, res) {
+    fs.readFile('views/index.ejs', 'utf8', function (err,data) {
+        if (err) return console.log(err);
+        var result = data.replace(/my-account/g, 'login');
+        console.log("replaced!")
+        fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
+            if (err) return console.log(err);
+        });
+    });
+
+    const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
+    const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+
+    getConnection().query(itemString, (err,result,fields) =>{
+        getConnection().query(truckString, (err,trucks,fields) =>{
+            res.render('index.ejs', {
+                items: result,
+                listings: trucks
+            })
         })
-          })
-             //create login cookie
-             /*function setCookie(cname, username) {
-               console.log("Cookie created!");
-               var loginCookie = document.cookie;
-               document.cookie = cname + "=" + username + "; path=/";
-             }
-             function checkCookie() {
-               var user = getCookie("username");
-               if (user != "") {
-                 alert("Welcome again " + user);
-                 //put route to index here
-               } else {
-                 alert("Cookie Error");
-               }
-            } */
+    })
+})
+
+
 app.get('/cart', function(req,res){
 fs.readFile('items.json', function(error, data){
     if(error) {
