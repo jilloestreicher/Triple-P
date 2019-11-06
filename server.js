@@ -186,7 +186,15 @@ app.post('/loginCheck', function(req, res) {
                 if (err) return console.log(err);
                 var result = data.replace(/login/g, 'my-account');
                 //console.log("about-us replaced!")
-                fs.writeFile('about-us.html', result, 'utf8', function (err) {
+                fs.writeFile('Front End/about-us.html', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('Front End/cart.html', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("cart replaced!")
+                fs.writeFile('Front End/cart.html', result, 'utf8', function (err) {
                    if (err) return console.log(err);
                 });
             });
