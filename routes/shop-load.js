@@ -202,6 +202,43 @@ router.get('/parts/:id', (req, res) =>{
     
 })
 
+router.get('/order/:id', (req,res) =>{
+    const orderId = req.params.id
+    const queryString = "SELECT OrderId as id, orderedParts.PartId as part, parts.PartId as partIn OrderedQuantity as quan, PriceUSD as price, ItemName as name, Picture as imgName from orderedParts, parts WHERE orderedParts.PartId = ? AND orderedParts.PartId = parts.PartId"
+    
+    getConnection().query(queryString, [orderId], (err, result, fields) => {
+        const billString = "SELECT OrderId as id, orders.PaymentId = pay, paymentdetails.PaymentId as payment, BillingAddress as address, BillingFirstName as first, BillingLastName as last, BillingCountry as country, BillingCity as city, BillingState as state, BillingPhone as phone, EmailAddress as email from orders, paymentdetails WHERE OrderId = ? AND paymentdetails.PaymentId = orders.PaymentId"
+        
+        getConnection().query(billString, [orderId], (err, billing, fields) => {
+            const shipString = "SELECT OrderId as id, orders.ShippingId = ship, shippingdetails.ShippingId as shipping, ShippingAddress as address, ShippingFirstName as first, ShippingLastName as last, ShippingCountry as country, ShippingCity as city, ShippingState as state, ShippingPhone as phone, EmailAddress as email from orders, shippingdetails WHERE OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId"
+            
+            getConnection().query(queryString, [orderId], (err, shipping, fields) => {
+                res.render('order-template.ejs', {
+                    items: result,
+                    bill: billing,
+                    ship: shipping
+                })
+            })
+        })
+        
+        
+    })
+})
+
+router.get('/orderHistory/:accounts', (req, res) => {
+    
+    //FIX THIS TO GET CURRENT ACCOUNT
+    
+    const account = req.params.accounts
+    const queryString = "SELECT orders.EmailAddress as email, orderedparts.OrderId as partid, ShippingId as ship, ShippingAddress as address, COUNT(orderedparts.PartId) as quan, orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId"
+    
+    getConnection().query(queryString, [account], (err, result, fields) => {
+        res.render('order-histroy.ejs',{
+            orders: result
+        })
+    })
+})
+
 router.get('/trucks/:id', (req, res) =>{
     console.log("Finding truck with id: " + req.params.id)
     
