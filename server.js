@@ -25,6 +25,7 @@ const app = express()
 const fs = require("fs")
 const stripe = require('stripe')(stripeSecretKey)
 const cookies = require('cookies')
+const session = require('express-session')
 
 //Set up the express engine
 
@@ -42,6 +43,21 @@ const loadRouter = require('./routes/shop-load.js')
 app.use(loadRouter)
 const createRouter = require('./routes/create.js')
 app.use(createRouter)
+
+//Define number of login attempts allowed
+
+var attempts = 3;
+
+//Create session
+
+app.use(session({
+    secret: 'logged on',
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        expires: 1800000
+    }
+}));
 
 //Connect to DB
 
@@ -103,19 +119,16 @@ app.post('/loginCheck', function(req, res) {
         if(err){
           console.log("Failed to query: " +err)
           console.log(results)
-          //res.sendStatus(500);
-          //res.end()
           return
         }
         if(results.length === 0 || results == null){
             console.log("Failed Login")
+            attempts --;
+            //if(attempts == 0)
+
         }else{
             console.log("Successful Login");
-
-            //create a cookie with a half-hour expiration date
-            var keys = ['log on']
-            var c = new cookies(req, res, { keys: keys })
-            res.cookie("login", username, {expire: 1800000 + Date.now()});
+            req.session.username = username;
 
             //all file headers must show My Account instead of Login
             fs.readFile('views/index.ejs', 'utf8', function (err,data) {
@@ -212,38 +225,54 @@ app.post('/loginCheck', function(req, res) {
                 })
             })
         }
-
-        //if the user is not logged in, display log in button
-        if(!loggedOn){
-            console.log("undefined")
-        }else{
-            console.log("logged on")
-            // res.send({success: true, message: '<li> <p> <a href="my-account.html">My Account</a></p></li>'});
-        }
     })
 })
 
+//middleware function
+function checkAuth(req, res, next) {
+  if (!req.session || !req.session.username) {
+    console.log('You are not authorized to view this page');
+  } else {
+    next();
+  }
+}
+
 app.post('/logout', function(req, res) {
-    fs.readFile('views/index.ejs', 'utf8', function (err,data) {
-        if (err) return console.log(err);
-        var result = data.replace(/my-account/g, 'login');
-        console.log("replaced!")
-        fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
-            if (err) return console.log(err);
-        });
-    });
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+          if(err) {
+            return next(err);
+          }else {
+            console.log("logged out")
+            fs.readFile('views/index.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/my-account/g, 'login');
+                console.log("replaced!")
+                fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                });
+            });
 
-    const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-    const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
+            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
 
-    getConnection().query(itemString, (err,result,fields) =>{
-        getConnection().query(truckString, (err,trucks,fields) =>{
-            res.render('index.ejs', {
-                items: result,
-                listings: trucks
+            getConnection().query(itemString, (err,result,fields) =>{
+                getConnection().query(truckString, (err,trucks,fields) =>{
+                    res.render('index.ejs', {
+                        items: result,
+                        listings: trucks
+                    })
+                })
             })
-        })
-    })
+          }
+        });
+    }
+})
+
+app.get('/checkSession', checkAuth, function(req,res){
+    //calls function checkAuth which will authenticate the session
+    console.log("checkSession - user is authorized!");
 })
 
 
