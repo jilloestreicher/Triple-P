@@ -59,11 +59,11 @@ router.post('/create_part', (req,res) => {
     
     const partName = req.body.part_name
     const partDesc = req.body.part_desc
-    const partPrice = req.body.part_price
+    const partPrice = req.body.part_price * 100
     const partBrand = req.body.part_brand
     const partQuan = req.body.part_quan
     
-    const queryString = "insert into parts (PartName, Brand, PriceUSD, PartDescription, QuantityOnHand) values (?,?,?,?,?)"
+    const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand) values (?,?,?,?,?)"
     
     getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan], (err, results, fields) => {
         if(err) {
@@ -77,6 +77,10 @@ router.post('/create_part', (req,res) => {
             res.sendStatus(500)
             return
         }
+        fs.writeFile('../items.json', results, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
         
         res.end()
     })
