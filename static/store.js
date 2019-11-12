@@ -177,7 +177,11 @@ function updateCartTotal() {
     total = Math.round(total * 100)/100
     document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + total
     var numItems = $('.cart-row').length;
+    var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
+    if (pageCheck == "CART"){}
+    else{
     document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems-1) +")";
+    }
     
 
 }
