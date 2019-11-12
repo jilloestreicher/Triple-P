@@ -176,6 +176,9 @@ function updateCartTotal() {
     }
     total = Math.round(total * 100)/100
     document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + total
+    var numItems = $('.cart-row').length;
+    document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems-1) +")";
+    
 
 }
 function populateCart() {
@@ -186,10 +189,7 @@ function populateCart() {
         //For a more advanced feature, you can set a cap on max items in the cart.
         for (i = 0; i <= localStorage.length-1; i++) {
             key = localStorage.key(i);
-            if (key == "lsid"){
-
-
-            }
+            if (key == "lsid"){}
             else{
             keyer = localStorage.getItem(key);
             var parser = JSON.parse(keyer);
@@ -222,6 +222,7 @@ function populateCart() {
                      cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
                      cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
                      updateCartTotal();
+                
 }
         }
 
