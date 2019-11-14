@@ -288,4 +288,16 @@ fs.readFile('items.json', function(error, data){
     }
 })
 })
+app.get('/postListing', function(req,res){
+fs.readFile('items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        res.render('postListing.ejs', {
+            stripePublicKey: stripePublicKey,
+            items: JSON.parse(data)
+        })
+    }
+})
+})
 app.listen(3000)
