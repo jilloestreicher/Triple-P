@@ -6,7 +6,6 @@
  * Main store javascript with stripe and cart functionality
  */
 
-
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
@@ -44,9 +43,11 @@ function ready() {
 }
 
 var stripeHandler = StripeCheckout.configure({
+
     key: stripePublicKey,
     locale: 'en',
     token: function(token) {
+
         var items = []
         var cartItemContainer = document.getElementsByClassName('cart-items')[0]
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
@@ -55,10 +56,12 @@ var stripeHandler = StripeCheckout.configure({
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
             var quantity = quantityElement.value
             var id = cartRow.dataset.itemId
+
             items.push({
                 id: id,
                 quantity: quantity
             })
+
         }
 
         fetch('/purchase', {
@@ -92,6 +95,7 @@ function purchaseClicked() {
     console.log(price)
     stripeHandler.open({
         amount: price
+
     })
 }
 
@@ -106,6 +110,7 @@ function removeCartItem(event) {
 
 function quantityChanged(event) {
     var input = event.target
+
     if (isNaN(input.value) || input.value <= 0) {
         input.value = 1
     }
@@ -120,6 +125,19 @@ function addToCartClicked(event) {
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
     var id = shopItem.dataset.itemId
+    var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
+     if(pageCheck == "POST A LISTING"){
+     id=9999
+     var full = {
+                 "title": title,
+                 "price": price,
+                 "imageSrc": imageSrc,
+                 "id": id
+             }
+             addItemToCart(title, price, imageSrc, id)
+                 updateCartTotal()
+     }
+else{
     var full = {
             "title": title,
             "price": price,
@@ -129,6 +147,8 @@ function addToCartClicked(event) {
     localStorage.setItem(id, JSON.stringify(full))
     addItemToCart(title, price, imageSrc, id)
     updateCartTotal()
+}
+
 }
 
 function addItemToCart(title, price, imageSrc, id) {
@@ -143,20 +163,43 @@ function addItemToCart(title, price, imageSrc, id) {
             return
         }
     }
+     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
+     var chekr = document.getElementById("carto").value
+
+         if(pageCheck == "POST A LISTING"){
     var cartRowContents = `
         <div class="cart-item cart-column">
-            <img class="cart-item-image" src="${imageSrc}" width="50" height="50">
-            <span class="cart-item-title">${title}</span>
+            <img class="cart-item-image" src="${imageSrc}" style="width:0px;height:0px;">
+            <span class="cart-item-title" style="font-size:0px">${title}</span>
         </div>
-        <span class="cart-price cart-column">${price}</span>
-        <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value="1">
-            <button class="btn btn-danger" type="button">REMOVE</button>
+        <span class="cart-price cart-column" style="font-size:0px">${price}</span>
+        <div class="cart-quantity cart-column" style="width:0px;height:0px;">
+            <input class="cart-quantity-input" type="number" id="invisibleQuant" value="0" style="width:0px;height:0px;">
         </div>`
     cartRow.innerHTML = cartRowContents
     cartItems.append(cartRow)
-    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+    }
+
+    else{
+    var cartRowContents = `
+            <div class="cart-item cart-column">
+                <img class="cart-item-image" src="${imageSrc}" width="50" height="50">
+                <span class="cart-item-title">${title}</span>
+            </div>
+            <span class="cart-price cart-column">${price}</span>
+            <div class="cart-quantity cart-column">
+                <input class="cart-quantity-input" type="number" value="1">
+                <button class="btn btn-danger" type="button">REMOVE</button>
+            </div>`
+        cartRow.innerHTML = cartRowContents
+        cartItems.append(cartRow)
+        cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
+        cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+
+    }
+
+     document.getElementById("invisibleQuant").value = chekr;
 }
 
 function updateCartTotal() {
@@ -179,12 +222,20 @@ function updateCartTotal() {
     var numItems = $('.cart-row').length;
     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
     if (pageCheck == "CART"){}
+    else if(pageCheck == "POST A LISTING"){
+     var total = 0
+        var quantityElement = document.getElementById('carto').value
+
+        total = (500 * quantityElement)
+        displayTotal = Math.round(total)/100
+        document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + displayTotal
+        console.log("total= "+ displayTotal)
+    }
     else{
     document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems-1) +")";
     }
-    
-
 }
+
 function populateCart() {
     if (CheckBrowser()) {
         var key = "";
@@ -193,7 +244,10 @@ function populateCart() {
         //For a more advanced feature, you can set a cap on max items in the cart.
         for (i = 0; i <= localStorage.length-1; i++) {
             key = localStorage.key(i);
-            if (key == "lsid"){}
+            if (key == "lsid"){
+
+
+            }
             else{
             keyer = localStorage.getItem(key);
             var parser = JSON.parse(keyer);
@@ -226,7 +280,7 @@ function populateCart() {
                      cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
                      cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
                      updateCartTotal();
-                
+
 }
         }
 
