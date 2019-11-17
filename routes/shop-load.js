@@ -47,7 +47,7 @@ fs.readFile('./items.json', function(error, data){
     } else{
         
         const connection = helper1.getConnection()
-        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts;"
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10;"
         
         
         connection.query(queryString, (err,result,fields) => {
@@ -66,6 +66,45 @@ fs.readFile('./items.json', function(error, data){
             res.render('shop.ejs', {
             stripePublicKey: stripePublicKey,
             items: result
+            })
+        })
+        
+    }
+})
+})
+
+router.get('/shop/:offset', function(req,res){
+    fs.readFile('./items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        
+        const connection = helper1.getConnection()
+        const offs = req.params.offset * 10 - 10
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10 OFFSET ?;"
+        
+        
+        connection.query(queryString, [offs], (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              res.sendStatus(500);
+              res.end()
+              return
+            }
+            fs.writeFile('test.json', result, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
+            console.log(result)
+            
+            const partString = "SELECT * from parts"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('shop.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
         
