@@ -1,7 +1,12 @@
 require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+const helper = require ('../helper.js');
+var helper1 = new helper();
 const express = require('express')
+const { check, validationResult } = require('express-validator');
+const { body } = require('express-validator');
+const { sanitizeBody } = require('express-validator');
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
 const app = express()
@@ -11,16 +16,17 @@ const router = express.Router()
 
 router.use(bodyParser.urlencoded({extended: false}))
 
-function getConnection(){
-    return mysql.createConnection({
-      host:'localhost',
-      user:'root',
-      password:'Capping2',
-      database:'acsas'
-    })
-}
 
-router.post('/create_listing', (req,res) => {
+
+router.post('/create_listing', [
+    body('truck_name').trim().escape(),
+    body('truck_brand').trim().escape(),
+    body('truck_km').trim().escape(),
+    body('truck_fuel').trim().escape(),
+    body('truck_drive').trim().escape(),
+    body('truck_color').trim().escape()
+],
+ (req,res) => {
     
     console.log("Creating Listing")
     
@@ -35,7 +41,7 @@ router.post('/create_listing', (req,res) => {
     
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress) values (?,?,?,?,?,?,?)"
     
-    getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(truckName)
@@ -53,7 +59,13 @@ router.post('/create_listing', (req,res) => {
     })
 })
 
-router.post('/create_part', (req,res) => {
+router.post('/create_part', [
+    body('part_name').trim().escape(),
+    body('part_desc').trim().escape(),
+    body('part_price').trim().escape(),
+    body('part_brand').trim().escape(),
+    body('part_quan').trim().escape()
+], (req,res) => {
     
     console.log("Creating Part")
     
@@ -65,7 +77,7 @@ router.post('/create_part', (req,res) => {
     
     const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand) values (?,?,?,?,?)"
     
-    getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(results)
