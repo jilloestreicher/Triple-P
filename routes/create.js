@@ -98,4 +98,35 @@ router.post('/create_part', [
     })
 })
 
+router.post('/create_account', [
+    body('account_first').trim().escape(),
+    body('account_last').trim().escape(),
+    body('account_email').trim().escape(),
+    body('account_password').trim().escape()
+], (req,res) => {
+    
+    const accountFirst = req.body.account_first
+    const accountLast = req.body.account_last
+    const accountEmail = req.body.account_email
+    const accountPass = req.body.account_pass
+    const elist = true
+    
+    const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList) values (?,?,?,?,?)"
+    
+    helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, accountPass, elist], (err, results, fields) => {
+        if(err) {
+            console.log("Insert failed")
+            console.log(results)
+            console.log(accountFirst)
+            console.log(accountLast)
+            console.log(accountEmail)
+            console.log(accountPass)
+            res.sendStatus(500)
+            return
+        }
+        
+        res.render('account-created.html')
+    })
+})
+
 module.exports = router
