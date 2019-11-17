@@ -52,6 +52,7 @@ router.post('/create_listing', [
             console.log(truckColor)
             console.log(email)
             res.sendStatus(500)
+            res.render('/Front End/error-500.html')
             return
         }
         
@@ -87,6 +88,7 @@ router.post('/create_part', [
             console.log(partBrand)
             console.log(partQuan)
             res.sendStatus(500)
+            res.render('/Front End/error-500.html')
             return
         }
         fs.writeFile('../items.json', results, function(err){
@@ -94,7 +96,7 @@ router.post('/create_part', [
               console.log('Saved');
                          })
         
-        res.end()
+        res.render('/Front End/list-sucess.html')
     })
 })
 
@@ -122,10 +124,11 @@ router.post('/create_account', [
             console.log(accountEmail)
             console.log(accountPass)
             res.sendStatus(500)
+            res.render('/Front End/error-500.html')
             return
         }
         
-        res.render('account-created.html')
+        res.render('/Front End/account-created.html')
     })
 })
 

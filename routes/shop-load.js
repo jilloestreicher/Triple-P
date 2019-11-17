@@ -25,7 +25,7 @@ router.get('/index', function(req,res){
        if(err){
         console.log("Failed to query: " +err)
         res.sendStatus(500);
-        res.end()
+        res.render('/Front End/error-500.html')
         return
        }
         
@@ -54,7 +54,7 @@ fs.readFile('./items.json', function(error, data){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -88,7 +88,7 @@ router.get('/shop/:offset', function(req,res){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -126,7 +126,7 @@ fs.readFile('./items.json', function(error, data){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -159,7 +159,7 @@ fs.readFile('./items.json', function(error, data){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -188,7 +188,7 @@ router.get('/manage-users', function(req,res){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -224,7 +224,7 @@ router.get('/parts/:id', (req, res) =>{
         if(err){
             console.log("Failed to query: " +err)
             res.sendStatus(500);
-            res.end()
+            res.render('/Front End/error-500.html')
             return
         }
         console.log("Sucessfully queried parts")
@@ -294,7 +294,7 @@ router.get('/trucks/:id', (req, res) =>{
         if(err){
             console.log("Failed to query: " +err)
             res.sendStatus(500);
-            res.end()
+            res.render('/Front End/error-500.html')
             return
         }
         console.log("Sucessfully queried trucks")
@@ -327,7 +327,7 @@ router.get('/trailers/:id', (req, res) =>{
         if(err){
             console.log("Failed to query: " +err)
             res.sendStatus(500);
-            res.end()
+            res.render('/Front End/error-500.html')
             return
         }
         console.log("Sucessfully queried trailers")

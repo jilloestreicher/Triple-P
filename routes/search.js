@@ -27,7 +27,7 @@ router.post('/search', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', results, function(err){
@@ -55,7 +55,7 @@ router.post('/searchTrailers', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', results, function(err){
@@ -81,7 +81,7 @@ router.post('/searchTrucks', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', results, function(err){
@@ -115,7 +115,7 @@ router.post('/sort', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -150,7 +150,7 @@ router.post('/sortTrucks', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -188,7 +188,7 @@ router.post('/sortTrailers', (req,res) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.end()
+              res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
