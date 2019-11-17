@@ -74,7 +74,7 @@
         <!-- modernizr js
         ============================================ -->
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="store.js" defer</script>
+        <script src="store.js" defer></script>
     </head>
     <body onload="populateCart()">
         <!-- header area start -->
@@ -171,7 +171,7 @@
                                                 <div class="mega-menu">
                                                     <span>
                                                         <a href="/../shop">Parts</a>
-                                                        <a href="cart.html">View Cart</a>
+                                                        <a href="/../cart">View Cart</a>
                                                         <a href="checkout.html">Checkout</a>
                                                         <a href="create-account.html">Create Account</a>
                                                     </span>
@@ -248,30 +248,30 @@
                             <!-- section title start -->
                             <!-- client information form -->
                             <div class="client-address-form">
-                                <form action="#">
+                                <form action="/create_account" method="POST">
                                     <div>
                                         <label for="firstname">First Name:</label>
-                                        <input type="text" id="firstname" name="firstname">
+                                        <input type="text" id="firstname" name="account_first">
                                     </div>
                                     <div>
                                         <label for="lastname">Last Name:</label>
-                                        <input type="text" id="lastname" name="lastname">
+                                        <input type="text" id="lastname" name="account_last">
                                     </div>
                                     <div>
                                         <label for="username">Email Address:</label>
-                                        <input type="text" id="username" name="username">
+                                        <input type="text" id="username" name="account_email">
                                     </div>
 
                                     <div>
                                         <label for="pass">Password (8 characters minimum):</label>
-                                        <input type="password" id="pass" name="password" minlength="8" required>
+                                        <input type="password" id="pass" name="account_pass" minlength="8" required>
                                     </div>
                                     <div>
                                         <label for="pass">Confirm Password</label>
                                         <input type="password" id="pass" name="password" minlength="8" required>
                                     </div>
 
-                                    <input type="submit" value="Create Account">
+                                    <button type="submit" value="account">Create Account</button>
                                 </form>
                             </div>
                         </div>
