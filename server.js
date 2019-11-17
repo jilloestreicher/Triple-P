@@ -18,8 +18,13 @@ console.log(stripePublicKey)
 
 //Require necessary node modules
 
+const helper = require ('./helper.js');
+var helper1 = new helper();
 const express = require('express')
 const mysql = require('mysql')
+const { check, validationResult } = require('express-validator');
+const { body } = require('express-validator');
+const { sanitizeBody } = require('express-validator');
 const bodyParser = require('body-parser')
 const app = express()
 const fs = require("fs")
@@ -59,18 +64,6 @@ app.use(session({
     }
 }));
 
-//Connect to DB
-
-function getConnection(){
-    return mysql.createConnection({
-      host:'localhost',
-      user:'root',
-      password:'Capping2',
-      database:'acsas'
-    })
-}
-
-
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
     
@@ -108,14 +101,17 @@ app.post('/purchase', function(req, res) {
   })
 })
 
-app.post('/loginCheck', function(req, res) {
+app.post('/loginCheck', [
+    body('username').trim().escape(),
+    body('password').trim().escape()
+], function(req, res) {
     var username = req.body.username
     var password = req.body.password
     var loggedOn
 
     var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
 
-    getConnection().query(queryString, [username, password], (err,results, field) =>{
+    helper1.getConnection().query(queryString, [username, password], (err,results, field) =>{
         if(err){
           console.log("Failed to query: " +err)
           console.log(results)
@@ -216,8 +212,8 @@ app.post('/loginCheck', function(req, res) {
             const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
             const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
 
-            getConnection().query(itemString, (err,result,fields) =>{
-                getConnection().query(truckString, (err,trucks,fields) =>{
+            helper1.getConnection().query(itemString, (err,result,fields) =>{
+                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
                     res.render('index.ejs', {
                         items: result,
                         listings: trucks
@@ -257,8 +253,8 @@ app.post('/logout', function(req, res) {
             const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
             const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
 
-            getConnection().query(itemString, (err,result,fields) =>{
-                getConnection().query(truckString, (err,trucks,fields) =>{
+            helper1.getConnection().query(itemString, (err,result,fields) =>{
+                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
                     res.render('index.ejs', {
                         items: result,
                         listings: trucks
