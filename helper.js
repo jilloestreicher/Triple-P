@@ -5,7 +5,7 @@ module.exports = function(){
         return mysql.createConnection({
           host:'localhost',
           user:'root',
-          password:'cyberWcap!',
+          password:'Capping2',
           database:'acsas'
         })
     }
