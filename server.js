@@ -120,7 +120,10 @@ app.post('/loginCheck', [
         if(results.length === 0 || results == null){
             console.log("Failed Login")
             attempts --;
-            //if(attempts == 0)
+            if(attempts == 0){
+                console.log("3 failed attempts");
+                window.close();
+            }
 
         }else{
             console.log("Successful Login");
