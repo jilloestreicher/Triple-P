@@ -716,14 +716,14 @@ p.error {
 /*========================================*/
 
 .slider-caption {
-    padding-top: 200px;
+    padding-top: 100px;
 }
 .layer-1-1 h2.title-1 ,
 .layer-1-2 h2.title-2 ,
 .layer-2-1 h2.title-1 ,
 .layer-2-2 h2.title-2 {
     color: #fff;
-    font-size: 72px;
+    font-size: 65px;
     font-weight: 900;
     
     margin-bottom: 15px;
