@@ -79,6 +79,14 @@
         <script>
           var stripePublicKey = '<%= stripePublicKey %>'
         </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+				<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152418607-1"></script>
+				<script>
+  				window.dataLayer = window.dataLayer || [];
+  				function gtag(){dataLayer.push(arguments);}
+  				gtag('js', new Date());
+					gtag('config', 'UA-152418607-1');
+				</script>
     </head>
     <body onload= "postListingPrice()">
         <!-- header area start -->
@@ -90,7 +98,7 @@
                             <!-- welcome message start -->
                             <div class="welcome-msg">
                                 <ul>
-                                    <li> <p>  Contact: (520) 223-3072</p></li>
+                                    <li> <p>Contact: (520) 223-3072</p></li>
                                     <li> <p>acsassalesllc@hotmail.com</p></li>
                                     <li> <p> <a href="my-account.html">My Account</a></p></li>
                                 </ul>
