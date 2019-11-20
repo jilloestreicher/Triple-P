@@ -228,16 +228,10 @@
                     <div class="col-md-12">
                         <!-- page title start -->
                         <div class="page-title">
-                            <h2> View Part </h2>
+                            <h2> Edit Part </h2>
                         </div>
                         <!-- page title end -->
 				        <!-- page title menu start -->
-                        <div class="page-title-menu">
-                   	        <ul>
-                        		<li><a href="index">Home</a> <span> / </span> </li>
-                        		<li><a href="../Front End/shop-details.html">View Part</a></li>
-                            </ul>
-                        </div>
                	        <!-- page title menu end -->
                     </div>
                 </div>
@@ -250,42 +244,44 @@
                 <div class="row">
                     <div class="single-list-shop">
                         <% items.forEach(function(item){ %>
+                        <form action="/edit_part" method="POST">
                             <div class="col-md-5 col-sm-6">
                                 <!-- product img start -->
                                 <div class="product-img">
-                                    <a href="/parts/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" alt=""></a>
+                                    <a href="/editPart/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" alt=""></a>
                                 </div>
                                 <!-- product img end -->
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="single-product">
                                     <div class="product-name">
-                                        <a ><%= item.name%></a>
+                                        <input type="text" name="part_name" placeholder="<%= item.name%>" value="<%= item.name%>">
                                     </div>
                                     <div class="price-rating">
                                         <div class="product-price pull-left">
-                                            <p>$<%= item.price / 100.0%></p>
+                                            <input type="text" name="part_price" placeholder="<%= item.price / 100.0%>" value="<%= item.price / 100.0%>">
                                         </div>
                                     </div>
                                     <div class="product-text">
-                                        <p><%= item.blah%></p>
-                                        <p> Brand:<%= item.brand%></p>
+                                        <input type="text" name="part_desc" placeholder="<%= item.blah%>" value="<%= item.blah%>">
+                                        <input type="text" name="part_brand" placeholder="<%= item.brand%>" value="<%= item.brand%>">
                                     </div>
                                     <!-- cart plus minus start -->
                                     <div class="cart-plus-minus">
                                         <label>Quantity: </label>
-                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                                        <input type="text" name="part_quan" placeholder="<%= item.quan%>" value="<%= item.quan%>">
                                     </div>
                                     <!-- cart plus minus end -->
                                     <!-- product action start -->
                                     <div class="product-action">
                                         <div class="action-btn">
-                                            <button class="text-button action-single-btn"> Add to Cart</button>
+                                            <button class="text-button action-single-btn" type="submit"> Edit Part</button>
                                         </div>
                                     </div>
                                     <!-- product action end -->
                                 </div>
                             </div>
+                            </form>
                         <% }) %>
                     </div>
                 </div>

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html class="no-js" lang="zxx">
     <head>
         <!-- Basic page needs
         ============================================ -->
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Shop Details || ACSAS </title>
+        <title>Shop || ACSAS </title>
         <meta name="description" content="">
 
         <!-- Mobile specific metas
@@ -65,7 +65,7 @@
 
         <!-- style css
         ============================================ -->
-        <link rel="stylesheet" href="../Front End/style.css">
+        <link rel="stylesheet" href="../Front End/style.css"/>
 
         <!-- responsive css
         ============================================ -->
@@ -74,9 +74,13 @@
         <!-- modernizr js
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
-	<script src="../static/store.js" defer></script>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+        <script src="https://checkout.stripe.com/checkout.js" defer></script>
+        <script src="store.js" defer></script>
+        <script>
+            var stripePublicKey = '<%= stripePublicKey %>'
+        </script>
+		
+				<!-- Global site tag (gtag.js) - Google Analytics -->
 				<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152418607-1"></script>
 				<script>
   				window.dataLayer = window.dataLayer || [];
@@ -97,38 +101,24 @@
                                 <ul>
                                     <li> <p>  Contact: (520) 223-3072</p></li>
                                     <li> <p>acsassalesllc@hotmail.com</p></li>
-				    <li> <p> <a href="../Front End/login.html">login</a></p></li>
+                                    <li> <p> <a href="../Front End/login.html">login</a></p></li>
                                 </ul>
                             </div>
                             <!-- welcome message end -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- Search Bar -->
-                            <div class="header-top-menu">
-                                <form action="/search" method="post">
-                                    <input type="text" placeholder="Search.." name="searchBar">
-                                    <button type="submit" value="search">Go</button>
-                                </form>
-                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="header-top-menu">
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
-                                        <li> 
-                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(1)</a>
+                                        <li> <input type="text" placeholder="Search..">
+                                            <a href="#"> <i class="fa fa-shopping-cart"></i><span class="cart-quantity">(0)</span></a>
                                             <div class="cart-items">
                                                 <ul>
-                                                    <!-- single cart item start -->
-                                                   
-                                                    <!-- single cart item end -->
-                                                    
                                                     <li>
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
                                                                 <h3>subtotal  <span class="cart-total-price">$0</span></h3>
-                                                            </div>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -138,7 +128,7 @@
                                                                 <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="checkout.html">checkout</a>
+                                                                <a href="../public/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
@@ -146,6 +136,7 @@
                                             </div>
                                         </li>
                                     </ul>
+
                                 </div>
                                 <!-- cart menu end -->
                             </div>
@@ -161,7 +152,7 @@
                             <div class="col-md-3 col-sm-2">
                                 <!-- logo start -->
                                 <div class="logo">
-                                    <a href="index">
+                                    <a href="index.html">
                                         <img src="../Front End/img/logo.png" alt="" height="100" width="200">
                                     </a>
                                 </div>
@@ -173,7 +164,7 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index">Home</a></li>
+                                            <li class="has-sub"><a href="index.html">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="../Front End/about-us.html">About us</a></li>
                                             <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
@@ -228,69 +219,180 @@
                     <div class="col-md-12">
                         <!-- page title start -->
                         <div class="page-title">
-                            <h2> View Part </h2>
+                            <h2>Parts</h2>
                         </div>
                         <!-- page title end -->
-				        <!-- page title menu start -->
+                        <!-- page title menu start -->
                         <div class="page-title-menu">
-                   	        <ul>
-                        		<li><a href="index">Home</a> <span> / </span> </li>
-                        		<li><a href="../Front End/shop-details.html">View Part</a></li>
+                            <ul>
+                                <li><a href="index">Home</a> <span> / </span> </li>
+                                <li><a href="shop">Parts</a></li>
                             </ul>
                         </div>
-               	        <!-- page title menu end -->
+                        <!-- page title menu end -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- page title area end -->
-        <!-- shop details area start -->
-        <div class="shop-details section-padding">
+        <!-- shop area start -->
+        <div class="shop-area pages section-padding">
             <div class="container">
                 <div class="row">
-                    <div class="single-list-shop">
-                        <% items.forEach(function(item){ %>
-                            <div class="col-md-5 col-sm-6">
-                                <!-- product img start -->
-                                <div class="product-img">
-                                    <a href="/parts/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" alt=""></a>
-                                </div>
-                                <!-- product img end -->
+                    <div class="col-md-12">
+                        <form action="/search" method="post">
+                                <input type="text" placeholder="Search.." name="searchBar">
+                                <button type="submit" value="search">Go</button>
+                            </form>
+                        <!-- shop bar start -->
+                        <div class="shop-bar">
+                            <!-- shop tab bar start -->
+                            <div class="shop-nav width-33 pull-left">
+                                <ul class="shop-navigation" role="tablist">
+                                    <li role="presentation" class="active gird">
+                                        <a href="#gird" aria-controls="gird" role="tab" data-toggle="tab">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="list">
+                                        <a href="#list" aria-controls="list" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bars"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="single-product">
-                                    <div class="product-name">
-                                        <a ><%= item.name%></a>
+                            <!-- shop tab bar end -->
+                            <!-- shop sort start -->
+                            <div class="sort-by width-33 pull-left text-center">
+                                <label>Sort By: </label>
+                                <form action="/sort" method="post">
+                                <select name="sortlist">
+                                    <option value="name" selected >Name</option>
+                                    <option value="new">Newest</option>
+                                    <option value="price">Price</option>
+                                </select>
+                                <button type='submit'>Sort</button>
+                                </form>
+                            </div>
+                            <!-- shop sort end -->
+                            <!-- shop show product start -->
+                            <div class="limit-product width-33 pull-left text-right">
+                                <label>Show: </label>
+                                <select name="show">
+                                    <option value="#" selected>9</option>
+                                    <option value="#">12</option>
+                                    <option value="#">24</option>
+                                    <option value="#">36</option>
+                                </select>
+                            </div>
+                            <!-- shop show product end -->
+                        </div>
+                        <!-- shop bar end -->
+                    </div>
+                </div>
+                <!-- jsonjson -->
+                <div class="row">
+                    <!-- shop tab content start -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="list">
+                            <!-- list shop start -->
+                            <div class="list-shop">
+                                <!-- single list shop start -->
+                                <% items.forEach(function(item){ %>
+                                <div class="single-list-shop" data-item-id="<%= item.id %>">
+                                    <div class="col-md-3 col-sm-5">
+                                        <!-- product img start -->
+                                        <div class="product-img">
+                                            <a href="/editPart/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:250px;height:250px;" class="shop-item-image"></a>
+                                        </div>
+                                        <!-- product img end -->
                                     </div>
-                                    <div class="price-rating">
-                                        <div class="product-price pull-left">
-                                            <p>$<%= item.price / 100.0%></p>
+                                    <div class="col-md-9 col-sm-7">
+                                        <div class="single-product">
+                                            <div class="product-name">
+                                                <a href="/editPart/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
+                                            </div>
+                                           
+                                            <div class="product-text">
+                                                <p><%= item.blah %></p>
+                                            </div>
+                                            <!-- cart plus minus start -->
+                                            <div class="contact-info">
+                                                <label class="shop-item-price">$<%= item.price / 100 %></label>
+                                            </div>
+                                            <!-- cart plus minus end -->
+                                            
+                                            <a href="/editPart/<%= item.id%>">Edit</a>
+                                            <a href="/deletePart/<%= item.id%>">Delete</a>
                                         </div>
                                     </div>
-                                    <div class="product-text">
-                                        <p><%= item.blah%></p>
-                                        <p> Brand:<%= item.brand%></p>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <!-- list shop end -->
+                        </div>
+                    </div>
+                    <!-- shop tab content end -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- toolbar start -->
+                        <div class="toolbar-bottom">
+                            <ul>
+                                <li><a href="#"> <i class="fa fa-angle-left"></i> </a></li>
+                                <% for(i=10; i < parts.length+10; i=i+10){ %>
+                                <li class="current"><a href="/shop/<% i/10 %>"><% i/10 %></a></li>
+                                <% } %>
+                                <li><a href="#"> <i class="fa fa-angle-right"></i> </a></li>
+                            </ul>
+                        </div>
+                        <!-- toolbar end -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TEMPORARY CODE FOR TESTING STRIPE API CHECKOUT -->
+            <section class="container content-section">
+                                     <h2 class="section-header">CART</h2>
+                                     <div class="cart-row">
+                                         <span class="cart-item cart-header cart-column">ITEM</span>
+                                         <span class="cart-price cart-header cart-column">PRICE</span>
+                                         <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+                                     </div>
+                                     <div class="cart-items">
+                                     </div>
+                                     <div class="cart-total">
+                                         <strong class="cart-total-title">Total</strong>
+                                         <span class="cart-total-price">$0</span>
+                                     </div>
+                                     <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+                                 </section>
+            <!-- TEMPORARY CODE END, REMOVE WHEN CART SESSIONS ARE WORKING -->
+            
+        </div>
+        <!-- shop area end -->
+        <!-- quick book area start -->
+        <div class="quick-book-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="book-now">
+                            <div class="display-table">
+                                <div class="display-table-cell">
+                                   <!-- book now content start -->
+                                    <div class="book-now-title">
+                                        <h2>HAVE A TRUCK YOU WANT TO SELL?</h2>
+                                        <a href="#" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i>LIST IT NOW</a>
                                     </div>
-                                    <!-- cart plus minus start -->
-                                    <div class="cart-plus-minus">
-                                        <label>Quantity: </label>
-                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                    </div>
-                                    <!-- cart plus minus end -->
-                                    <!-- product action start -->
-                                    <div class="product-action">
-                                        <div class="action-btn">
-                                            <button class="text-button action-single-btn"> Add to Cart</button>
-                                        </div>
-                                    </div>
-                                    <!-- product action end -->
+                                    <!-- book now content end -->
                                 </div>
                             </div>
-                        <% }) %>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- quick book area end -->
         <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
@@ -300,8 +402,9 @@
                         <div class="single-footer-top">
                             <div class="footer-about-us">
                                 <!-- address start -->
+
                                 <div class="footer-address">
-                                    <p> <span> ADDRESS: </span>Rio Rico Arizona </p>
+                                    <p> <span> ADDRESS: </span>Rico Rico Arizona </p>
                                     <p>USA 85648</p>
                                 </div>
                                 <!-- address end -->
@@ -326,17 +429,17 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="../Front End/about-us.html">About Us</a></li>
-                                    <li><a href="shop">Shop Parts</a></li>
-                                    <li><a href="trucks">Shop Trucks</a></li>
-                                    <li><a href="trailers">Shop Trailers</a></li>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Shop Parts</a></li>
+                                    <li><a href="#">Shop Trucks & Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
                         </div>
                         <!-- single footer end -->
                     </div>
+
                 </div>
             </div>
         </div>
@@ -349,8 +452,11 @@
                         <!-- footer social start -->
                         <div class="footer-social">
                             <ul>
-                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
+                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
+                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
+                                <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
                             </ul>
                         </div>
                         <!-- footer social end -->
@@ -378,7 +484,7 @@
         <!-- ============== All JS ================ -->
         <!-- jquery js
         =========================================== -->
-        <script src="../Front End/js/vendor/jquery-1.12.0.min.js"></script>
+        <script src="../Front End//js/vendor/jquery-1.12.0.min.js"></script>
 
         <!-- bootstrap js
         =========================================== -->
