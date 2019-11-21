@@ -235,7 +235,7 @@
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="manageusers">Manage Users</a></li>
+                                <li><a href="manage-users">Manage Users</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -263,17 +263,19 @@
                                 <!-- Populate Users -->
                                 
                                 <% items.forEach(function(item){ %>
-                                    <div class="single-list-shop" data-item-id="<%= item.id %>">
+                                    <div class="single-list-shop" data-item-id="<%= item.email %>">
                                         <div class="col-md-9 col-sm-7">
                                             <div class="single-product">
                                                 <div class="product-name">
-                                                    <a href="#"><%= item.first %> <%= item.last %> </a>
+                                                    <p><%= item.first %> <%= item.last %> </p>
                                                 </div>
+                                                <form action="/remove_user" method="post">
                                                 <div class="product-text">
-                                                    <p>Email: <%= item.email %></p>
+                                                    <input readonly value="<%= item.email %>" name="user_id">
                                                     <p>Phone number: <%= item.phone %></p>
-                                                    <a href="">Delete</a>
+                                                    <button type="submit">Delete</button>
                                                 </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

@@ -299,6 +299,7 @@
                             <div class="list-shop">
                                 <!-- single list shop start -->
                                 <% items.forEach(function(item){ %>
+                                <form action="/delete_part" method="post">
                                 <div class="single-list-shop" data-item-id="<%= item.id %>">
                                     <div class="col-md-3 col-sm-5">
                                         <!-- product img start -->
@@ -311,6 +312,7 @@
                                         <div class="single-product">
                                             <div class="product-name">
                                                 <a href="/editPart/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
+                                                <input readonly value="<%= item.id %>" name="part_id">
                                             </div>
                                            
                                             <div class="product-text">
@@ -323,10 +325,11 @@
                                             <!-- cart plus minus end -->
                                             
                                             <a href="/editPart/<%= item.id%>">Edit</a>
-                                            <a href="/deletePart/<%= item.id%>">Delete</a>
+                                            <button type="submit">Delete</button>
                                         </div>
                                     </div>
                                 </div>
+                                    </form>
                                 <% }) %>
                             </div>
                             <!-- list shop end -->
@@ -340,9 +343,11 @@
                         <div class="toolbar-bottom">
                             <ul>
                                 <li><a href="#"> <i class="fa fa-angle-left"></i> </a></li>
-                                <% for(i=10; i < parts.length+10; i=i+10){ %>
-                                <li class="current"><a href="/shop/<% i/10 %>"><% i/10 %></a></li>
-                                <% } %>
+                                <li class="current"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
                                 <li><a href="#"> <i class="fa fa-angle-right"></i> </a></li>
                             </ul>
                         </div>

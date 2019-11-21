@@ -301,6 +301,7 @@
                             <div class="list-shop">
                                 <!-- single list shop start -->
                                 <% items.forEach(function(item){ %>
+                                <form action="/delete_truck" method="post">
                                 <div class="single-list-shop" data-item-id="<%= item.id %>">
                                     <div class="col-md-3 col-sm-5">
                                         <!-- product img start -->
@@ -317,6 +318,7 @@
                                             
                                             <div class="price-rating">
                                                 <div class="truck-details pull-left">
+                                                    <input readonly value="<%= item.id %>" name="truck_id">
                                                     <p><b>Brand</b>: <%= item.brand %> &nbsp;
                                                         <b>Fuel Type</b>: <%= item.fuel %> &nbsp;
                                                         <b>Drive</b>: <%= item.drive %></p>
@@ -330,10 +332,11 @@
                                                 <label class="shop-item-price"><%= item.email %></label>
                                             </div>
                                             <a href="/editTruck/<%= item.id%>">Edit</a>
-                                            <a href="/deleteTruck/<%= item.id%>">Delete</a>
+                                            <button type="submit">Delete</button>
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                                 <% }) %>
                             </div>
                             <!-- list shop end -->

@@ -244,7 +244,7 @@
                 <div class="row">
                     <div class="single-list-shop">
                         <% items.forEach(function(item){ %>
-                        <form action="/edit_part" method="POST">
+                        <form action="/edit_Part" method="POST">
                             <div class="col-md-5 col-sm-6">
                                 <!-- product img start -->
                                 <div class="product-img">
@@ -257,6 +257,7 @@
                                     <div class="product-name">
                                         <input type="text" name="part_name" placeholder="<%= item.name%>" value="<%= item.name%>">
                                     </div>
+                                    <input type="text" name="part_id" placeholder="<%= item.id%>" value="<%= item.id%>">
                                     <div class="price-rating">
                                         <div class="product-price pull-left">
                                             <input type="text" name="part_price" placeholder="<%= item.price / 100.0%>" value="<%= item.price / 100.0%>">
