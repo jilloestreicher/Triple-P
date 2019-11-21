@@ -54,7 +54,7 @@ fs.readFile('./items.json', function(error, data){
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              //res.render('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
