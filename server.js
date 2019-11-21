@@ -48,6 +48,8 @@ const loadRouter = require('./routes/shop-load.js')
 app.use(loadRouter)
 const createRouter = require('./routes/create.js')
 app.use(createRouter)
+const adminRouter = require('./routes/admin.js')
+app.use(adminRouter)
 
 //Define number of login attempts allowed
 
