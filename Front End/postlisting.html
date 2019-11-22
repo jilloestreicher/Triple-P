@@ -74,7 +74,7 @@
         <!-- modernizr js
         ============================================ -->
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="store.js" defer</script>
+        <script src="../static/store.js" defer></script>
     </head>
     <body onload="allOnloads()">
         <!-- header area start -->
@@ -248,7 +248,7 @@
                             <!-- section title start -->
                             <!-- client address form -->
                             <div class="client-address-form">
-                                <form action="/create_listing" method="POST">
+                                <form action="/create_listing" enctype="multipart/form-data" method="POST">
                                     <!-- input title -->
                                     <p>Title</p>
                                     <input type="text" name="truck_name">
@@ -267,9 +267,11 @@
                                     <!-- input color -->
                                     <p>Color</p>
                                     <input type="text" name="truck_color">
+                                    <p>Description</p>
+                                    <input type="text" name="truck_desc">
                                     <!-- add pictures -->
-                                    <p>Pictures</p>
-                                    <input type="text">
+                                    <p>Picture</p>
+                                    <input type="file" accept="image/jpg" name="file">
                                     <button type="submit" value="list">Post listing</button>
                                 </form>
                             </div>

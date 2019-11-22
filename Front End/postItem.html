@@ -248,7 +248,7 @@
                             <!-- section title start -->
                             <!-- post item form -->
                             <div class="client-address-form">
-                                <form action="/create_part" method="POST">
+                                <form action="/create_part" enctype="multipart/form-data" method="POST">
                                     <!-- input title -->
                                     <p>Name</p>
                                     <input type="text" name="part_name">
@@ -265,8 +265,8 @@
                                     <p>Brand</p>
                                     <input type="text" name="part_brand">
                                     <!-- add pictures -->
-                                    <p>Pictures</p>
-                                    <input type="text">
+                                    <p>Picture</p>
+                                    <input type="file" accept="image/jpg" name="file">
                                     <button type="submit" value="part">Post part</button>
                                 </form>
                             </div>
