@@ -32,15 +32,7 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 
 
-router.post('/create_listing', [
-    body('truck_name').trim(),
-    body('truck_brand').trim(),
-    body('truck_km').trim(),
-    body('truck_fuel').trim(),
-    body('truck_drive').trim(),
-    body('truck_color').trim()
-],
- (req,res) => {
+router.post('/create_listing', upload.single("file"), (req,res) => {
     
     console.log("Creating Listing")
     
@@ -50,12 +42,15 @@ router.post('/create_listing', [
     const truckFuel = req.body.truck_fuel
     const truckDrive = req.body.truck_drive
     const truckColor = req.body.truck_color
+    const truckDesc = req.body.truck_desc
+    var picture = req.file.filename
+    picture = picture.slice(0,-4)
     
     const email = "example2@gmail.com"
     
-    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress) values (?,?,?,?,?,?,?)"
+    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture) values (?,?,?,?,?,?,?,?,?)"
     
-    helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(truckName)
@@ -65,8 +60,10 @@ router.post('/create_listing', [
             console.log(truckDrive)
             console.log(truckColor)
             console.log(email)
-            res.sendStatus(500)
-            res.render('/Front End/error-500.html')
+            console.log(truckDesc)
+            console.log(picture)
+            //res.sendStatus(500)
+            res.redirect('/Front End/error-500.html')
             return
         }
         
@@ -116,13 +113,7 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     
 })
 
-router.post('/create_part', [
-    body('part_name').trim().escape(),
-    body('part_desc').trim().escape(),
-    body('part_price').trim().escape(),
-    body('part_brand').trim().escape(),
-    body('part_quan').trim().escape()
-], (req,res) => {
+router.post('/create_part', upload.single("file"),  (req,res) => {
     
     console.log("Creating Part")
     
@@ -131,10 +122,12 @@ router.post('/create_part', [
     const partPrice = req.body.part_price * 100
     const partBrand = req.body.part_brand
     const partQuan = req.body.part_quan
+    var picture = req.file.filename
+    picture = picture.slice(0,-4)
     
-    const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand) values (?,?,?,?,?)"
+    const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand, Picture) values (?,?,?,?,?,?)"
     
-    helper1.getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan, picture], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(results)
@@ -143,8 +136,9 @@ router.post('/create_part', [
             console.log(partPrice)
             console.log(partBrand)
             console.log(partQuan)
-            res.sendStatus(500)
-            res.render('/Front End/error-500.html')
+            console.log(picture)
+            //res.sendStatus(500)
+            res.redirect('/Front End/error-500.html')
             return
         }
         fs.writeFile('../items.json', results, function(err){
@@ -152,7 +146,7 @@ router.post('/create_part', [
               console.log('Saved');
                          })
         
-        res.render('/Front End/list-sucess.html')
+        res.redirect('/Front End/list-sucess.html')
     })
 })
 
