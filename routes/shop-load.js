@@ -239,26 +239,34 @@ router.get('/parts/:id', (req, res) =>{
 })
 
 router.get('/order/:id', (req,res) =>{
-    const orderId = req.params.id.trim().escape()
+    const orderId = req.params.id
     const queryString = "SELECT OrderId as id, orderedParts.PartId as part, parts.PartId as partIn OrderedQuantity as quan, PriceUSD as price, ItemName as name, Picture as imgName from orderedParts, parts WHERE orderedParts.PartId = ? AND orderedParts.PartId = parts.PartId"
-    
-    helper1.getConnection().query(queryString, [orderId], (err, result, fields) => {
-        const billString = "SELECT OrderId as id, orders.PaymentId = pay, paymentdetails.PaymentId as payment, BillingAddress as address, BillingFirstName as first, BillingLastName as last, BillingCountry as country, BillingCity as city, BillingState as state, BillingPhone as phone, EmailAddress as email from orders, paymentdetails WHERE OrderId = ? AND paymentdetails.PaymentId = orders.PaymentId"
-        
-        helper1.getConnection().query(billString, [orderId], (err, billing, fields) => {
-            const shipString = "SELECT OrderId as id, orders.ShippingId = ship, shippingdetails.ShippingId as shipping, ShippingAddress as address, ShippingFirstName as first, ShippingLastName as last, ShippingCountry as country, ShippingCity as city, ShippingState as state, ShippingPhone as phone, EmailAddress as email from orders, shippingdetails WHERE OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId"
-            
-            helper1.getConnection().query(queryString, [orderId], (err, shipping, fields) => {
-                res.render('order-template.ejs', {
-                    items: result,
-                    bill: billing,
-                    ship: shipping
+    const queryUser = "SELECT EmailAddress as email FROM orders WHERE OrderId = ?"
+
+    //if the user is not logged in, it will direct them to the login page
+    if(!req.session || !req.session.username) {
+        res.redirect('../login.html');
+    }else{
+        if(req.session.username === queryUser){
+            helper1.getConnection().query(queryString, [orderId], (err, result, fields) => {
+                const billString = "SELECT OrderId as id, orders.PaymentId = pay, paymentdetails.PaymentId as payment, BillingAddress as address, BillingFirstName as first, BillingLastName as last, BillingCountry as country, BillingCity as city, BillingState as state, BillingPhone as phone, EmailAddress as email from orders, paymentdetails WHERE OrderId = ? AND paymentdetails.PaymentId = orders.PaymentId"
+
+                helper1.getConnection().query(billString, [orderId], (err, billing, fields) => {
+                    const shipString = "SELECT OrderId as id, orders.ShippingId = ship, shippingdetails.ShippingId as shipping, ShippingAddress as address, ShippingFirstName as first, ShippingLastName as last, ShippingCountry as country, ShippingCity as city, ShippingState as state, ShippingPhone as phone, EmailAddress as email from orders, shippingdetails WHERE OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId"
+
+                    helper1.getConnection().query(queryString, [orderId], (err, shipping, fields) => {
+                        res.render('order-template.ejs', {
+                            items: result,
+                            bill: billing,
+                            ship: shipping
+                        })
+                    })
                 })
             })
-        })
-        
-        
-    })
+        }else{
+             res.redirect('../error-500.html');
+        }
+    }
 })
 
 router.get('/orderHistory/:accounts', (req, res) => {
