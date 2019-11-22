@@ -11,6 +11,20 @@ const mysql = require('mysql')
 const bodyParser = require('body-parser')
 const app = express()
 const fs = require("fs")
+const multer = require("multer");
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./Front End/img/product")
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+    }
+});
+
+const upload = multer({
+    storage: storage
+})
 
 const router = express.Router()
 
@@ -19,12 +33,12 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 
 router.post('/create_listing', [
-    body('truck_name').trim().escape(),
-    body('truck_brand').trim().escape(),
-    body('truck_km').trim().escape(),
-    body('truck_fuel').trim().escape(),
-    body('truck_drive').trim().escape(),
-    body('truck_color').trim().escape()
+    body('truck_name').trim(),
+    body('truck_brand').trim(),
+    body('truck_km').trim(),
+    body('truck_fuel').trim(),
+    body('truck_drive').trim(),
+    body('truck_color').trim()
 ],
  (req,res) => {
     
@@ -58,6 +72,48 @@ router.post('/create_listing', [
         
         res.end()
     })
+})
+
+router.post('/trailer_listing', upload.single("file"), (req,res) => {
+    
+    const trailerName = req.body.trailer_name
+    const trailerBrand = req.body.trailer_brand
+    const trailerLength = req.body.trailer_length
+    const trailerWidth = req.body.trailer_width
+    const trailerDesc = req.body.trailer_desc
+    const trailerColor = req.body.trailer_color
+    var picture = req.file.filename
+    picture = picture.slice(0,-4)
+    
+    //FIX TO PULL FROM SESSION
+    const email = "example2@gmail.com"
+    
+    const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture) values (?,?,?,?,?,?,?,?)"
+    
+    helper1.getConnection().query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture], (err,results,fields) => {
+        if(err) {
+            console.log("Insert failed")
+            console.log(trailerName)
+            console.log(trailerBrand)
+            console.log(trailerLength)
+            console.log(trailerWidth)
+            console.log(trailerDesc)
+            console.log(trailerColor)
+            console.log(email)
+            console.log(picture)
+            console.log(err)
+            res.redirect('/Front End/error-500.html')
+            return
+        }
+        else{
+            if(req.file) {
+                res.json(req.file);
+            }
+        }
+        
+        res.end()
+    })
+    
 })
 
 router.post('/create_part', [
