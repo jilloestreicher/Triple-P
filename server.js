@@ -61,6 +61,7 @@ app.use(session({
     secret: 'logged on',
     resave: true,
     saveUninitialized: false,
+    maxAge: Date.now() + 1800000,
     cookie: {
         expires: 1800000
     }
