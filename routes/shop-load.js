@@ -29,7 +29,7 @@ router.get('/index', function(req,res){
         return
        }
         
-       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName from trucks;"
         
        connection.query(truckString, (err,trucks,fields) =>{
            res.render('index.ejs', {
