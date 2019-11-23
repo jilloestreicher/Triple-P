@@ -75,7 +75,7 @@
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="https://checkout.stripe.com/checkout.js" defer></script>
-        <script src="store.js" defer></script>
+        <script src="../static/store.js" defer></script>
         <script>
             var stripePublicKey = '<%= stripePublicKey %>'
         </script>
@@ -126,10 +126,10 @@
                                                     <li>
                                                         <div class="cart-btns">
                                                             <span class="default-btn">
-                                                                <a href="../public/cart.html">view cart</a>
+                                                                <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="../public/checkout.html">checkout</a>
+                                                                <a href="../Front%20End/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
@@ -174,7 +174,7 @@
                                                 <div class="mega-menu">
                                                     <span>
                                                         <a href="shop">Parts</a>
-                                                        <a href="../Front End/cart.html">View Cart</a>
+                                                        <a href="cart">View Cart</a>
                                                         <a href="../Front End/checkout.html">Checkout</a>
                                                         <a href="../Front End/create-account.html">Create Account</a>
                                                     </span>

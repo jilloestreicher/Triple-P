@@ -75,7 +75,7 @@
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="https://checkout.stripe.com/checkout.js" defer></script>
-        <script src="store.js" defer></script>
+        <script src="../static/store.js" defer></script>
         <script>
             var stripePublicKey = '<%= stripePublicKey %>'
         </script>
@@ -128,7 +128,7 @@
                                                                 <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="../public/checkout.html">checkout</a>
+                                                                <a href="../Front End/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
@@ -152,7 +152,7 @@
                             <div class="col-md-3 col-sm-2">
                                 <!-- logo start -->
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="index">
                                         <img src="../Front End/img/logo.png" alt="" height="100" width="200">
                                     </a>
                                 </div>
@@ -164,7 +164,7 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index.html">Home</a></li>
+                                            <li class="has-sub"><a href="index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="../Front End/about-us.html">About us</a></li>
                                             <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
@@ -172,7 +172,7 @@
                                                 <div class="mega-menu">
                                                     <span>
                                                         <a href="shop">Parts</a>
-                                                        <a href="../Front End/cart.html">View Cart</a>
+                                                        <a href="cart">View Cart</a>
                                                         <a href="../Front End/checkout.html">Checkout</a>
                                                         <a href="../Front End/create-account.html">Create Account</a>
                                                     </span>
@@ -186,7 +186,7 @@
                                                         <a href="../Front End/listing-details.html">Listing Details</a>
                                                         <a href="../Front End/login.html">Login</a>
                                                         <a href="manage-users">Admin - Manage Users</a>
-                                                        <a href="../Front End/search-results.html">Search Results</a>
+                                                        
                                                     </span>
                                                     <span>
                                                         <a href="../Front End/order-history.html">Order History</a>
@@ -226,7 +226,7 @@
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="shop">Parts</a></li>
+                                <li><a href="adminParts">Parts</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -376,28 +376,7 @@
             
         </div>
         <!-- shop area end -->
-        <!-- quick book area start -->
-        <div class="quick-book-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="book-now">
-                            <div class="display-table">
-                                <div class="display-table-cell">
-                                   <!-- book now content start -->
-                                    <div class="book-now-title">
-                                        <h2>HAVE A TRUCK YOU WANT TO SELL?</h2>
-                                        <a href="#" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i>LIST IT NOW</a>
-                                    </div>
-                                    <!-- book now content end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- quick book area end -->
+        
         <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">
@@ -434,10 +413,10 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Shop Parts</a></li>
-                                    <li><a href="#">Shop Trucks & Trailers</a></li>
+                                    <li><a href="index">Home</a></li>
+                                    <li><a href="../Front%2520End/about-us.html">About Us</a></li>
+                                    <li><a href="shop">Shop Parts</a></li>
+                                    <li><a href="trucks">Shop Trucks & Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
@@ -457,11 +436,8 @@
                         <!-- footer social start -->
                         <div class="footer-social">
                             <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
                             </ul>
                         </div>
                         <!-- footer social end -->

@@ -75,7 +75,7 @@
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="https://checkout.stripe.com/checkout.js" defer></script>
-        <script src="store.js" defer></script>
+        <script src="../static/store.js" defer></script>
         <script>
             var stripePublicKey = '<%= stripePublicKey %>'
         </script>
@@ -126,10 +126,10 @@
                                                     <li>
                                                         <div class="cart-btns">
                                                             <span class="default-btn">
-                                                                <a href="../public/cart.html">view cart</a>
+                                                                <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="../public/checkout.html">checkout</a>
+                                                                <a href="../Front End/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
@@ -166,7 +166,7 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index.html">Home</a></li>
+                                            <li class="has-sub"><a href="index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="../Front End/about-us.html">About us</a></li>
                                             <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
@@ -174,7 +174,7 @@
                                                 <div class="mega-menu">
                                                     <span>
                                                         <a href="shop">Parts</a>
-                                                        <a href="../Front End/cart.html">View Cart</a>
+                                                        <a href="cart">View Cart</a>
                                                         <a href="../Front End/checkout.html">Checkout</a>
                                                         <a href="../Front End/create-account.html">Create Account</a>
                                                     </span>
@@ -228,7 +228,7 @@
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="trucks">Trucks</a></li>
+                                <li><a href="adminTrucks">Trucks</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -364,28 +364,7 @@
             </div>
         </div>
         <!-- shop area end -->
-        <!-- quick book area start -->
-        <div class="quick-book-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="book-now">
-                            <div class="display-table">
-                                <div class="display-table-cell">
-                                   <!-- book now content start -->
-                                    <div class="book-now-title">
-                                        <h2>HAVE A TRUCK YOU WANT TO SELL?</h2>
-                                        <a href="#" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i>LIST IT NOW</a>
-                                    </div>
-                                    <!-- book now content end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- quick book area end -->
+
         <!-- footer top start -->
         <div class="footer-top-area">
             <div class="container">

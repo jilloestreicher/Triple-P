@@ -74,7 +74,7 @@
         <!-- modernizr js
         ============================================ -->
         <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="../store.js" defer></script>
+        <script src="../static/store.js" defer></script>
 
 				<!-- Global site tag (gtag.js) - Google Analytics -->
 				<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152418607-1"></script>
@@ -93,14 +93,11 @@
                         <div class="col-md-7">
                             <!-- welcome message start -->
                             <div class="welcome-msg">
-                                <form action="/checkSession" method="get">
-                                    <input type="submit" value="Check session">
-                                </form>
                                 <ul>
                                     <li> <p>Contact: (520) 223-3072</p></li>
                                     <li> <p>acsassalesllc@hotmail.com</p></li>
                                     <li><form action="/loginCheck" method="post">
-                                        <a href="login.html" <button type="submit" id="login" onclick="">login</button></a>
+                                        <a href="../Front End/login.html" <button type="submit" id="login" onclick="">login</button></a>
                                     </form></li>
                                 </ul>
                             </div>
@@ -141,7 +138,7 @@
                                                                 <a href="cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="checkout.html">checkout</a>
+                                                                <a href="../Front%20End/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
@@ -184,8 +181,8 @@
                                                 <div class="mega-menu">
                                                     <span>
                                                         <a href="shop">Parts</a>
-                                                        <a href="../Front End/cart.html">View Cart</a>
-                                                        <a href="../Front End/../Front End/checkout.html">Checkout</a>
+                                                        <a href="cart">View Cart</a>
+                                                        <a href="../Front End/checkout.html">Checkout</a>
                                                         <a href="../Front End/create-account.html">Create Account</a>
                                                     </span>
                                                     <span>
@@ -198,7 +195,6 @@
                                                         <a href="../Front End/listing-details.html">Listing Details</a>
                                                         <a href="../Front End/login.html">Login</a>
                                                         <a href="manage-users">Admin - Manage Users</a>
-                                                        <a href="../Front End/search-results.html">Search Results</a>
                                                     </span>
                                                     <span>
                                                         <a href="../Front End/order-history.html">Order History</a>
@@ -289,7 +285,7 @@
                                             <div class="single-product hover-style text-center">
                                                 <div class="product-img">
                                                     <!-- product-img -->
-                                                    <a href="listing-details.html" class="main-img">
+                                                    <a href="/parts/<%= item.id%>" class="main-img">
                                                         <img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
                                                     </a>
                                                     <!-- product actions -->
@@ -302,7 +298,7 @@
                                                 <!-- product-info start -->
                                                 <div class="product-info text-center">
                                                     <div class="product-name">
-                                                        <a href="#"><%= item.name %></a>
+                                                        <a href="/parts/<%= item.id%>"><%= item.name %></a>
                                                     </div>
                                                     <div class="product-price">
                                                         <p>$<%= item.price / 100 %></p>
@@ -329,7 +325,7 @@
                                             <div class="single-product hover-style text-center">
                                                 <div class="product-img">
                                                     <!-- product-img -->
-                                                    <a href="listing-details.html" class="main-img">
+                                                    <a href="/parts/<%= item.id%>" class="main-img">
                                                         <img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:212.5px;height:159px;">
                                                     </a>
                                                     <!-- product actions -->
@@ -342,7 +338,7 @@
                                                 <!-- product-info start -->
                                                 <div class="product-info text-center">
                                                     <div class="product-name">
-                                                        <a href="#"><%= item.name %></a>
+                                                        <a href="/parts/<%= item.id%>"><%= item.name %></a>
                                                     </div>
                                                     <div class="product-price">
                                                         <p>$<%= item.price / 100 %></p>
@@ -388,8 +384,8 @@
                                     <div class="listing-details">
                                         <!-- listing img start -->
                                         <div class="listing-img">
-                                            <a href="listing-details.html">
-                                                <img src="../Front End/img/listing/1.jpg" alt="">
+                                            <a href="/trucks/<%= truck.id%>">
+                                                <img src="../Front End/img/product/<%=truck.imgName %>.jpg" style="width:212.5px;height:159px;" alt="">
                                                 <span class="post-date">
                                                     19 <br> Sept
                                                 </span>
@@ -399,18 +395,17 @@
                                         <!-- listing content start -->
                                         <div class="listing-info">
                                             <!-- post title -->
-                                            <a href="../Front End/listing-details.html" class="listing-title"> <%= truck.name %> </a>
+                                            <a href="/trucks/<%= truck.id%>" class="listing-title"> <%= truck.name %> </a>
                                             <!-- post info -->
                                             <p class="post-info">
                                                 <span> <i class="icofont icofont-user"></i> <%= truck.email %></span>
-                                                <span class="pull-right"> <i class="icofont icofont-comment"></i> $37,800 </span>
                                             </p>
                                             <!-- post summary -->
                                             <p class="post-summary">
                                                 <%= truck.blah %>
                                             </p>
                                             <!-- read post button -->
-                                            <a href="../Front End/listing-details.html" class="read-post"> See Listing </a>
+                                            <a href="/trucks/<%= truck.id%>" class="read-post"> See Listing </a>
                                         </div>
                                         <!-- listing content end -->
                                     </div>
