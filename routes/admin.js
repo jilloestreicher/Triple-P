@@ -50,7 +50,7 @@ router.post('/edit_Part', [
         }
         
         console.log("Updated Part")
-        res.end()
+        res.redirect('/adminParts')
     })
     
 })
@@ -89,6 +89,42 @@ router.post('/edit_truck', [
         
         console.log("Updated Truck")
         res.end()
+    })
+    
+})
+
+router.post('/edit_trailer', [
+    body('trailer_id').trim(),
+    body('trailer_name').trim(),
+    body('trailer_length').trim(),
+    body('trailer_desc').trim(),
+    body('trailer_brand').trim(),
+    body('trailer_width').trim(),
+    body('trailer_color').trim()
+    ], (req,res) => {
+    
+    const trailerId = req.body.trailer_id
+    const trailerName = req.body.trailer_name
+    const trailerDesc = req.body.trailer_desc
+    const trailerBrand = req.body.trailer_brand
+    const trailerLength = req.body.trailer_length
+    const trailerWidth = req.body.trailer_width
+    const trailerColor = req.body.trailer_color
+    
+    const queryString = "update trailers set TrailerName=?, Length=?, TrailerDescription=?, Brand=?, Width=?, Color=? where TrailerId=?"
+    
+    helper1.getConnection().query(queryString, [trailerName, trailerLength, trailerDesc, trailerBrand, trailerWidth, trailerColor, trailerId], (err,result,fields) => {
+        
+        if(err) {
+            console.log("Update failed")
+            
+            res.sendStatus(500)
+            //res.redirect('/Front End/error-500.html')
+            return
+        }
+        
+        console.log("Updated Trailer")
+        res.redirect('/adminTrailers')
     })
     
 })
@@ -159,6 +195,39 @@ router.get('/editTruck/:id', (req, res) =>{
     
 })
 
+router.get('/editTrailer/:id', (req, res) =>{
+    console.log("Finding trailer with id: " + req.params.id)
+    
+    //Establish connection to DB
+    const connection = helper1.getConnection()
+    
+    const trailerId = req.params.id.trim()
+    
+    //? allows us to fill in with a different value
+    const queryString = "SELECT TrailerId as id, TrailerName as name, TrailerDescription as blah, EmailAddress as email, Brand as brand, Length as length, Width as width, Color as color, Picture as imgName FROM trailers WHERE TrailerId = ?"
+    
+    //Query DB. First param is query, second is callback
+    //[] is used for filling in the ?
+    connection.query(queryString, [trailerId], (err, result, fields) => {
+        
+        //check if we succesfully queried
+        if(err){
+            console.log("Failed to query: " +err)
+            res.sendStatus(500);
+            //res.redirect('../Front End/error-500.html')
+            return
+        }
+        console.log("Sucessfully queried trailers")
+        
+        res.render('editTrailer.ejs', {
+            items: result
+        })
+        
+    })
+    //ending response
+    
+})
+
 router.post('/remove_user', (req,res) => {
     const userId = req.body.user_id.trim()
     const con = helper1.getConnection()
@@ -187,7 +256,7 @@ fs.readFile('./items.json', function(error, data){
     } else{
         
         const connection = helper1.getConnection()
-        const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks;"
+        const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
         
         
         connection.query(queryString, (err,result,fields) => {
@@ -203,9 +272,130 @@ fs.readFile('./items.json', function(error, data){
                          })
             console.log(result)
             
-            res.render('adminTrucks.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+            const partString = "SELECT * from trucks"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminTrucks.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
+            })
+        })
+        
+    }
+})
+})
+
+router.get('/adminTrucks/:offset', function(req,res){
+fs.readFile('./items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        
+        const connection = helper1.getConnection()
+        const offs = req.params.offset * 10 - 10
+        const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10 OFFSET ?;"
+        
+        
+        connection.query(queryString, [offs], (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              res.sendStatus(500);
+              //res.render('/Front End/error-500.html')
+              return
+            }
+            fs.writeFile('test.json', result, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
+            console.log(result)
+            
+            const partString = "SELECT * from trucks"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminTrucks.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
+            })
+        })
+        
+    }
+})
+})
+
+router.get('/adminTrailers', function(req,res){
+fs.readFile('./items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        
+        const connection = helper1.getConnection()
+        const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10;"
+        
+        
+        connection.query(queryString, (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              res.sendStatus(500);
+              //res.render('/Front End/error-500.html')
+              return
+            }
+            fs.writeFile('test.json', result, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
+            console.log(result)
+            
+            const partString = "SELECT * from trailers"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminTrailers.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
+            })
+        })
+        
+    }
+})
+})
+
+router.get('/adminTrailers/:offset', function(req,res){
+fs.readFile('./items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        
+        const connection = helper1.getConnection()
+        const offs = req.params.offset * 10 - 10
+        const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10 OFFSET ?;"
+        
+        
+        connection.query(queryString, [offs], (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              res.sendStatus(500);
+              //res.render('/Front End/error-500.html')
+              return
+            }
+            fs.writeFile('test.json', result, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
+            console.log(result)
+            
+            const partString = "SELECT * from trailers"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminTrailers.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
         
@@ -220,7 +410,7 @@ fs.readFile('./items.json', function(error, data){
     } else{
         
         const connection = helper1.getConnection()
-        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts;"
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10;"
         
         connection.query(queryString, (err,result,fields) => {
             if(err){
@@ -235,9 +425,54 @@ fs.readFile('./items.json', function(error, data){
                          })
             console.log(result)
             
-            res.render('adminParts.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+            const partString = "SELECT * from parts"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminParts.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
+            })
+        })
+        
+    }
+})
+})
+
+router.get('/adminParts/:offset', function(req,res){
+    fs.readFile('./items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        
+        const connection = helper1.getConnection()
+        const offs = req.params.offset * 10 - 10
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10 OFFSET ?;"
+        
+        
+        connection.query(queryString, [offs], (err,result,fields) => {
+            if(err){
+              console.log("Failed to query: " +err)
+              console.log(offs)
+              //res.sendStatus(500);
+              res.redirect('/Front End/error-500.html')
+              return
+            }
+            fs.writeFile('test.json', result, function(err){
+              if(err) throw err;
+              console.log('Saved');
+                         })
+            console.log(result)
+            
+            const partString = "SELECT * from parts"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('adminParts.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
         
@@ -297,6 +532,29 @@ router.post('/delete_truck', (req,res) => {
                             else{
                             
                             console.log("Deleted Truck")
+                            res.end()
+                        }
+                            })
+                        
+})
+
+router.post('/delete_trailer', (req,res) => {
+    const trailerId = req.body.trailer_id.trim()
+    const con = helper1.getConnection()
+    
+    const queryString = "DELETE from trailers where TrailerId = ?"
+                            con.query(queryString, [trailerId], (err,result,fields) => {
+                              if(err) {
+                            console.log("Delete failed -trailer")
+                            console.log(trailerId)
+			                console.log(err)
+                            res.sendStatus(500)
+                            //res.redirect('/Front End/error-500.html')
+                            return
+                            }  
+                            else{
+                            
+                            console.log("Deleted Trailer")
                             res.end()
                         }
                             })
