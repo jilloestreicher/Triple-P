@@ -255,20 +255,30 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="single-product">
                                     <div class="product-name">
-                                        <input type="text" name="part_name" placeholder="<%= item.name%>" value="<%= item.name%>">
+                                        <label>Name: </label>
+                                        <input type="text" name="part_name" placeholder="<%= item.name%>" value="<%= item.name%>" size=65>
                                     </div>
-                                    <input type="text" name="part_id" placeholder="<%= item.id%>" value="<%= item.id%>">
+                                    <div class="product-text">
+                                        <label>ID: </label>
+                                        <input type="text" name="part_id" placeholder="<%= item.id%>" value="<%= item.id%>" readonly>
+                                    </div>
                                     <div class="price-rating">
                                         <div class="product-price pull-left">
-                                            <input type="text" name="part_price" placeholder="<%= item.price / 100.0%>" value="<%= item.price / 100.0%>">
+                                            <label>Price: </label>
+                                            <input type="text" name="part_price" placeholder="<%= item.price%>" value="<%= item.price%>">
                                         </div>
                                     </div>
                                     <div class="product-text">
-                                        <input type="text" name="part_desc" placeholder="<%= item.blah%>" value="<%= item.blah%>">
+                                        <label>Description: </label>
+                                        <textarea name="part_desc" rows="5" cols="40"><%= item.blah%></textarea>
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Brand: </label>
                                         <input type="text" name="part_brand" placeholder="<%= item.brand%>" value="<%= item.brand%>">
                                     </div>
+                                    
                                     <!-- cart plus minus start -->
-                                    <div class="cart-plus-minus">
+                                    <div class="product-text">
                                         <label>Quantity: </label>
                                         <input type="text" name="part_quan" placeholder="<%= item.quan%>" value="<%= item.quan%>">
                                     </div>

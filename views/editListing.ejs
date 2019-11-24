@@ -261,15 +261,36 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="single-product">
                                     <div class="product-name">
+                                        <label>Name: </label>
                                         <input type="text" name="truck_name" placeholder="<%= item.name%>" value="<%= item.name%>">
                                     </div>
                                     <div class="product-text">
-                                        <input type="text" name="truck_desc" placeholder="<%= item.blah%>" value="<%= item.blah%>">
-                                        <p> Brand:</p><input type="text" name="truck_brand" placeholder="<%= item.brand%>" value="<%= item.brand%>">
-                                        <p> Drive Type:</p> <input type="text" name="truck_drive" placeholder="<%= item.drive%>" value="<%= item.drive%>">
-                                        <p> KMPerHour:</p> <input type="text" name="truck_km" placeholder="<%= item.km%>" value="<%= item.km%>">
-                                        <p> Fuel Type:</p> <input type="text" name="truck_fuel" placeholder="<%= item.fuel%>" value="<%= item.fuel%>">
-                                        <p> Color:</p> <input type="text" name="truck_color" placeholder="<%= item.color%>" value="<%= item.color%>">
+                                        <label>ID: </label>
+                                        <input type="text" name="truck_id" placeholder="<%= item.id%>" value="<%= item.id%>" readonly>
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Description: </label>
+                                        <textarea name="truck_desc" rows="5" cols="40"><%= item.blah%></textarea>
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Brand: </label>
+                                        <input type="text" name="truck_brand" placeholder="<%= item.brand%>" value="<%= item.brand%>">
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Drive Type: </label>
+                                        <input type="text" name="truck_drive" placeholder="<%= item.drive%>" value="<%= item.drive%>">
+                                    </div>
+                                    <div class="product-text">
+                                        <label>KM Per Hour: </label>
+                                        <input type="text" name="truck_km" placeholder="<%= item.km%>" value="<%= item.km%>">
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Fuel Type: </label>
+                                        <input type="text" name="truck_fuel" placeholder="<%= item.fuel%>" value="<%= item.fuel%>">
+                                    </div>
+                                    <div class="product-text">
+                                        <label>Color: </label>
+                                        <input type="text" name="truck_color" placeholder="<%= item.color%>" value="<%= item.color%>">
                                     </div>
                                     <!-- contact info start -->
                                     <div class="price-rating">

@@ -343,11 +343,9 @@
                         <div class="toolbar-bottom">
                             <ul>
                                 <li><a href="#"> <i class="fa fa-angle-left"></i> </a></li>
-                                <li class="current"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
+                                <% for(var i=10; i < parts.length+10; i=i+10){ %>
+                                <li class="current"><a href="/adminParts/<%= i/10 %>"><%= i/10 %></a></li>
+                                <% } %>
                                 <li><a href="#"> <i class="fa fa-angle-right"></i> </a></li>
                             </ul>
                         </div>

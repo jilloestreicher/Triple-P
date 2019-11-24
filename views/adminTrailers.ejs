@@ -228,7 +228,7 @@
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="adminTrucks">Trucks</a></li>
+                                <li><a href="adminTrailers">Trailers</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -271,7 +271,8 @@
                                 <select name="sortlist">
                                     <option value="name" selected >Name</option>
                                     <option value="new">Newest</option>
-                                    <option value="mile">Mileage</option>
+                                    <option value="length">Length</option>
+                                    <option value="width">Width</option>
                                 </select>
                                 <button type='submit'>Sort</button>
                                 </form>
@@ -301,27 +302,26 @@
                             <div class="list-shop">
                                 <!-- single list shop start -->
                                 <% items.forEach(function(item){ %>
-                                <form action="/delete_truck" method="post">
+                                <form action="/delete_trailer" method="post">
                                 <div class="single-list-shop" data-item-id="<%= item.id %>">
                                     <div class="col-md-3 col-sm-5">
                                         <!-- product img start -->
                                         <div class="product-img">
-                                            <a href="/editTruck/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:250px;height:250px;" class="shop-item-image"></a>
+                                            <a href="/editTrailer/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:250px;height:250px;" class="shop-item-image"></a>
                                         </div>
                                         <!-- product img end -->
                                     </div>
                                     <div class="col-md-9 col-sm-7">
                                         <div class="single-product">
                                             <div class="product-name">
-                                                <a href="/editTruck/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
+                                                <a href="/editTrailer/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
                                             </div>
-                                            
                                             <div class="price-rating">
                                                 <div class="truck-details pull-left">
-                                                    <input readonly value="<%= item.id %>" name="truck_id">
+                                                    <input readonly value="<%= item.id %>" name="trailer_id">
                                                     <p><b>Brand</b>: <%= item.brand %> &nbsp;
-                                                        <b>Fuel Type</b>: <%= item.fuel %> &nbsp;
-                                                        <b>Drive</b>: <%= item.drive %></p>
+                                                        <b>Length</b>: <%= item.length %> &nbsp;
+                                                        <b>Width</b>: <%= item.width %></p>
                                                 </div>
                                             </div>
                                             <div class="product-text">
@@ -331,7 +331,7 @@
                                             <div class="contact-info">
                                                 <label class="shop-item-price"><%= item.email %></label>
                                             </div>
-                                            <a href="/editTruck/<%= item.id%>">Edit</a>
+                                            <a href="/editTrailer/<%= item.id%>">Edit</a>
                                             <button type="submit">Delete</button>
                                         </div>
                                     </div>
@@ -351,7 +351,7 @@
                             <ul>
                                 <li><a href="#"> <i class="fa fa-angle-left"></i> </a></li>
                                 <% for(var i=10; i < parts.length+10; i=i+10){ %>
-                                <li class="current"><a href="/adminTrucks/<%= i/10 %>"><%= i/10 %></a></li>
+                                <li class="current"><a href="/adminTrailers/<%= i/10 %>"><%= i/10 %></a></li>
                                 <% } %>
                                 <li><a href="#"> <i class="fa fa-angle-right"></i> </a></li>
                             </ul>
