@@ -293,6 +293,7 @@ function populateCart() {
 function allOnloads(){
     populateCart();
     fetch('/checkSession');
+    fetch('/changeLoginButton');
 }
 
 function ClearAll() {
