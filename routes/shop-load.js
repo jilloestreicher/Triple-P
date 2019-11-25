@@ -123,7 +123,15 @@ fs.readFile('./items.json', function(error, data){
     if(error) {
       res.status(500).end()
     } else{
-        
+        var sql = "delete from trucks where current_timestamp() < RemoveTime"
+
+        const connection = getConnection()
+        connection.query(sql, 1, (error, results, fields) => {
+          if (error)
+            return console.error(error.message);
+
+          console.log('Deleted Row(s):', results.affectedRows);
+        });
         const connection = helper1.getConnection()
         const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
         
