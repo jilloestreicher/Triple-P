@@ -69,33 +69,118 @@ app.use(session({
 
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
-    
-  //Pull the item information from the items.json file
-    
-  //TODO: Possibly pull this from user's cart!!
-    
   fs.readFile('items.json', function(error, data) {
     if (error) {
       res.status(500).end()
-    } else {
+      return
+    } 
+    else {
       const itemsJson = JSON.parse(data)
-      const itemsArray = itemsJson.parts.concat(itemsJson.merch)
+      const itemsArray = itemsJson.music.concat(itemsJson.merch)
       let total = 0
+      const emailAddress = "example2@gmail.com"
+      console.log("Collecting order info")
+        
+      var sql = "SELECT ShippingId AS ShippingId FROM shippingdetails ORDER BY ShippingId DESC LIMIT 1"
+      var sql2 = "SELECT PaymentId AS PaymentId FROM paymentdetails ORDER BY PaymentId DESC LIMIT 1"
+     
+      var parsed = 0;
+      var parsed2 = 0;
+      var parsed3 = 0;
+        
+      const connection = getConnection()
+      connection.query(sql, 1, (error, results, fields) => {
+        if (error)
+          return console.error(error.message);
+          
+         var parser = JSON.stringify(results)
+         var almost = parser.replace("[{\"ShippingId\":", "")
+         var finished = almost.replace("}]", "")
+         parsed = parsed + parseInt(finished, 10)
+         connection.query(sql2, 1, (error, results, fields) => {
+           if (error)
+             return console.error(error.message);
+             
+             var parser2 = JSON.stringify(results)
+             var almost2 = parser2.replace("[{\"PaymentId\":", "")
+             var finished2 = almost2.replace("}]", "")
+             parsed2 = parsed2 + parseInt(finished2, 10)
+             
+             console.log("shippingid = "+parsed)
+             console.log("payment id = "+parsed2)
+             
+             const shippingId = parsed+1
+             const paymentId = parsed2+1
+             const orderStatus = "Processed"
+             
+             var queryString4 = "insert into orders (ShippingId, PaymentId, EmailAddress, OrderStatus) values (?,?,?,?)"
+             
+             getConnection().query(queryString4, [shippingId, paymentId, emailAddress, orderStatus], (err, results, fields) => {
+               if(err) {
+                 console.log("Insert failed order")
+                 console.log(shippingId)
+                 console.log(paymentId)
+                 res.sendStatus(500)
+                 return
+               }
+             });
+           });
+         })
+         res.end()
+
+
+
       req.body.items.forEach(function(item) {
         const itemJson = itemsArray.find(function(i) {
           return i.id == item.id
         })
+
+        console.log(item.id)
+          
         total = total + itemJson.price * item.quantity
+          
+        if (item.id == 9999){}
+        else{
+          var sql = "SELECT OrderId AS OrderId FROM orders ORDER BY OrderId DESC LIMIT 1"
+          var parsed = 0;
+          getConnection().query(sql, 1, (error, results, fields) => {
+            if (error)
+              return console.error(error.message);
+              
+            var parser = JSON.stringify(results)
+            var almost = parser.replace("[{\"OrderId\":", "")
+            var finished = almost.replace("}]", "")
+            parsed3 = parseInt(finished, 10)
+            var orderId= parsed3+1
+            var partId = item.id
+            var orderQuantity = item.quantity
+            
+            console.log("order id = "+orderId)
+              
+            const queryString3 = "insert into orderedparts (OrderId, PartId, OrderedQuantity) values (?,?,?)"
+
+            getConnection().query(queryString3, [orderId, partId, orderQuantity], (err, results, fields) => {
+              if(err) {
+                console.log("Insert failed order")
+                console.log(orderId)
+                console.log(partId)
+                console.log(orderQuantity)
+                res.sendStatus(500)
+                return
+              }
+            })
+           })
+         }
       })
 
-      //Send a charge to Stripe
       stripe.charges.create({
         amount: total,
         source: req.body.stripeTokenId,
         currency: 'usd'
       }).then(function() {
         console.log('Charge Successful')
-        res.json({ message: 'Successfully purchased items' })
+        //res.json({ message: 'Successfully purchased items' })
+
       }).catch(function() {
         console.log('Charge Fail')
         res.status(500).end()
