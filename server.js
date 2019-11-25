@@ -40,6 +40,18 @@ app.use(express.static('./Front End'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static('./static/'));
 
+//Establish session
+
+app.use(session({
+    secret: "loggedOn",
+    resave: true,
+    saveUninitialized: false,
+    maxAge: Date.now() + 1800000,
+    cookie: {
+        expires: 1800000
+    }
+}));
+
 //Set up the routes
 
 const searchRouter = require('./routes/search.js')
@@ -54,18 +66,6 @@ app.use(adminRouter)
 //Define number of login attempts allowed
 
 var attempts = 3;
-
-//Create session
-
-app.use(session({
-    secret: 'logged on',
-    resave: true,
-    saveUninitialized: false,
-    maxAge: Date.now() + 1800000,
-    cookie: {
-        expires: 1800000
-    }
-}));
 
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
@@ -214,6 +214,7 @@ app.post('/loginCheck', [
                 console.log("3 failed attempts");
                 window.close();
             }
+            res.redirect('loginCheck');
 
         }else{
             console.log("Successful Login");
@@ -361,7 +362,7 @@ app.post('/logout', function(req, res) {
 
 app.get('/checkSession', checkAuth, function(req,res){
     //calls function checkAuth which will authenticate the session
-    console.log("checkSession - user is authorized!");
+    console.log("checkSession - user is authorized!" + req.session.username);
 })
 
 
