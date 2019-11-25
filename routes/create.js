@@ -260,5 +260,6 @@ router.post('/collect_shippingandbilling', (req,res) => {
 
         res.end()
     })
+})
 
 module.exports = router
