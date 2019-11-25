@@ -76,7 +76,7 @@ app.post('/purchase', function(req, res) {
     } 
     else {
       const itemsJson = JSON.parse(data)
-      const itemsArray = itemsJson.music.concat(itemsJson.merch)
+      const itemsArray = itemsJson.parts.concat(itemsJson.merch)
       let total = 0
       const emailAddress = "example2@gmail.com"
       console.log("Collecting order info")
@@ -173,6 +173,8 @@ app.post('/purchase', function(req, res) {
          }
       })
 
+      //Sends a charge to Stripe 
+        
       stripe.charges.create({
         amount: total,
         source: req.body.stripeTokenId,
