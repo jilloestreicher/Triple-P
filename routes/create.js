@@ -259,7 +259,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
             return
         }
 
-        res.end()
+        res.redirect('/checkout');
     })
 })
 
