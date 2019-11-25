@@ -97,7 +97,7 @@
                                 <ul>
                                     <li> <p>  Contact: (520) 223-3072</p></li>
                                     <li> <p>acsassalesllc@hotmail.com</p></li>
-                                    <li> <p> <a href="../Front End/login.html">login</a></p></li>
+                                   <li> <p> <a href="../Front End/login.html">login</a></p></li>
                                 </ul>
                             </div>
                             <!-- welcome message end -->
@@ -313,7 +313,7 @@
                             <!-- section title start -->
                             <!-- client address form -->
                             <div class="client-address-form">
-                                <% bill.forEach(function(bill){ %>
+                                <% bills.forEach(function(bill){ %>
                                     <form action="#">
                                         <!-- input name -->
                                         <p><b>First Name</b> : <%= bill.first %></p>
@@ -347,7 +347,7 @@
                             <!-- section title start -->
                             <!-- shipping details form -->
                             <div class="client-address-form">
-                                <% ship.forEach(function(ship){ %>
+                                <% ships.forEach(function(ship){ %>
                                     <form action="#">
                                        <p><b>First Name</b> : <%= ship.first %></p>
                                         <!-- input name -->

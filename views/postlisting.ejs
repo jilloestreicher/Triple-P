@@ -100,7 +100,7 @@
                                 <ul>
                                     <li> <p>Contact: (520) 223-3072</p></li>
                                     <li> <p>acsassalesllc@hotmail.com</p></li>
-                                    <li> <p> <a href="../Front%20End/login.html">login</a></p></li>
+                                    <li> <p> <a href="../Front End/login.html">login</a></p></li>
                                 </ul>
                             </div>
                             <!-- welcome message end -->
@@ -229,7 +229,7 @@
                             <!-- section title start -->
                             <!-- client address form -->
                             <div class="client-address-form">
-                                <form action="/create_listing" method="POST">
+                                <form id="payment" action="/create_listing" enctype="multipart/form-data" method="POST">
                                     <!-- input title -->
                                     <p>Title</p>
                                     <input type="text" name="truck_name">
@@ -248,9 +248,12 @@
                                     <!-- input color -->
                                     <p>Color</p>
                                     <input type="text" name="truck_color">
+                                    <p>Description</p>
+                                    <input type="text" name="truck_desc">
                                     <!-- add pictures -->
-                                    <p>Pictures</p>
-                                    <input type="text">
+                                    <p>Picture</p>
+                                    <input type="file" accept="image/jpg" name="file">
+                                    
                                     <p>Length of Time (Days) </p>
                                     <div class="cart-quantity cart-column">
                                         <input name ="time" id="carto" class="cart-quantity-input" type="number" value="1">
