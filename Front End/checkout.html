@@ -1,415 +1,454 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-    <head>
-        <!-- Basic page needs
-        ============================================ -->
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Checkout || ACSAS </title>
-        <meta name="description" content="">
+<head>
+    <!-- Basic page needs
+    ============================================ -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Checkout || ACSAS </title>
+    <meta name="description" content="">
 
-        <!-- Mobile specific metas
-        ============================================ -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Mobile specific metas
+    ============================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- favicon.ico -->
-        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <!-- favicon.ico -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
-        <!-- ============== All CSS ================ -->
-        <!-- normalize css
-        ============================================ -->
-        <link rel="stylesheet" href="css/normalize.css">
+    <!-- ============== All CSS ================ -->
+    <!-- normalize css
+    ============================================ -->
+    <link rel="stylesheet" href="css/normalize.css">
 
-        <!-- animate css
-        ============================================ -->
-        <link rel="stylesheet" href="css/animate.css">
+    <!-- animate css
+    ============================================ -->
+    <link rel="stylesheet" href="css/animate.css">
 
-        <!-- bootstrap css
-        ============================================ -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- bootstrap css
+    ============================================ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-        <!-- meanmenu css
-        ============================================ -->
-        <link rel="stylesheet" href="css/meanmenu.min.css">
+    <!-- meanmenu css
+    ============================================ -->
+    <link rel="stylesheet" href="css/meanmenu.min.css">
 
-        <!-- font-awesome css
-        ============================================ -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- font-awesome css
+    ============================================ -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
-        <!-- icofont css
-        ============================================ -->
-        <link rel="stylesheet" href="css/icofont.css">
+    <!-- icofont css
+    ============================================ -->
+    <link rel="stylesheet" href="css/icofont.css">
 
-        <!-- change-text css
-        ============================================ -->
-        <link rel="stylesheet" href="css/change-text.css">
+    <!-- change-text css
+    ============================================ -->
+    <link rel="stylesheet" href="css/change-text.css">
 
-        <!-- YTPlayer css
-        ============================================ -->
-        <link rel="stylesheet" href="css/jquery.mb.YTPlayer.min.css">
+    <!-- YTPlayer css
+    ============================================ -->
+    <link rel="stylesheet" href="css/jquery.mb.YTPlayer.min.css">
 
-        <!-- main css
-        ============================================ -->
-        <link rel="stylesheet" href="css/main.css">
+    <!-- main css
+    ============================================ -->
+    <link rel="stylesheet" href="css/main.css">
 
-        <!-- owl.carousel css
-        ============================================ -->
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <link rel="stylesheet" href="css/owl.theme.css">
-        <link rel="stylesheet" href="css/owl.transitions.css">
+    <!-- owl.carousel css
+    ============================================ -->
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.css">
+    <link rel="stylesheet" href="css/owl.transitions.css">
 
-        <!-- nivo-slider css
-        ============================================ -->
-        <link rel="stylesheet" href="lib/css/nivo-slider.css">
-        <link rel="stylesheet" href="lib/css/preview.css">
+    <!-- nivo-slider css
+    ============================================ -->
+    <link rel="stylesheet" href="lib/css/nivo-slider.css">
+    <link rel="stylesheet" href="lib/css/preview.css">
 
-        <!-- style css
-        ============================================ -->
-        <link rel="stylesheet" href="style.css">
+    <!-- style css
+    ============================================ -->
+    <link rel="stylesheet" href="style.css">
 
-        <!-- responsive css
-        ============================================ -->
-        <link rel="stylesheet" href="css/responsive.css">
+    <!-- responsive css
+    ============================================ -->
+    <link rel="stylesheet" href="css/responsive.css">
 
-        <!-- modernizr js
-        ============================================ -->
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="store.js" defer</script>
-    </head>
-    <body onload="allOnloads()">
-        <!-- header area start -->
-        <header id="sticker">
-            <div class="header-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <!-- welcome message start -->
-                            <div class="welcome-msg">
+    <!-- modernizr js
+    ============================================ -->
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://checkout.stripe.com/checkout.js" defer></script>
+    <script src="store.js" defer></script>
+
+
+</head>
+<body onload="populateCart()">
+<!-- header area start -->
+<header id="sticker">
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- welcome message start -->
+                    <div class="welcome-msg">
+                        <ul>
+                            <li> <p>  Contact: (520) 223-3072</p></li>
+                            <li> <p>acsassalesllc@hotmail.com</p></li>
+                            <li> <p> <a href="my-account.html">My Account</a></p></li>
+                        </ul>
+                    </div>
+                    <!-- welcome message end -->
+                </div>
+                <div class="col-md-3">
+                    <!-- Search Bar -->
+                    <div class="header-top-menu">
+                        <form action="/search" method="post">
+                            <input type="text" placeholder="Search.." name="searchBar">
+                            <button type="submit" value="search">Go</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="header-top-menu">
+                        <!-- cart menu start -->
+
+                        <!-- cart menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mainmenu area start -->
+    <div class="main-menu-area hidden-xs">
+        <div class="container">
+            <div class="menu-position">
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <!-- logo start -->
+                        <div class="logo">
+                            <a href="index">
+                                <img src="img/logo.png" alt="" height="100" width="200">
+                            </a>
+                        </div>
+                        <!-- logo end -->
+                    </div>
+                    <div class="col-md-9 col-sm-10 static">
+                        <!-- main-menu start -->
+                        <div class="main-menu">
+                            <nav>
                                 <ul>
-                                    <li> <p>  Contact: (520) 223-3072</p></li>
-                                    <li> <p>acsassalesllc@hotmail.com</p></li>
-                                    <li> <p> <a href="login.html">login</a></p></li>
+                                    <!-- single menu -->
+                                    <li class="has-sub"><a href="index">Home</a></li>
+                                    <!-- single menu -->
+                                    <li><a href="about-us.html">About us</a></li>
+                                    <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
+                                        <!-- mega-menu start -->
+                                        <div class="mega-menu">
+                                                    <span>
+                                                        <a href="shop">Parts</a>
+                                                        <a href="cart.html">View Cart</a>
+                                                        <a href="checkout.html">Checkout</a>
+                                                        <a href="create-account.html">Create Account</a>
+                                                    </span>
+                                            <span>
+                                                        <a href="edit-order-admin.html">Admin - Edit Order</a>
+                                                        <a href="editItem.html">Edit Item</a>
+                                                        <a href="EditListing.html">Edit Listing</a>
+                                                        <a href="postlisting.html">Post Listing</a>
+                                                    </span>
+                                            <span>
+                                                        <a href="listing-details.html">Listing Details</a>
+                                                        <a href="login.html">Login</a>
+                                                        <a href="manage-users">Admin - Manage Users</a>
+                                                        <a href="search-results.html">Search Results</a>
+                                                    </span>
+                                            <span>
+                                                        <a href="order-history.html">Order History</a>
+                                                        <a href="order-template.html">Order Template</a>
+                                                        <a href="postItem.html">Post Items</a>
+                                                        <a href="error-404.html">Error 404</a>
+                                                        <a href="error-500.html">Error 500</a>
+                                                    </span>
+                                        </div>
+                                        <!-- mega-menu end -->
+                                    </li>
+                                    <li><a href="trucks">Trucks</a></li>
+                                    <li><a href="trailers">Trailers</a></li>
                                 </ul>
-                            </div>
-                            <!-- welcome message end -->
+                            </nav>
                         </div>
-                        <div class="col-md-3">
-                            <!-- Search Bar -->
-                            <div class="header-top-menu">
-                                <form action="/search" method="post">
-                                    <input type="text" placeholder="Search.." name="searchBar">
-                                    <button type="submit" value="search">Go</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="header-top-menu">
-                                <!-- cart menu start -->
-                                <div class="cart-menu">
-                                    <ul>
-                                        <li> 
-                                            <a href="#"> <i class="fa fa-shopping-cart"></i>(1)</a>
-                                            <div class="cart-items">
-                                                <ul>
-                                                    <!-- single cart item start -->
-                                                  
-                                                    <!-- single cart item end -->
-                                                    
-                                                    <li>
-                                                        <div class="subtotal">
-                                                            <div class="subtotal-title">
-                                                                <h3>subtotal  <span class="cart-total-price">$0</span></h3>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="cart-btns">
-                                                            <span class="default-btn">
-                                                                <a href="cart">view cart</a>
-                                                            </span>
-                                                            <span class="default-btn pull-right">
-                                                                <a href="checkout.html">checkout</a>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- cart menu end -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- mainmenu area start -->
-            <div class="main-menu-area hidden-xs">
-                <div class="container">
-                    <div class="menu-position">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-2">
-                                <!-- logo start -->
-                                <div class="logo">
-                                    <a href="index">
-                                        <img src="img/logo.png" alt="" height="100" width="200">
-                                    </a>
-                                </div>
-                                <!-- logo end -->
-                            </div>
-                            <div class="col-md-9 col-sm-10 static">
-                                <!-- main-menu start -->
-                                <div class="main-menu">
-                                    <nav>
-                                        <ul>
-                                            <!-- single menu -->
-                                            <li class="has-sub"><a href="index">Home</a></li>
-                                            <!-- single menu -->
-                                            <li><a href="about-us.html">About us</a></li>
-                                            <li class="has-mega"><a href="shop">Parts</a></li>
-                                            <li><a href="trucks">Trucks</a></li>
-                                            <li><a href="trailers">Trailers</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <!-- main-menu start -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- mainmenu area end -->
-        </header>
-        <!-- header area end -->
-        <!-- page title area start -->
-        <div class="page-title-area overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- page title start -->
-                        <div class="page-title">
-                            <h2>checkout</h2>
-                        </div>
-                        <!-- page title end -->
-                        <!-- page title menu start -->
-                        <div class="page-title-menu">
-                            <ul>
-                                <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="checkout.html">checkout</a></li>
-                            </ul>
-                        </div>
-                        <!-- page title menu end -->
+                        <!-- main-menu start -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- page title area end -->
-        <!-- checkout area start -->
-        <div class="checkout-area section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- client address start -->
-                        <div class="client-address">
-                            <!-- section title start -->
-                            <div class="section-small-title">
-                                <h3>billing details</h3>
-                            </div>
-                            <!-- section title start -->
-                            <!-- client address form -->
-                            <div class="client-address-form">
-                                <form action="#">
-                                    <!-- input name -->
-                                    <input type="text" placeholder="First name">
-                                    <!-- input name -->
-                                    <input type="text" placeholder="Last name">
-                                    <!--input email address-->
-                                    <input type="email" placeholder="your email address">
-                                    <!-- input phone number -->
-                                    <input type="text" placeholder="Phone number here">
-                                    <!-- input country name -->
-                                    <input type="text" placeholder="country">
-                                    <!-- input state -->
-                                    <input type="text" placeholder="state">
-                                    <!-- input town/city -->
-                                    <input type="text" placeholder="town/city">
-                                    <!-- input your details address -->
-                                    <input type="text" placeholder="Your Address">
-                                </form>
-                            </div>
-                        </div>
-                        <!-- client address end -->
-                    </div>
-                    <div class="col-md-6">
-                        <!-- total cart area start -->
-                        <div class="cart-total">
-                            <!-- section title start -->
-                            <div class="section-small-title">
-                                <h3>your order</h3>
-                            </div>
-                            <!-- section title end -->
-                            <!-- single item -->
-                            <p>Placeholder 1<span class="pull-right">$1170.00</span> </p>
-                            <!-- single item -->
-                            <p>Placeholder 2 <span class="pull-right">$220.50</span> </p>
-                            <!-- total price -->
-                            <p>Placeholder 3 <span class="pull-right">$1390.50</span> </p>
-                            <!-- shipping cost -->
-                            <p>Shipping and Handing <span class="pull-right">$15.00</span> </p>
-                            <!-- vat cost -->
-                            <p class="no-border">vat <span class="pull-right">$00.00</span> </p>
-                            <!-- grand total -->
-                            <p class="total-price">total <span class="pull-right">$1405.50</span> </p>
-                        </div>
-                        <!-- total cart area end -->
-                        <!-- payment method start -->
-                        <br>
-                        <div class="client-address">
-                            <!-- TODO: STRIPE API FOR PURCHASE GOES HERE -->
-                        </div>
-                        <!-- shopping button start -->
-                        <div class="shopping-button">
-                            <a href="#">place order</a>
-                        </div>
-                        <!-- shopping button end -->
-                    </div>
+    </div>
+    <!-- mainmenu area end -->
+</header>
+<!-- header area end -->
+<!-- page title area start -->
+<div class="page-title-area overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- page title start -->
+                <div class="page-title">
+                    <h2>checkout</h2>
                 </div>
+                <!-- page title end -->
+                <!-- page title menu start -->
+                <div class="page-title-menu">
+                    <ul>
+                        <li><a href="index">Home</a> <span> / </span> </li>
+                        <li><a href="checkout.html">checkout</a></li>
+                    </ul>
+                </div>
+                <!-- page title menu end -->
             </div>
         </div>
-        <!-- checkout area end -->
-        <!-- footer top start -->
-        <div class="footer-top-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-4">
-                        <!-- single footer start -->
-                        <div class="single-footer-top">
-                            <div class="footer-about-us">
-                                <!-- address start -->
-
-                                <div class="footer-address">
-                                    <p> <span> ADDRESS: </span>Rio Rico Arizona </p>
-                                    <p>USA 85648</p>
-                                </div>
-                                <!-- address end -->
-                                <!-- contact info start -->
-                                <div class="footer-contact-info">
-                                    <p> <span> Telephone:</span> (520) 223-3072 </p>
-                                    <p> <span> Email:</span> acsassalesllc@hotmail.com </p>
-                                </div>
-                                <!-- contact info end -->
-                            </div>
-                        </div>
-                        <!-- single footer end -->
+    </div>
+</div>
+<!-- page title area end -->
+<!-- checkout area start -->
+<div class="checkout-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- client address start -->
+                <div class="client-address">
+                    <!-- section title start -->
+                    <div class="section-small-title">
+                        <h3>Shipping details</h3>
                     </div>
-                    <div class="col-md-2 col-md-offset-1 col-sm-3">
-                        <!-- single footer start -->
-                        <div class="single-footer-top">
-                            <!-- section title start -->
-                            <div class="footer-top-title">
-                                <h3>USEFUL LINKS</h3>
-                            </div>
-                            <!-- section title end -->
-                            <!-- footer menu start -->
-                            <div class="footer-top-menu">
-                                <ul>
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="shop">Shop Parts</a></li>
-                                    <li><a href="trucks">Shop Trucks</a></li>
-                                    <li><a href="trailers">Shop Trailers</a></li>
-                                </ul>
-                            </div>
-                            <!-- footer menu end -->
-                        </div>
-                        <!-- single footer end -->
+                    <!-- section title start -->
+                    <!-- client address form -->
+                    <div class="client-address-form">
+                        <form id="form" action="/collect_shippingandbilling" method="POST">
+                            <!-- input name -->
+                            <input name="firstName" type="text" placeholder="First name">
+                            <!-- input name -->
+                            <input name="lastName" type="text" placeholder="Last name">
+                            <!--input email address-->
+                            <input name="emailAddress" type="email" placeholder="email address">
+                            <!-- input phone number -->
+                            <input name="phoneNumber" type="text" placeholder="Phone number">
+                            <!-- input country name -->
+                            <input name="country" type="text" placeholder="country">
+                            <input name="address" type="text" placeholder="Address">
+                            <input name="address2" type="text" placeholder="Address2">
+                            <!-- input state -->
+                            <input name="town" type="text" placeholder="town/city">
+                            <!-- input your details address -->
+                            <input name="state" type="text" placeholder="state">
+                            <!-- input town/city -->
+                            <input name="zip" type="text" placeholder="zipcode">
+                            <!-- input town/city -->
+
+
+
                     </div>
                 </div>
+                <!-- client address end -->
             </div>
-        </div>
-        <!-- footer top end -->
-        <!-- footer area start -->
-        <div class="footer-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-4">
-                        <!-- footer social start -->
-                        <div class="footer-social">
-                            <ul>
-                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
-                            </ul>
-                        </div>
-                        <!-- footer social end -->
+            <div class="col-md-6">
+                <!-- client address start -->
+                <div class="client-address">
+                    <!-- section title start -->
+                    <div class="section-small-title">
+                        <h3>Billing details</h3>
                     </div>
-                    <div class="col-md-6 col-sm-4">
-                        <!-- copyright text start -->
-                        <div class="footer-copyright">
-                            <p>Copyright &copy; 2018- <a href="https://freethemescloud.com/">Free themes Cloud</a> </p>
-                        </div>
-                        <!-- copyright text end -->
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                        <!-- payment method start -->
-                        <div class="footer-payment-method">
-                            <img src="img/payment-method.png" alt="">
-                        </div>
-                        <!-- payment method end -->
+                    <!-- section title start -->
+                    <!-- client address form -->
+                    <div class="client-address-form">
+                        <input name="billingFirstName" type="text" placeholder="First Name">
+                        <!-- input phone number -->
+                        <input name="billingLastName" type="text" placeholder="Last Name">
+                        <!-- input country name -->
+                        <input name="billingEmailAddress" type="text" placeholder="Email Address">
+                        <!-- input name -->
+                        <input name="billingPhone" type="text" placeholder="Phone Number">
+                        <!-- input your details address -->
+                        <input name="billingCountry" type="text" placeholder="country">
+                        <input name="billingAddress" type="text" placeholder="Billing Address">
+                        <!-- input name -->
+                        <input name="billingAddress2" type="text" placeholder="Billing Address2">
+                        <!--input email address-->
+                        <input name="billingTown" type="text" placeholder="town/city">
+                        <!-- input town/city -->
+
+                        <!-- input state -->
+                        <input name="billingState" type="text" placeholder="state">
+                        <!-- input town/city -->
+
+                        <input name="billingZip" type="text" placeholder="Zipcode">
+                        <!-- input town/city -->
+
+
+
                     </div>
                 </div>
+                <!-- client address end -->
+            </div>
+
+            <div class="col-md-6">
+                <!-- total cart area start -->
+                <div class="cart-total">
+                    <!-- section title start -->
+                    <div class="section-small-title">
+
+                    </div>
+                    <!-- section title end -->
+                    <!-- single item -->
+
+
+
+
+
+                </div>
+                <!-- total cart area end -->
+                <!-- payment method start -->
+                <br>
+                <div class="client-address">
+                    <button type="submit">Proceed to Payment</button>
+                </div>
+
+                </form>
+
             </div>
         </div>
-        <!-- footer area end -->
+    </div>
+</div>
+<!-- checkout area end -->
+<!-- footer top start -->
+<div class="footer-top-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <!-- single footer start -->
+                <div class="single-footer-top">
+                    <div class="footer-about-us">
+                        <!-- address start -->
 
-        <!-- ============== All JS ================ -->
-        <!-- jquery js
-        =========================================== -->
-        <script src="js/vendor/jquery-1.12.0.min.js"></script>
+                        <div class="footer-address">
+                            <p> <span> ADDRESS: </span>Rio Rico Arizona </p>
+                            <p>USA 85648</p>
+                        </div>
+                        <!-- address end -->
+                        <!-- contact info start -->
+                        <div class="footer-contact-info">
+                            <p> <span> Telephone:</span> (520) 223-3072 </p>
+                            <p> <span> Email:</span> acsassalesllc@hotmail.com </p>
+                        </div>
+                        <!-- contact info end -->
+                    </div>
+                </div>
+                <!-- single footer end -->
+            </div>
+            <div class="col-md-2 col-md-offset-1 col-sm-3">
+                <!-- single footer start -->
+                <div class="single-footer-top">
+                    <!-- section title start -->
+                    <div class="footer-top-title">
+                        <h3>USEFUL LINKS</h3>
+                    </div>
+                    <!-- section title end -->
+                    <!-- footer menu start -->
+                    <div class="footer-top-menu">
+                        <ul>
+                            <li><a href="index">Home</a></li>
+                            <li><a href="about-us.html">About Us</a></li>
+                            <li><a href="shop">Shop Parts</a></li>
+                            <li><a href="trucks">Shop Trucks</a></li>
+                            <li><a href="trailers">Shop Trailers</a></li>
+                        </ul>
+                    </div>
+                    <!-- footer menu end -->
+                </div>
+                <!-- single footer end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer top end -->
+<!-- footer area start -->
+<div class="footer-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <!-- footer social start -->
+                <div class="footer-social">
+                    <ul>
+                        <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                        <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
+                    </ul>
+                </div>
+                <!-- footer social end -->
+            </div>
+            <div class="col-md-6 col-sm-4">
+                <!-- copyright text start -->
+                <div class="footer-copyright">
+                    <p>Copyright &copy; 2018- <a href="https://freethemescloud.com/">Free themes Cloud</a> </p>
+                </div>
+                <!-- copyright text end -->
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <!-- payment method start -->
+                <div class="footer-payment-method">
+                    <img src="img/payment-method.png" alt="">
+                </div>
+                <!-- payment method end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer area end -->
 
-        <!-- bootstrap js
-        =========================================== -->
-        <script src="js/bootstrap.min.js"></script>
+<!-- ============== All JS ================ -->
+<!-- jquery js
+=========================================== -->
+<script src="js/vendor/jquery-1.12.0.min.js"></script>
 
-        <!-- meanmenu js
-        =========================================== -->
-        <script src="js/jquery.meanmenu.js"></script>
+<!-- bootstrap js
+=========================================== -->
+<script src="js/bootstrap.min.js"></script>
 
-        <!-- scrollUp js
-        =========================================== -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+<!-- meanmenu js
+=========================================== -->
+<script src="js/jquery.meanmenu.js"></script>
 
-        <!-- wow js
-        =========================================== -->
-        <script src="js/wow.min.js"></script>
+<!-- scrollUp js
+=========================================== -->
+<script src="js/jquery.scrollUp.min.js"></script>
 
-        <!-- owl.carousel js
-        =========================================== -->
-        <script src="js/owl.carousel.min.js"></script>
+<!-- wow js
+=========================================== -->
+<script src="js/wow.min.js"></script>
 
-        <!-- change-text js
-        =========================================== -->
-        <script src="js/change-text.js"></script>
+<!-- owl.carousel js
+=========================================== -->
+<script src="js/owl.carousel.min.js"></script>
 
-        <!-- YTPlayer js
-        =========================================== -->
-        <script src="js/jquery.mb.YTPlayer.min.js"></script>
+<!-- change-text js
+=========================================== -->
+<script src="js/change-text.js"></script>
 
-        <!-- textillate js
-        =========================================== -->
-        <script src="js/jquery.lettering.js"></script>
-        <script src="js/jquery.textillate.js"></script>
+<!-- YTPlayer js
+=========================================== -->
+<script src="js/jquery.mb.YTPlayer.min.js"></script>
 
-        <!-- nivo.slider js
-        =========================================== -->
-        <script src="lib/js/jquery.nivo.slider.js"></script>
-        <script src="lib/home.js"></script>
+<!-- textillate js
+=========================================== -->
+<script src="js/jquery.lettering.js"></script>
+<script src="js/jquery.textillate.js"></script>
 
-        <!-- plugins js
-        =========================================== -->
-        <script src="js/plugins.js"></script>
+<!-- nivo.slider js
+=========================================== -->
+<script src="lib/js/jquery.nivo.slider.js"></script>
+<script src="lib/home.js"></script>
 
-        <!-- main js
-        =========================================== -->
-        <script src="js/main.js"></script>
-    </body>
+<!-- plugins js
+=========================================== -->
+<script src="js/plugins.js"></script>
+
+<!-- main js
+=========================================== -->
+<script src="js/main.js"></script>
+</body>
 </html>
