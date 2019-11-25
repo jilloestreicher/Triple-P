@@ -561,14 +561,131 @@ router.post('/delete_trailer', (req,res) => {
                         
 })
 
-router.post('/adminCheck', function(req,res) {
+router.post('/adminCheck', [
+   body('username').trim().escape(),
+   body('password').trim().escape()
+],function(req,res) {
     var username = req.body.username
     var password = req.body.password
     var loggedOn
 
     var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
-    
-    //FILL IN HERE FOR LOGIN STUFF
+
+    helper1.getConnection().query(queryString, [username, password], (err,results, field) =>{
+        if(err){
+          console.log("Failed to query: " +err)
+          console.log(results)
+          return
+        }
+        if(results.length === 0 || results == null){
+            console.log("Failed Login")
+            attempts --;
+            if(attempts == 0){
+                console.log("3 failed attempts");
+                window.close();
+            }
+            res.redirect('loginCheck');
+
+        }else{
+            console.log("Successful Login");
+            req.session.username = username;
+
+            //all file headers must show My Account instead of Login
+            fs.readFile('views/index.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("index replaced!")
+                fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                });
+             });
+            fs.readFile('views/listing-details.ejs', 'utf8', function (err,data) {
+               if (err) return console.log(err);
+               var result = data.replace(/login/g, 'my-account');
+               //console.log("listing-details replaced!")
+               fs.writeFile('views/listing-details.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+               });
+            });
+            fs.readFile('views/manage-users.ejs', 'utf8', function (err,data) {
+               if (err) return console.log(err);
+               var result = data.replace(/login/g, 'my-account');
+               //console.log("manage-users replaced!")
+               fs.writeFile('views/manage-users.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+               });
+            });
+            fs.readFile('views/shop.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("shop replaced!")
+                fs.writeFile('views/shop.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/shop-details.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("shop-details replaced!")
+                fs.writeFile('views/shop-details.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/trailer-details.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trailer-details replaced!")
+                 fs.writeFile('views/trailer-details.ejs', result, 'utf8', function (err) {
+                    if (err) return console.log(err);
+                 });
+             });
+            fs.readFile('views/trailers.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trailers replaced!")
+                fs.writeFile('views/trailers.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('views/trucks.ejs', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("trucks replaced!")
+                fs.writeFile('views/trucks.ejs', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('Front End/about-us.html', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("about-us replaced!")
+                fs.writeFile('Front End/about-us.html', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+            fs.readFile('Front End/cart.html', 'utf8', function (err,data) {
+                if (err) return console.log(err);
+                var result = data.replace(/login/g, 'my-account');
+                //console.log("cart replaced!")
+                fs.writeFile('Front End/cart.html', result, 'utf8', function (err) {
+                   if (err) return console.log(err);
+                });
+            });
+
+            //redirect user back to the home page
+            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
+            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+
+            helper1.getConnection().query(itemString, (err,result,fields) =>{
+                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
+                    res.render('index.ejs', {
+                        items: result,
+                        listings: trucks
+                    })
+                })
+            })
+        }
+    })
 })
 
 
