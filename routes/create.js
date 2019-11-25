@@ -185,8 +185,7 @@ router.post('/create_account', [
 router.post('/collect_shippingandbilling', (req,res) => {
 
     console.log("Collecting shipping info")
-    const emailAddress = "example2@gmail.com"
-   // const emailAddress = req.body.emailAddress
+    const emailAddress = req.session.username;
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const country = req.body.country
@@ -224,7 +223,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const cardMonth = "cardmonth"
     const cardYear = "cardyear"
     const securityCode = "eseccode"
-   // const emailAddress = req.body.emailAddress
+    const emailAddress = req.session.username;
     const billingFirstName = req.body.billingFirstName
     const billingLastName = req.body.billingLastName
     const billingCountry = req.body.billingCountry
