@@ -225,7 +225,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const cardMonth = "cardmonth"
     const cardYear = "cardyear"
     const securityCode = "eseccode"
-   // const emailAddress = req.body.emailAddress
+    const billingEmailAddress = req.session.username;
     const billingFirstName = req.body.billingFirstName
     const billingLastName = req.body.billingLastName
     const billingCountry = req.body.billingCountry
@@ -238,7 +238,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
 
     const queryString = "insert into paymentdetails (CardNum, CardMonth, CardYear, SecurityCode, BillingAddress, BillingAddress2, BillingFirstName, BillingLastName, BillingCountry, BillingCity, BillingState, BillingZIP, BillingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
-    helper1.getConnection().query(queryString, [cardNum, cardMonth, cardYear, securityCode, billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, emailAddress], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [cardNum, cardMonth, cardYear, securityCode, billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
         if(err) {
             console.log("Insert failed bill")
             console.log(emailAddress)
