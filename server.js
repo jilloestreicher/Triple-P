@@ -88,19 +88,22 @@ app.post('/purchase', function(req, res) {
       var parsed2 = 0;
       var parsed3 = 0;
         
-      const connection = getConnection()
+      const connection = helper1.getConnection()
+      console.log("Before Ship Query")
       connection.query(sql, 1, (error, results, fields) => {
-        if (error)
+        if (error){
           return console.error(error.message);
+        }
           
          var parser = JSON.stringify(results)
          var almost = parser.replace("[{\"ShippingId\":", "")
          var finished = almost.replace("}]", "")
          parsed = parsed + parseInt(finished, 10)
+         console.log("Before Pay Query")
          connection.query(sql2, 1, (error, results, fields) => {
-           if (error)
+           if (error){
              return console.error(error.message);
-             
+           }
              var parser2 = JSON.stringify(results)
              var almost2 = parser2.replace("[{\"PaymentId\":", "")
              var finished2 = almost2.replace("}]", "")
@@ -114,19 +117,20 @@ app.post('/purchase', function(req, res) {
              const orderStatus = "Processed"
              
              var queryString4 = "insert into orders (ShippingId, PaymentId, EmailAddress, OrderStatus) values (?,?,?,?)"
-             
-             getConnection().query(queryString4, [shippingId, paymentId, emailAddress, orderStatus], (err, results, fields) => {
+             connection.query(queryString4, [parsed, parsed2, emailAddress, orderStatus], (err, resulto, fields) => {
                if(err) {
-                 console.log("Insert failed order")
-                 console.log(shippingId)
-                 console.log(paymentId)
+                 console.log("Insert failed order -initial order")
+                 console.log(err)
+                 console.log(parsed)
+                 console.log(parsed2)
                  res.sendStatus(500)
                  return
                }
+               console.log("Order Inserted!!")
              });
            });
          })
-         res.end()
+         
 
 
 
@@ -143,11 +147,11 @@ app.post('/purchase', function(req, res) {
         else{
           var sql = "SELECT OrderId AS OrderId FROM orders ORDER BY OrderId DESC LIMIT 1"
           var parsed = 0;
-          getConnection().query(sql, 1, (error, results, fields) => {
+          helper1.getConnection().query(sql, 1, (error, resultp, fields) => {
             if (error)
               return console.error(error.message);
               
-            var parser = JSON.stringify(results)
+            var parser = JSON.stringify(resultp)
             var almost = parser.replace("[{\"OrderId\":", "")
             var finished = almost.replace("}]", "")
             parsed3 = parseInt(finished, 10)
@@ -159,10 +163,11 @@ app.post('/purchase', function(req, res) {
               
             const queryString3 = "insert into orderedparts (OrderId, PartId, OrderedQuantity) values (?,?,?)"
 
-            getConnection().query(queryString3, [orderId, partId, orderQuantity], (err, results, fields) => {
+            helper1.getConnection().query(queryString3, [orderId, partId, orderQuantity], (err, results, fields) => {
               if(err) {
-                console.log("Insert failed order")
+                console.log("Insert failed order -Part")
                 console.log(orderId)
+                //console.log(err)
                 console.log(partId)
                 console.log(orderQuantity)
                 res.sendStatus(500)
@@ -181,11 +186,11 @@ app.post('/purchase', function(req, res) {
         currency: 'usd'
       }).then(function() {
         console.log('Charge Successful')
-        //res.json({ message: 'Successfully purchased items' })
+        res.json({ message: 'Successfully purchased items' })
 
       }).catch(function() {
         console.log('Charge Fail')
-        res.status(500).end()
+        res.status(500)
       })
     }
   })
@@ -296,24 +301,25 @@ fs.readFile('items.json', function(error, data){
     }
 })
 })
-app.get('/postListing', function(req,res){
-fs.readFile('items.json', function(error, data){
-    if(error) {
-      res.status(500).end()
-    } else{
-        res.render('postListing.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: JSON.parse(data)
-        })
-    }
-})
-})
+
 app.get('/checkout', function(req,res){
 fs.readFile('items.json', function(error, data){
     if(error) {
       res.status(500).end()
     } else{
         res.render('checkout.ejs', {
+            stripePublicKey: stripePublicKey,
+            items: JSON.parse(data)
+        })
+    }
+})
+})
+app.get('/postListing', function(req,res){
+fs.readFile('items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        res.render('postListing.ejs', {
             stripePublicKey: stripePublicKey,
             items: JSON.parse(data)
         })
