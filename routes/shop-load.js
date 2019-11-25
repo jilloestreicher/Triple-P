@@ -123,6 +123,7 @@ fs.readFile('./items.json', function(error, data){
     if(error) {
       res.status(500).end()
     } else{
+        
         var sql = "delete from trucks where current_timestamp() < RemoveTime"
 
         const connection = getConnection()
@@ -132,6 +133,8 @@ fs.readFile('./items.json', function(error, data){
 
           console.log('Deleted Row(s):', results.affectedRows);
         });
+        
+        
         const connection = helper1.getConnection()
         const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
         
@@ -343,7 +346,7 @@ router.get('/parts/:id', (req, res) =>{
 
 router.get('/order/:id', (req,res) =>{
     const orderId = req.params.id
-    const queryString = "SELECT OrderId as id, orderedParts.PartId as part, parts.PartId as partIn, OrderedQuantity as quan, PriceUSD as price, ItemName as name, Picture as imgName from orderedParts, parts WHERE orderedParts.OrderId = ? AND orderedParts.PartId = parts.PartId"
+    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM orders WHERE OrderId = ?"
 
     console.log("Order lookup")
@@ -356,10 +359,9 @@ router.get('/order/:id', (req,res) =>{
         }else{
             if(req.session.username === accountresult[0].email){
                 helper1.getConnection().query(queryString, [orderId], (err, result, fields) => {
-                    const billString = "SELECT orders.OrderId as id, paymentdetails.PaymentId as payment, orders.PaymentId as pay, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.EmailAddress as email, paymentdetails.BillingPhone as phone, paymentdetails.BillingCountry as country, paymentdetails.BillingState as state, paymentdetails.BillingCity as city, paymentdetails.BillingAddress as address FROM orders, paymentdetails WHERE OrderId = ? AND paymentdetails.PaymentId = orders.PaymentId;"
-
+                    const billString = "SELECT orders.OrderId as id, orders.PaymentId, paymentdetails.PaymentId, paymentdetails.BillingAddress as address, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.BillingCountry as country, paymentdetails.BillingCity as city, paymentdetails.BillingState as state, paymentdetails.BillingPhone as phone, orders.EmailAddress as email FROM orders, paymentdetails WHERE orders.OrderId = ? AND orders.PaymentId = paymentdetails.PaymentId"
                     helper1.getConnection().query(billString, [orderId], (err, billing, fields) => {
-                        const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone, shippingdetails.EmailAddress as email from orders, shippingdetails WHERE OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
+                        const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone from orders, shippingdetails WHERE orders.OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
                         console.log(billing)
                         helper1.getConnection().query(shipString, [orderId], (err, shipping, fields) => {
                         console.log(shipping)
@@ -383,7 +385,9 @@ router.get('/order/:id', (req,res) =>{
 router.get('/orderHistory/:accounts', (req, res) => {
 
     const account = req.params.accounts
-    const queryString = "SELECT orders.EmailAddress as email, orderedparts.OrderId as partid, ShippingId as ship, ShippingAddress as address, COUNT(orderedparts.PartId) as quan, orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId"
+    const queryString = "SELECT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND orders.ShippingId = shippingdetails.ShippingId"
+    
+    //COUNT(orderedparts.PartId) as quan,
 
     //if the user is not logged in, it will direct them to the login page
     if(!req.session || !req.session.username) {
@@ -397,7 +401,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
             })
         }else{
           console.log(req.session.username)
-          console.log(accountresult[0].email)
+          console.log(result[0].email)
           //res.redirect('../error-500.html');
         }
     }
