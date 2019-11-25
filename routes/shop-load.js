@@ -126,7 +126,7 @@ fs.readFile('./items.json', function(error, data){
         
         var sql = "delete from trucks where current_timestamp() < RemoveTime"
 
-        const connection = getConnection()
+        const connection = helper1.getConnection()
         connection.query(sql, 1, (error, results, fields) => {
           if (error)
             return console.error(error.message);
@@ -135,7 +135,7 @@ fs.readFile('./items.json', function(error, data){
         });
         
         
-        const connection = helper1.getConnection()
+        
         const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
         
         
@@ -385,7 +385,9 @@ router.get('/order/:id', (req,res) =>{
 router.get('/orderHistory/:accounts', (req, res) => {
 
     const account = req.params.accounts
-    const queryString = "SELECT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND orders.ShippingId = shippingdetails.ShippingId"
+    const queryString = "SELECT DISTINCT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND orders.ShippingId = shippingdetails.ShippingId"
+    
+    const quanString = "SELECT parts.ItemName as name, orderedparts.PartId, parts.PartId, orderedparts.OrderId, orders.OrderId, orders.EmailAddress from orders, parts, orderedparts where orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND parts.PartId = orderedParts.PartId"
     
     //COUNT(orderedparts.PartId) as quan,
 
@@ -395,9 +397,12 @@ router.get('/orderHistory/:accounts', (req, res) => {
     }else{
         if(req.session.username === account){
             helper1.getConnection().query(queryString, [account], (err, result, fields) => {
+            
                 res.render('order-history.ejs',{
-                    orders: result
+                    orders: result,
+                   // part: parts
                 })
+                
             })
         }else{
           console.log(req.session.username)
@@ -413,7 +418,7 @@ router.get('/trucks/:id', (req, res) =>{
     //Establish connection to DB
     const connection = helper1.getConnection()
     
-    const truckId = req.params.id.trim().escape()
+    const truckId = req.params.id.trim()
     
     //? allows us to fill in with a different value
     const queryString = "SELECT TruckId as id, TruckName as name, TruckDescription as blah, EmailAddress as email, Brand as brand, DriveType as drive, KMPerHour as km, FuelType as fuel, Color as color, Picture as imgName FROM trucks WHERE TruckId = ?"
@@ -446,7 +451,7 @@ router.get('/trailers/:id', (req, res) =>{
     //Establish connection to DB
     const connection = helper1.getConnection()
     
-    const trailerId = req.params.id.trim().escape()
+    const trailerId = req.params.id.trim()
     
     //? allows us to fill in with a different value
     const queryString = "SELECT TrailerId as id, TrailerName as name, TrailerDescription as blah, EmailAddress as email, Brand as brand, Length as length, Width as width, Color as color, Picture as imgName FROM trailers WHERE TrailerId = ?"
@@ -471,6 +476,28 @@ router.get('/trailers/:id', (req, res) =>{
     })
     //ending response
     
+})
+
+router.get('/my-account/:email', (req, res) => {
+    const connection = helper1.getConnection()
+    const accountEmail = req.params.email.trim()
+    
+    const accountString = "SELECT EmailAddress as email, PhoneNumber as phone from accounts WHERE EmailAddress = ?"
+    const truckString = "SELECT TruckId as id, TruckName as name, TruckDescription as blah, EmailAddress as email, Brand as brand, DriveType as drive, KMPerHour as km, FuelType as fuel, Color as color, Picture as imgName FROM trucks WHERE EmailAddress = ?"
+    const trailerString = "SELECT TrailerId as id, TrailerName as name, TrailerDescription as blah, EmailAddress as email, Brand as brand, Length as length, Width as width, Color as color, Picture as imgName FROM trailers WHERE EmailAddress = ?"
+    
+    
+    connection.query(accountString, [accountEmail], (err, resulta, fields) => {
+        connection.query(truckString, [accountEmail], (err, resultt, fields) => {
+            connection.query(trailerString, [accountEmail], (err, resultr, fields) => {
+                res.render('my-account.ejs' , {
+                    accounts: resulta,
+                    trucks: resultt,
+                    trailers: resultr
+                })
+            })
+        })
+    })
 })
 
 module.exports = router
