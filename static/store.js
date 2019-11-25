@@ -166,9 +166,10 @@ function addItemToCart(title, price, imageSrc, id) {
         }
     }
      var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
-     var chekr = document.getElementById("carto").value
+    
 
          if(pageCheck == "POST A LISTING"){
+              var chekr = document.getElementById("carto").value
     var cartRowContents = `
         <div class="cart-item cart-column">
             <img class="cart-item-image" src="${imageSrc}" style="width:0px;height:0px;">
@@ -181,6 +182,7 @@ function addItemToCart(title, price, imageSrc, id) {
     cartRow.innerHTML = cartRowContents
     cartItems.append(cartRow)
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+    document.getElementById("invisibleQuant").value = chekr;
     }
 
     else{
@@ -201,7 +203,7 @@ function addItemToCart(title, price, imageSrc, id) {
 
     }
 
-     document.getElementById("invisibleQuant").value = chekr;
+     
 }
 
 function updateCartTotal() {
