@@ -75,10 +75,11 @@ var stripeHandler = StripeCheckout.configure({
                 items: items
             })
         }).then(function(res) {
-            //return res.json()
+            return res.json()
         }).then(function(data) {
            // alert(data.message)
-           document.forms["form"].submit()
+           console.log("Reached")
+           document.forms["payment"].submit();
             var cartItems = document.getElementsByClassName('cart-items')[0]
             while (cartItems.hasChildNodes()) {
                 cartItems.removeChild(cartItems.firstChild)
