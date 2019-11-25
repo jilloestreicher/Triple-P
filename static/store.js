@@ -236,7 +236,7 @@ function updateCartTotal() {
         console.log("total= "+ displayTotal)
     }
     else{
-    document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems-1) +")";
+    document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems) +")";
     }
 }
 
