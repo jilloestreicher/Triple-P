@@ -45,12 +45,12 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     const truckDesc = req.body.truck_desc
     var picture = req.file.filename
     picture = picture.slice(0,-4)
-    
+    const time = req.body.time
     const email = "example2@gmail.com"
     
-    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture) values (?,?,?,?,?,?,?,?,?)"
+    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, RemoveTime) values (?,?,?,?,?,?,?,?,?,?)"
     
-    helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(truckName)
@@ -181,5 +181,84 @@ router.post('/create_account', [
         res.render('/Front End/account-created.html')
     })
 })
+
+router.post('/collect_shippingandbilling', (req,res) => {
+
+    console.log("Collecting shipping info")
+    const emailAddress = "example2@gmail.com"
+   // const emailAddress = req.body.emailAddress
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
+    const country = req.body.country
+    const state = req.body.state
+    const town = req.body.town
+    const zip = req.body.town
+    const address = req.body.address
+    const address2 = req.body.address
+    const phoneNumber = req.body.phoneNumber
+
+    const queryString2 = "insert into shippingdetails (ShippingAddress, ShippingAddress2, ShippingFirstName, ShippingLastName, ShippingCountry, ShippingCity, ShippingState, ShippingZIP, ShippingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?)"
+
+    getConnection().query(queryString2, [address, address2, firstName, lastName, country, town, state, zip, phoneNumber, emailAddress], (err, results, fields) => {
+        if(err) {
+            console.log("Insert failed ship")
+            console.log(emailAddress)
+             console.log(firstName)
+             console.log(lastName)
+                        console.log(country)
+                        console.log(state)
+                        console.log(town)
+                        console.log(address)
+                        console.log(address2)
+                        console.log(phoneNumber)
+            res.sendStatus(500)
+            return
+        }
+
+        res.end()
+    })
+
+    console.log("Collecting billing info")
+
+    const cardNum = 555
+    const cardMonth = "cardmonth"
+    const cardYear = "cardyear"
+    const securityCode = "eseccode"
+   // const emailAddress = req.body.emailAddress
+    const billingFirstName = req.body.billingFirstName
+    const billingLastName = req.body.billingLastName
+    const billingCountry = req.body.billingCountry
+    const billingState = req.body.billingState
+    const billingTown = req.body.billingTown
+    const billingZip = req.body.billingZip
+    const billingAddress = req.body.billingAddress
+    const billingAddress2 = req.body.billingAddress2
+    const billingPhone = req.body.billingPhone
+
+    const queryString = "insert into paymentdetails (CardNum, CardMonth, CardYear, SecurityCode, BillingAddress, BillingAddress2, BillingFirstName, BillingLastName, BillingCountry, BillingCity, BillingState, BillingZIP, BillingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+    getConnection().query(queryString, [cardNum, cardMonth, cardYear, securityCode, billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, emailAddress], (err, results, fields) => {
+        if(err) {
+            console.log("Insert failed bill")
+            console.log(emailAddress)
+             console.log(cardNum)
+             console.log(cardMonth)
+                        console.log(cardYear)
+                        console.log(securityCode)
+                        console.log(billingFirstName)
+                        console.log(billingLastName)
+                        console.log(billingCountry)
+                        console.log(billingState)
+                        console.log(billingTown)
+                   console.log(billingZip)
+                   console.log(billingAddress)
+                    console.log(billingAddress2)
+                    console.log(billingPhone)
+            res.sendStatus(500)
+            return
+        }
+
+        res.end()
+    })
 
 module.exports = router
