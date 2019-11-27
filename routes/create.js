@@ -12,6 +12,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const fs = require("fs")
 const multer = require("multer");
+const passwordHash = require('password-hash');
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -33,9 +34,9 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 
 router.post('/create_listing', upload.single("file"), (req,res) => {
-    
+
     console.log("Creating Listing")
-    
+
     const truckName = req.body.truck_name
     const truckBrand = req.body.truck_brand
     const truckKM = req.body.truck_km
@@ -47,9 +48,9 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     picture = picture.slice(0,-4)
     const time = req.body.time
     const email = "test@test.com"
-    
+
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp + interval ? day)"
-    
+
     helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
@@ -67,13 +68,13 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
             res.redirect('/Front End/error-500.html')
             return
         }
-        
+
         res.end()
     })
 })
 
 router.post('/trailer_listing', upload.single("file"), (req,res) => {
-    
+
     const trailerName = req.body.trailer_name
     const trailerBrand = req.body.trailer_brand
     const trailerLength = req.body.trailer_length
@@ -82,12 +83,12 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     const trailerColor = req.body.trailer_color
     var picture = req.file.filename
     picture = picture.slice(0,-4)
-    
+
     //FIX TO PULL FROM SESSION
     const email = "example2@gmail.com"
-    
+
     const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture) values (?,?,?,?,?,?,?,?)"
-    
+
     helper1.getConnection().query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture], (err,results,fields) => {
         if(err) {
             console.log("Insert failed")
@@ -108,16 +109,16 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
                 res.json(req.file);
             }
         }
-        
+
         res.end()
     })
-    
+
 })
 
 router.post('/create_part', upload.single("file"),  (req,res) => {
-    
+
     console.log("Creating Part")
-    
+
     const partName = req.body.part_name
     const partDesc = req.body.part_desc
     const partPrice = req.body.part_price * 100
@@ -125,9 +126,9 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
     const partQuan = req.body.part_quan
     var picture = req.file.filename
     picture = picture.slice(0,-4)
-    
+
     const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand, Picture) values (?,?,?,?,?,?)"
-    
+
     helper1.getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan, picture], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
@@ -146,7 +147,7 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
               if(err) throw err;
               console.log('Saved');
                          })
-        
+
         res.redirect('/Front End/list-sucess.html')
     })
 })
@@ -158,17 +159,20 @@ router.post('/create_account', [
     body('account_phone').trim(),
     body('account_password').trim()
 ], (req,res) => {
-    
+
     const accountFirst = req.body.account_first
     const accountLast = req.body.account_last
     const accountEmail = req.body.account_email
     const accountPass = req.body.account_pass
     const accountPhone = req.body.account_phone
     const elist = true
-    
+
+    //hash user's password
+    var hashedPassword = passwordHash.generate(accountPass);
+
     const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList, PhoneNumber) values (?,?,?,?,?,?)"
-    
-    helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, accountPass, elist, accountPhone], (err, results, fields) => {
+
+    helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, hashedPassword, elist, accountPhone], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(results)
@@ -177,11 +181,11 @@ router.post('/create_account', [
             console.log(accountEmail)
             console.log(accountPhone)
             console.log(accountPass)
-            
+
             res.redirect('/Front End/error-500.html')
             return
         }
-        
+
         res.redirect('/Front End/account-created.html')
     })
 })
