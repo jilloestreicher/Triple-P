@@ -11,6 +11,7 @@ const mysql = require('mysql')
 const bodyParser = require('body-parser')
 const app = express()
 const fs = require("fs")
+const passwordHash = require('password-hash')
 
 const router = express.Router()
 
@@ -848,28 +849,48 @@ router.post('/adminCheck', [
     var username = req.body.username
     var password = req.body.password
     var loggedOn
+     var hashedPassword = ' ';
 
-    var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
+    //get hashed version of password
+    var queryPass = "SELECT Password FROM accounts WHERE EmailAddress = ?";
 
-    helper1.getConnection().query(queryString, [username, password], (err,results, field) =>{
-        if(err){
-          console.log("Failed to query: " +err)
-          console.log(results)
-          return
-        }
-        if(results.length === 0 || results == null){
-            console.log("Failed Login")
-            
-            res.redirect('adminCheck');
+     helper1.getConnection().query(queryPass, [username], (err,results, field) =>{
+            if(err){
+              console.log("Failed to query: " +err)
+              console.log(results)
+              return
+            }else{
+                var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
+                if(correctPass === true){
+                    hashedPassword = results[0].Password;
+                }else{
+                    console.log("Error -  wrong password");
+                }
 
-        }else{
-            console.log("Successful Login");
-            req.session.username = username;
+                var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
 
-            res.redirect("../Front End/adminHome.html")
-        }
-    })
+                helper1.getConnection().query(queryString, [username, hashedPassword], (err,results, field) =>{
+                    if(err){
+                      console.log("Failed to query: " +err)
+                      console.log(results)
+                      return
+                    }
+                    if(results.length === 0 || results == null){
+                        console.log("Failed Login")
+
+                        res.redirect('adminCheck');
+
+                    }else{
+                        console.log("Successful Login");
+                        req.session.username = username;
+
+                        res.redirect("../Front End/adminHome.html")
+                    }
+                })
+            }
+     })
 })
+        
 
 router.get('/adminOrders', function(req,res) {
     
