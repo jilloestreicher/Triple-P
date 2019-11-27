@@ -152,34 +152,37 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
 })
 
 router.post('/create_account', [
-    body('account_first').trim().escape(),
-    body('account_last').trim().escape(),
-    body('account_email').trim().escape(),
-    body('account_password').trim().escape()
+    body('account_first').trim(),
+    body('account_last').trim(),
+    body('account_email').trim(),
+    body('account_phone').trim(),
+    body('account_password').trim()
 ], (req,res) => {
     
     const accountFirst = req.body.account_first
     const accountLast = req.body.account_last
     const accountEmail = req.body.account_email
     const accountPass = req.body.account_pass
+    const accountPhone = req.body.account_phone
     const elist = true
     
-    const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList) values (?,?,?,?,?)"
+    const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList, PhoneNumber) values (?,?,?,?,?,?)"
     
-    helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, accountPass, elist], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, accountPass, elist, accountPhone], (err, results, fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(results)
             console.log(accountFirst)
             console.log(accountLast)
             console.log(accountEmail)
+            console.log(accountPhone)
             console.log(accountPass)
-            res.sendStatus(500)
-            res.render('/Front End/error-500.html')
+            
+            res.redirect('/Front End/error-500.html')
             return
         }
         
-        res.render('/Front End/account-created.html')
+        res.redirect('/Front End/account-created.html')
     })
 })
 
