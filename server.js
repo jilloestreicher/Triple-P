@@ -202,40 +202,62 @@ app.post('/loginCheck', [
 ], function(req, res) {
     var username = req.body.username
     var password = req.body.password
-    var loggedOn
+    var hashedPassword = ' ';
 
-    var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
+    //get hashed version of password
+    var queryPass = "SELECT Password FROM accounts WHERE EmailAddress = ?";
 
-    helper1.getConnection().query(queryString, [username, password], (err,results, field) =>{
+    helper1.getConnection().query(queryPass, [username], (err,results, field) =>{
         if(err){
           console.log("Failed to query: " +err)
           console.log(results)
           return
-        }
-        if(results.length === 0 || results == null){
-            console.log("Failed Login")
-            attempts --;
-            if(attempts == 0){
-                console.log("3 failed attempts");
-                window.close();
-            }
-            res.redirect('loginCheck');
-
         }else{
-            console.log("Successful Login");
-            req.session.username = username;
+            var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
 
-            //redirect user back to the home page
-            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+            if(correctPass === true){
+                hashedPassword = results[0].Password;
+            }else{
+                console.log("Error -  wrong password");
+            }
 
-            helper1.getConnection().query(itemString, (err,result,fields) =>{
-                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
-                    res.render('index.ejs', {
-                        items: result,
-                        listings: trucks
+            var queryString = "SELECT EmailAddress, Password FROM accounts WHERE EmailAddress = ? AND Password = ?"
+
+            helper1.getConnection().query(queryString, [username, hashedPassword], (err,results, field) =>{
+                if(err){
+                  console.log("Failed to query: " +err)
+                  console.log(results)
+                  return
+                }
+
+                if(results.length == 0 || results == null){
+                    console.log("Failed Login")
+                    attempts --;
+                    if(attempts == 0){
+                        console.log("3 failed attempts");
+                        window.close();
+                    }
+                    res.redirect('/loginCheck');
+
+                }else{
+                    console.log("Successful Login");
+                    req.session.username = username;
+
+                    //redirect user back to the home page
+                    const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
+                    const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
+
+
+
+                    helper1.getConnection().query(itemString, (err,result,fields) =>{
+                        helper1.getConnection().query(truckString, (err,trucks,fields) =>{
+                            res.render('index.ejs', {
+                                items: result,
+                                listings: trucks
+                            })
+                        })
                     })
-                })
+                }
             })
         }
     })
