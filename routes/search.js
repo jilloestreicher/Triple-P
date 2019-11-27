@@ -23,23 +23,26 @@ router.post('/search', (req,res) =>{
         
         const queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts WHERE ItemName LIKE ? OR PartDescription LIKE ? OR Brand LIKE ?"
         
-        helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,results,fields) =>{
+        helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              res.redirect('/Front End/error-500.html')
               return
             }
-            fs.writeFile('test.json', results, function(err){
+            fs.writeFile('test.json', result, function(err){
               if(err) throw err;
               console.log('Saved');
             })
             
+           const partString = "SELECT * from parts"
             
-            
-            res.render('shop.ejs', {
-              stripePublicKey: stripePublicKey,
-              items: results
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('shop.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
 
         })
@@ -49,23 +52,28 @@ router.post('/searchTrailers', (req,res) =>{
     var searchName = req.body.searchBar
     const trimSearch = '%'+searchName+'%'
     
-    const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers WHERE TrailerName LIKE ? OR TrailerDescription LIKE ? OR Brand LIKE ?;"
+    const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers WHERE TrailerName LIKE ? OR TrailerDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
     
-    helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,results,fields) =>{
+    helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              res.redirect('/Front End/error-500.html')
               return
             }
-            fs.writeFile('test.json', results, function(err){
+            fs.writeFile('test.json', result, function(err){
               if(err) throw err;
               console.log('Saved');
             })
             
-            res.render('trailers.ejs', {
-              stripePublicKey: stripePublicKey,
-              items: results
+            const partString = "SELECT * from trailers"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('trailers.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
 
         })
@@ -75,23 +83,28 @@ router.post('/searchTrucks', (req,res) =>{
     var searchName = req.body.searchBar
     const trimSearch = '%'+searchName+'%'
     
-    const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks WHERE TruckName LIKE ? OR TruckDescription LIKE ? OR Brand LIKE ?;"
+    const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks WHERE TruckName LIKE ? OR TruckDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
     
-    helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,results,fields) =>{
+    helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              res.redirect('/Front End/error-500.html')
               return
             }
-            fs.writeFile('test.json', results, function(err){
+            fs.writeFile('test.json', result, function(err){
               if(err) throw err;
               console.log('Saved');
             })
             
-            res.render('trucks.ejs', {
-              stripePublicKey: stripePublicKey,
-              items: results
+            const partString = "SELECT * from trucks"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('trucks.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
 
         })
@@ -111,11 +124,13 @@ router.post('/sort', (req,res) =>{
         queryString = queryString + " ORDER BY PriceUSD"
     }
     
+    queryString = queryString + " LIMIT 10"
+    
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              res.redirect('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -124,9 +139,14 @@ router.post('/sort', (req,res) =>{
                          })
             console.log(result)
             
-            res.render('shop.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+            const partString = "SELECT * from parts"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('shop.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
     
@@ -146,6 +166,8 @@ router.post('/sortTrucks', (req,res) =>{
         queryString = queryString + " ORDER BY KMPerHour"
     }
     
+    queryString = queryString + " LIMIT 10"
+    
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
               console.log("Failed to query: " +err)
@@ -159,9 +181,14 @@ router.post('/sortTrucks', (req,res) =>{
                          })
             console.log(result)
             
-            res.render('trucks.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+            const partString = "SELECT * from trucks"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('trucks.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
     
@@ -184,11 +211,13 @@ router.post('/sortTrailers', (req,res) =>{
         queryString = queryString + " ORDER BY Width DESC"
     }
     
+    queryString = queryString + " LIMIT 10"
+    
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
               console.log("Failed to query: " +err)
               res.sendStatus(500);
-              res.render('/Front End/error-500.html')
+              res.redirect('/Front End/error-500.html')
               return
             }
             fs.writeFile('test.json', result, function(err){
@@ -197,9 +226,14 @@ router.post('/sortTrailers', (req,res) =>{
                          })
             console.log(result)
             
-            res.render('trailers.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+            const partString = "SELECT * from trailers"
+            
+            helper1.getConnection().query(partString, (err,results,fields) => {
+                res.render('trailers.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: result,
+                    parts: results
+                })
             })
         })
     

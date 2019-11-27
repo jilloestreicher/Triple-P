@@ -793,9 +793,10 @@ router.post('/delete_truck', (req,res) => {
 
                 console.log("Deleted Truck")
                 res.end()
-            }else{
+            }})}else{
                 res.redirect('../index');
-            }
+                }
+        
         }
     })
                         
@@ -832,11 +833,12 @@ router.post('/delete_trailer', (req,res) => {
 
                 console.log("Deleted Trailer")
                 res.end()
-            }else{
+            }})}else{
                 res.redirect('../index');
             }
+                
         }
-    })
+        })
 })
 
 router.post('/adminCheck', [
@@ -857,113 +859,448 @@ router.post('/adminCheck', [
         }
         if(results.length === 0 || results == null){
             console.log("Failed Login")
-            attempts --;
-            if(attempts == 0){
-                console.log("3 failed attempts");
-                window.close();
-            }
-            res.redirect('loginCheck');
+            
+            res.redirect('adminCheck');
 
         }else{
             console.log("Successful Login");
             req.session.username = username;
 
-            //all file headers must show My Account instead of Login
-            fs.readFile('views/index.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("index replaced!")
-                fs.writeFile('views/index.ejs', result, 'utf8', function (err) {
-                    if (err) return console.log(err);
-                });
-             });
-            fs.readFile('views/listing-details.ejs', 'utf8', function (err,data) {
-               if (err) return console.log(err);
-               var result = data.replace(/login/g, 'my-account');
-               //console.log("listing-details replaced!")
-               fs.writeFile('views/listing-details.ejs', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-               });
-            });
-            fs.readFile('views/manage-users.ejs', 'utf8', function (err,data) {
-               if (err) return console.log(err);
-               var result = data.replace(/login/g, 'my-account');
-               //console.log("manage-users replaced!")
-               fs.writeFile('views/manage-users.ejs', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-               });
-            });
-            fs.readFile('views/shop.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("shop replaced!")
-                fs.writeFile('views/shop.ejs', result, 'utf8', function (err) {
-                    if (err) return console.log(err);
-                });
-            });
-            fs.readFile('views/shop-details.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("shop-details replaced!")
-                fs.writeFile('views/shop-details.ejs', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-                });
-            });
-            fs.readFile('views/trailer-details.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("trailer-details replaced!")
-                 fs.writeFile('views/trailer-details.ejs', result, 'utf8', function (err) {
-                    if (err) return console.log(err);
-                 });
-             });
-            fs.readFile('views/trailers.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("trailers replaced!")
-                fs.writeFile('views/trailers.ejs', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-                });
-            });
-            fs.readFile('views/trucks.ejs', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("trucks replaced!")
-                fs.writeFile('views/trucks.ejs', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-                });
-            });
-            fs.readFile('Front End/about-us.html', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("about-us replaced!")
-                fs.writeFile('Front End/about-us.html', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-                });
-            });
-            fs.readFile('Front End/cart.html', 'utf8', function (err,data) {
-                if (err) return console.log(err);
-                var result = data.replace(/login/g, 'my-account');
-                //console.log("cart replaced!")
-                fs.writeFile('Front End/cart.html', result, 'utf8', function (err) {
-                   if (err) return console.log(err);
-                });
-            });
-
-            //redirect user back to the home page
-            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
-
-            helper1.getConnection().query(itemString, (err,result,fields) =>{
-                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
-                    res.render('index.ejs', {
-                        items: result,
-                        listings: trucks
-                    })
-                })
-            })
+            res.redirect("../Front End/adminHome.html")
         }
     })
+})
+
+router.get('/adminOrders', function(req,res) {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (error, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                if(error) {
+                  console.log(error)
+                  res.status(500).end()
+                }else{
+                     const queryString = "SELECT orders.OrderId as id, orders.EmailAddress as email, orders.ShippingId as ship, shippingdetails.ShippingId as ships, shippingdetails.ShippingAddress as address FROM orders, shippingdetails WHERE orders.ShippingId = shippingdetails.ShippingId"
+
+                      helper1.getConnection().query(queryString, (err, result, fields) => {
+                            res.render('adminOrders.ejs',{
+                                orders: result,
+                                // part: parts
+                            })            
+                    })
+                }
+            }else{
+                res.redirect('../index');
+            }
+        }
+    })
+})
+
+router.get('/adminOrder/:id', (req,res) =>{
+    const orderId = req.params.id
+    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    console.log("Order lookup")
+
+    helper1.getConnection().query(queryUser, [orderId], (error, accountresult) => {
+
+        //if the user is not logged in, it will direct them to the login page
+        if(!req.session || !req.session.username) {
+            res.redirect('../login.html');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                if(error) {
+                  console.log(error)
+                  res.status(500).end()
+                }else{
+            
+                helper1.getConnection().query(queryString, [orderId], (err, result, fields) => {
+                    const billString = "SELECT orders.OrderId as id, orders.PaymentId, paymentdetails.PaymentId, paymentdetails.BillingAddress as address, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.BillingCountry as country, paymentdetails.BillingCity as city, paymentdetails.BillingState as state, paymentdetails.BillingPhone as phone, orders.EmailAddress as email FROM orders, paymentdetails WHERE orders.OrderId = ? AND orders.PaymentId = paymentdetails.PaymentId"
+                    helper1.getConnection().query(billString, [orderId], (err, billing, fields) => {
+                        const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone from orders, shippingdetails WHERE orders.OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
+                        console.log(billing)
+                        helper1.getConnection().query(shipString, [orderId], (err, shipping, fields) => {
+                        console.log(shipping)
+                            res.render('order-template.ejs', {
+                                items: result,
+                                bills: billing,
+                                ships: shipping
+                            })
+                        })
+                    })
+                })
+            }}else{
+                 console.log(req.session.username)
+                 console.log(accountresult[0].email)
+                 res.redirect('../error-500.html');
+            }
+        }
+    })
+    
+})
+
+router.post('/adminSearchParts', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var searchName = req.body.searchBar
+                const trimSearch = '%'+searchName+'%'
+                
+                const connection = helper1.getConnection()
+                const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts WHERE ItemName LIKE ? OR PartDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
+
+                    connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          
+                          res.redirect('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from parts"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminParts.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
+})
+
+router.post('/adminSearchTrucks', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var searchName = req.body.searchBar
+                const trimSearch = '%'+searchName+'%'
+                
+                const connection = helper1.getConnection()
+                const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks WHERE TruckName LIKE ? OR TruckDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
+
+                    connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          
+                          res.redirect('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from trucks"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminTrucks.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
+})
+
+router.post('/adminSearchTrailers', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var searchName = req.body.searchBar
+                const trimSearch = '%'+searchName+'%'
+                
+                const connection = helper1.getConnection()
+                const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers WHERE TrailerName LIKE ? OR TrailerDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
+
+                    connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          
+                          res.redirect('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from trailers"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminTrailers.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
+})
+
+router.post('/adminSortParts', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var sortType = req.body.sortlist
+                var queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts"
+                console.log(sortType)
+                if(sortType === 'name'){
+                    queryString = queryString + " ORDER BY ItemName"
+                }
+                else if(sortType === 'new'){
+                    queryString = queryString + " ORDER BY PartId DESC"
+                }
+                else if(sortType === 'price'){
+                    queryString = queryString + " ORDER BY PriceUSD"
+                }
+
+                queryString = queryString + " LIMIT 10"
+
+                helper1.getConnection().query(queryString, (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          res.sendStatus(500);
+                          res.redirect('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from parts"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminParts.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+                
+                
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
+})
+
+router.post('/adminSortTrucks', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var sortType = req.body.sortlist
+                var queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks"
+                console.log(sortType)
+                if(sortType === 'name'){
+                    queryString = queryString + " ORDER BY TruckName"
+                }
+                else if(sortType === 'new'){
+                    queryString = queryString + " ORDER BY TruckId DESC"
+                }
+                else if(sortType === 'mile'){
+                    queryString = queryString + " ORDER BY KMPerHour"
+                }
+
+                queryString = queryString + " LIMIT 10"
+
+                helper1.getConnection().query(queryString, (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          res.sendStatus(500);
+                          res.render('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from trucks"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminTrucks.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+                
+                
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
+})
+
+router.post('/adminSortTrailers', (req,res) => {
+    
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            for(var x = 0; x < accountresult.length; x++){
+                if(req.session.username === accountresult[x].email){
+                    var isAdmin = true;
+                }
+            }
+            if(isAdmin){
+                
+                var sortType = req.body.sortlist
+                var queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers"
+                console.log(sortType)
+                if(sortType === 'name'){
+                    queryString = queryString + " ORDER BY TrailerName"
+                }
+                else if(sortType === 'new'){
+                    queryString = queryString + " ORDER BY TrailerId DESC"
+                }
+                else if(sortType === 'length'){
+                    queryString = queryString + " ORDER BY Length DESC"
+                }
+                else if(sortType === 'width'){
+                    queryString = queryString + " ORDER BY Width DESC"
+                }
+
+                queryString = queryString + " LIMIT 10"
+
+                helper1.getConnection().query(queryString, (err,result,fields) => {
+                        if(err){
+                          console.log("Failed to query: " +err)
+                          res.sendStatus(500);
+                          res.redirect('/Front End/error-500.html')
+                          return
+                        }
+                        fs.writeFile('test.json', result, function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                                     })
+                        console.log(result)
+
+                        const partString = "SELECT * from trailers"
+
+                        helper1.getConnection().query(partString, (err,results,fields) => {
+                            res.render('adminTrailers.ejs', {
+                                stripePublicKey: stripePublicKey,
+                                items: result,
+                                parts: results
+                            })
+                        })
+                    })
+                
+                
+            }else{
+                 res.redirect('../index');
+            }
+        }
+    })   
 })
 
 
