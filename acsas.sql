@@ -26,7 +26,7 @@ CREATE TABLE `accounts` (
   `EmailAddress` varchar(40) NOT NULL,
   `FirstName` varchar(20) NOT NULL,
   `LastName` varchar(25) NOT NULL,
-  `Password` varchar(30) NOT NULL,
+  `Password` varchar(60) NOT NULL,
   `EmailList` tinyint(1) NOT NULL,
   `PhoneNumber` varchar(15) NOT NULL,
   PRIMARY KEY (`EmailAddress`)
