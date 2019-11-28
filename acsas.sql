@@ -54,7 +54,7 @@ CREATE TABLE `admins` (
   `EmailAddress` varchar(45) NOT NULL,
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
-  `Password` varchar(45) DEFAULT NULL,
+  `Password` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`EmailAddress`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -65,7 +65,7 @@ CREATE TABLE `admins` (
 
 LOCK TABLES `admins` WRITE;
 /*!40000 ALTER TABLE `admins` DISABLE KEYS */;
-INSERT INTO `admins` VALUES ('example@gmail.com','Bob','Test','test123');
+INSERT INTO `admins` VALUES ('example@gmail.com','Bob','Test','example123');
 /*!40000 ALTER TABLE `admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
