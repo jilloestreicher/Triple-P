@@ -117,7 +117,7 @@
                                 <div class="cart-menu">
                                     <ul>
                                         <li> 
-                                             <a href="#"> <i class="fa fa-shopping-cart"></i><span class="cart-quantity">(0)</span></a>
+                                            <a href="#"> <i class="fa fa-shopping-cart"></i><span class="cart-quantity">(0)</span></a>
                                             <div class="cart-items">
                                                 <ul>
                                                     <li>
@@ -229,18 +229,15 @@
                 <div class="shop-tab-area">
                     <!-- Shop tabs -->
                     <ul class="shop-tab" role="tablist">
-                        <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">NEW ARRIVAL</a></li>
+                        <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">NEW ARRIVALS</a></li>
                         <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">BEST SELLING</a></li>
                     </ul>
                     <!-- Shop Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="tab1">
                             
-                            <!-- TODO: PROPERLY QUERY:
-                                 FOR NEWEST ARRIVAL, GET THE BIGGEST ID -->
-                            
                             <div class="row">
-                                <% items.forEach(function(item){ %>
+                                <% news.forEach(function(item){ %>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="single-list-shop" data-item-id="<%= item.id %>">
                                         <!-- single product start -->
@@ -274,13 +271,11 @@
                                 <% }) %>
                             </div>
                         </div>
-                        
-                         <!-- TODO: PROPERLY QUERY:
-                                 FOR TOP SELLING, QUERY ORDERS TO FIND MOST POPULAR ITEM -->
+                    
                         
                         <div role="tabpanel" class="tab-pane fade" id="tab3">
                             <div class="row">
-                                <% items.forEach(function(item){ %>
+                                <% pops.forEach(function(item){ %>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="single-list-shop" data-item-id="<%= item.id %>">
                                             <!-- single product start -->
@@ -349,7 +344,7 @@
                                             <a href="/trucks/<%= truck.id%>">
                                                 <img src="../Front End/img/product/<%=truck.imgName %>.jpg" style="width:212.5px;height:159px;" alt="">
                                                 <span class="post-date">
-                                                    19 <br> Sept
+                                                    <%=truck.date %>
                                                 </span>
                                             </a>
                                         </div>
@@ -392,7 +387,8 @@
                                     <!-- book now content start -->
                                     <div class="book-now-title">
                                         <h2> Have a truck or trailer you want to sell? </h2>
-                                        <a href="../Front End/postlisting.html" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i> LIST IT NOW</a>
+                                        <a href="/postListing" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i> List a Truck</a>
+                                        <a href="/postListing" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i> List a Trailer</a>
                                     </div>
                                     <!-- book now content end -->
                                 </div>
