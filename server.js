@@ -341,7 +341,7 @@ fs.readFile('items.json', function(error, data){
     if(error) {
       res.status(500).end()
     } else{
-        res.render('postListing.ejs', {
+        res.render('postlisting.ejs', {
             stripePublicKey: stripePublicKey,
             items: JSON.parse(data)
         })
