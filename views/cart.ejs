@@ -112,14 +112,13 @@
                             </div>
                             <!-- welcome message end -->
                         </div>
-                        <div class="col-md-5">
+                       <div class="col-md-3">
+                            <!-- Search Bar -->
                             <div class="header-top-menu">
-
-                                <!-- top social start -->
-
-                                <!-- top social end -->
-                                <!-- cart menu start -->
-
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -145,10 +144,10 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="/index">Home</a></li>
+                                            <li><a href="/index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="../Front End/about-us.html">About us</a></li>
-                                            <li class="has-mega"><a href="shop">Parts</a></li>
+                                            <li><a href="/shop/1">Parts</a></li>
                                             <li><a href="/trucks">Trucks</a></li>
                                             <li><a href="/trailers">Trailers</a></li>
                                             <!-- single menu -->
@@ -186,7 +185,7 @@
                         <div class="page-title-menu">
                             <ul>
                                 <li><a href="/index">Home</a> <span> / </span> </li>
-                                <li><a href="cart">cart</a></li>
+                                <li><a href="/cart">cart</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -198,7 +197,7 @@
         <!-- cart area start -->
 
 
-        </form>
+        
         <section class="container content-section">
             <h2 class="section-header">CART</h2>
             <div class="cart-row">
@@ -277,7 +276,7 @@
                                 <ul>
                                     <li><a href="/index">Home</a></li>
                                     <li><a href="../Front%20End/about-us.html">About Us</a></li>
-                                    <li><a href="/shop">Shop Parts</a></li>
+                                    <li><a href="/shop/1">Shop Parts</a></li>
                                     <li><a href="/trucks">Shop Trucks & Trailers</a></li>
                                 </ul>
                             </div>
