@@ -349,6 +349,19 @@ fs.readFile('items.json', function(error, data){
 })
 })
 
+app.get('/postTrailer', function(req,res){
+fs.readFile('items.json', function(error, data){
+    if(error) {
+      res.status(500).end()
+    } else{
+        res.render('posttrailer.ejs', {
+            stripePublicKey: stripePublicKey,
+            items: JSON.parse(data)
+        })
+    }
+})
+})
+
 app.get('/changeLoginButton', function(req,res){
     if(req.session && req.session.username) {
         //all file headers must show Logout instead of Login
