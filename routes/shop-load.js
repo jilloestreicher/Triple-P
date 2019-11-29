@@ -462,7 +462,7 @@ router.get('/trailers/:id', (req, res) =>{
     
     //Query DB. First param is query, second is callback
     //[] is used for filling in the ?
-    connection.query(queryString, [truckId], (err, result, fields) => {
+    connection.query(queryString, [trailerId], (err, result, fields) => {
         
         //check if we succesfully queried
         if(err){
