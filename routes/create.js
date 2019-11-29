@@ -49,7 +49,7 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     const time = req.body.time
     const email = "test@test.com"
 
-    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp + interval ? day)"
+    const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
     helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
         if(err) {
@@ -81,15 +81,16 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     const trailerWidth = req.body.trailer_width
     const trailerDesc = req.body.trailer_desc
     const trailerColor = req.body.trailer_color
+    const time = req.body.time
     var picture = req.file.filename
     picture = picture.slice(0,-4)
 
     //FIX TO PULL FROM SESSION
     const email = "example2@gmail.com"
 
-    const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture) values (?,?,?,?,?,?,?,?)"
+    const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
-    helper1.getConnection().query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture], (err,results,fields) => {
+    helper1.getConnection().query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture, time], (err,results,fields) => {
         if(err) {
             console.log("Insert failed")
             console.log(trailerName)
