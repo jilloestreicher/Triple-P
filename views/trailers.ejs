@@ -106,12 +106,21 @@
                             </div>
                             <!-- welcome message end -->
                         </div>
+                        <div class="col-md-3">
+                            <!-- Search Bar -->
+                            <div class="header-top-menu">
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
+                            </div>
+                        </div>
                         <div class="col-md-5">
                             <div class="header-top-menu">
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
-                                        <li> <input type="text" placeholder="Search..">
+                                        <li> 
                                             <a href="#"> <i class="fa fa-shopping-cart"></i><span class="cart-quantity">(0)</span></a>
                                             <div class="cart-items">
                                                 <ul>
@@ -119,23 +128,21 @@
                                                         <div class="subtotal">
                                                             <div class="subtotal-title">
                                                                 <h3>subtotal  <span class="cart-total-price">$0</span></h3>
-
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="cart-btns">
                                                             <span class="default-btn">
-                                                                <a href="cart">view cart</a>
+                                                                <a href="/cart">view cart</a>
                                                             </span>
                                                             <span class="default-btn pull-right">
-                                                                <a href="../public/checkout.html">checkout</a>
+                                                                <a href="../Front%20End/checkout.html">checkout</a>
                                                             </span>
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
                                         </li>
                                     </ul>
 
@@ -166,12 +173,12 @@
                                     <nav>
                                         <ul>
                                             <!-- single menu -->
-                                            <li class="has-sub"><a href="index.html">Home</a></li>
+                                            <li><a href="/index">Home</a></li>
                                             <!-- single menu -->
                                             <li><a href="../Front End/about-us.html">About us</a></li>
-                                            <li class="has-mega"><a href="shop">Parts</a></li>
-                                            <li><a href="trucks">Trucks</a></li>
-                                            <li><a href="trailers">Trailers</a></li>
+                                            <li><a href="/shop/1">Parts</a></li>
+                                            <li><a href="/trucks">Trucks</a></li>
+                                            <li><a href="/trailers">Trailers</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -197,8 +204,8 @@
                         <!-- page title menu start -->
                         <div class="page-title-menu">
                             <ul>
-                                <li><a href="index">Home</a> <span> / </span> </li>
-                                <li><a href="trailers">Trailers</a></li>
+                                <li><a href="/index">Home</a> <span> / </span> </li>
+                                <li><a href="/trailers">Trailers</a></li>
                             </ul>
                         </div>
                         <!-- page title menu end -->
@@ -218,22 +225,7 @@
                             </form>
                         <!-- shop bar start -->
                         <div class="shop-bar">
-                            <!-- shop tab bar start -->
-                            <div class="shop-nav width-33 pull-left">
-                                <ul class="shop-navigation" role="tablist">
-                                    <li role="presentation" class="active gird">
-                                        <a href="#gird" aria-controls="gird" role="tab" data-toggle="tab">
-                                            <i class="fa fa-th"></i>
-                                        </a>
-                                    </li>
-                                    <li role="presentation" class="list">
-                                        <a href="#list" aria-controls="list" role="tab" data-toggle="tab">
-                                            <i class="fa fa-bars"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- shop tab bar end -->
+                            
                             <!-- shop sort start -->
                             <div class="sort-by width-33 pull-left text-center">
                                 <label>Sort By: </label>
@@ -249,21 +241,10 @@
                             </div>
                             </div>
                             <!-- shop sort end -->
-                            <!-- shop show product start -->
-                            <div class="limit-product width-33 pull-left text-right">
-                                <label>Show: </label>
-                                <select name="show">
-                                    <option value="#" selected>9</option>
-                                    <option value="#">12</option>
-                                    <option value="#">24</option>
-                                    <option value="#">36</option>
-                                </select>
-                            </div>
-                            <!-- shop show product end -->
+                            
                         </div>
                         <!-- shop bar end -->
                     </div>
-                </div>
                 
                 <div class="row">
                     <!-- shop tab content start -->
@@ -326,6 +307,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         <!-- shop area end -->
         <!-- quick book area start -->
         <div class="quick-book-area">
@@ -338,7 +320,7 @@
                                    <!-- book now content start -->
                                     <div class="book-now-title">
                                         <h2>HAVE A TRAILER YOU WANT TO SELL?</h2>
-                                        <a href="#" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i>LIST IT NOW</a>
+                                        <a href="/postTrailer" class="book-now-btn"> <i class="icofont icofont-long-arrow-right"></i>List a Trailer</a>
                                     </div>
                                     <!-- book now content end -->
                                 </div>
@@ -384,11 +366,11 @@
                             <!-- footer menu start -->
                             <div class="footer-top-menu">
                                 <ul>
-                                    <li><a href="index">Home</a></li>
+                                    <li><a href="/index">Home</a></li>
                                     <li><a href="../Front End/about-us.html">About Us</a></li>
-                                    <li><a href="shop">Shop Parts</a></li>
-                                    <li><a href="trucks">Shop Trucks</a></li>
-                                    <li><a href="trailers">Shop Trailers</a></li>
+                                    <li><a href="/shop">Shop Parts</a></li>
+                                    <li><a href="/trucks">Shop Trucks</a></li>
+                                    <li><a href="/trailers">Shop Trailers</a></li>
                                 </ul>
                             </div>
                             <!-- footer menu end -->
