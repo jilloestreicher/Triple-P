@@ -31,6 +31,7 @@ const fs = require("fs")
 const stripe = require('stripe')(stripeSecretKey)
 const cookies = require('cookies')
 const session = require('express-session')
+const passwordHash = require('password-hash')
 
 //Set up the express engine
 
@@ -244,19 +245,7 @@ app.post('/loginCheck', [
                     req.session.username = username;
 
                     //redirect user back to the home page
-                    const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-                    const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
-
-
-
-                    helper1.getConnection().query(itemString, (err,result,fields) =>{
-                        helper1.getConnection().query(truckString, (err,trucks,fields) =>{
-                            res.render('index.ejs', {
-                                items: result,
-                                listings: trucks
-                            })
-                        })
-                    })
+                    res.redirect('/index')
                 }
             })
         }
@@ -289,17 +278,7 @@ app.post('/logout', function(req, res) {
                 });
             });
 
-            const itemString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-            const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah from trucks;"
-
-            helper1.getConnection().query(itemString, (err,result,fields) =>{
-                helper1.getConnection().query(truckString, (err,trucks,fields) =>{
-                    res.render('index.ejs', {
-                        items: result,
-                        listings: trucks
-                    })
-                })
-            })
+            res.redirect('/index')
           }
         });
     }
