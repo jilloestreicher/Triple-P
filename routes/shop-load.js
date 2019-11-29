@@ -19,9 +19,10 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 router.get('/index', function(req,res){
     const connection = helper1.getConnection()
-    const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts LIMIT 4;"
-    
-    connection.query(queryString, (err,result,fields) =>{
+    const newString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts ORDER BY PartId DESC LIMIT 4;"
+    const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) LIMIT 4;"
+   
+    connection.query(newString, (err,result,fields) =>{
        if(err){
         console.log("Failed to query: " +err)
         res.sendStatus(500);
@@ -29,13 +30,16 @@ router.get('/index', function(req,res){
         return
        }
         
-       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName from trucks;"
+       connection.query(popString, (err,resultp,fields) =>{
+       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName, date(ListingTime) as date from trucks;"
         
        connection.query(truckString, (err,trucks,fields) =>{
            res.render('index.ejs', {
-               items: result,
+               news: result,
+               pops: resultp,
                listings: trucks
            })
+       })
        })
     })
 })
@@ -376,7 +380,7 @@ router.get('/order/:id', (req,res) =>{
             }else{
                  console.log(req.session.username)
                  console.log(accountresult[0].email)
-                 //res.redirect('../error-500.html');
+                 res.redirect('../error-500.html');
             }
         }
     })
