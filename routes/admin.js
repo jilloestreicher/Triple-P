@@ -852,7 +852,7 @@ router.post('/adminCheck', [
      var hashedPassword = ' ';
 
     //get hashed version of password
-    var queryPass = "SELECT Password FROM accounts WHERE EmailAddress = ?";
+    var queryPass = "SELECT Password FROM admins WHERE EmailAddress = ?";
 
      helper1.getConnection().query(queryPass, [username], (err,results, field) =>{
             if(err){
