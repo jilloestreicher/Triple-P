@@ -211,9 +211,9 @@ app.post('/loginCheck', [
     helper1.getConnection().query(queryPass, [username], (err,results, field) =>{
         if(err){
           console.log("Failed to query: " +err)
-          console.log(results)
+          res.redirect('/Front End/error-500.html')
           return
-        }else{
+        } else{
             var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
 
             if(correctPass === true){
@@ -227,9 +227,9 @@ app.post('/loginCheck', [
             helper1.getConnection().query(queryString, [username, hashedPassword], (err,results, field) =>{
                 if(err){
                   console.log("Failed to query: " +err)
-                  console.log(results)
+                  res.redirect('/Front End/error-500.html')
                   return
-                }
+                } 
 
                 if(results.length == 0 || results == null){
                     console.log("Failed Login")
@@ -323,6 +323,13 @@ fs.readFile('items.json', function(error, data){
         const queryUser = "SELECT EmailAddress as email FROM admins"
 
         helper1.getConnection().query(queryUser, (err, accountresult) => {
+            
+            if(err){
+              console.log("Failed to query: " +err)
+              res.redirect('/Front End/error-500.html')
+              return
+            } 
+            
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
                 res.redirect('../login.html');
@@ -345,6 +352,13 @@ fs.readFile('items.json', function(error, data){
         const queryUser = "SELECT EmailAddress as email FROM admins"
 
         helper1.getConnection().query(queryUser, (err, accountresult) => {
+            
+            if(err){
+              console.log("Failed to query: " +err)
+              res.redirect('/Front End/error-500.html')
+              return
+            } 
+            
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
                 res.redirect('../login.html');
