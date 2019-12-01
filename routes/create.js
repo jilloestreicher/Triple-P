@@ -47,7 +47,7 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     var picture = req.file.filename
     picture = picture.slice(0,-4)
     const time = req.body.time
-    const email = "test@test.com"
+    const email = req.session.username;
 
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
@@ -58,7 +58,7 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
             return
         }
 
-        res.end()
+        res.redirect('/Front End/list-sucess.html')
     })
 })
 
@@ -75,7 +75,7 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     picture = picture.slice(0,-4)
 
     //FIX TO PULL FROM SESSION
-    const email = "example2@gmail.com"
+    const email = req.session.username;
 
     const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
@@ -91,7 +91,7 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
             }
         }
 
-        res.end()
+        res.redirect('/Front End/list-sucess.html')
     })
 
 })
@@ -180,7 +180,6 @@ router.post('/collect_shippingandbilling', (req,res) => {
             return
         }
 
-        res.end()
     })
 
     console.log("Collecting billing info")
