@@ -319,10 +319,19 @@ app.get('/postListing', function(req,res){
 fs.readFile('items.json', function(error, data){
     if(error) {
       res.status(500).end()
-    } else{
-        res.render('postlisting.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: JSON.parse(data)
+    }else{
+        const queryUser = "SELECT EmailAddress as email FROM admins"
+
+        helper1.getConnection().query(queryUser, (err, accountresult) => {
+            //if the user is not logged in, it will direct them to the login page
+            if(!req.session || !req.session.username) {
+                res.redirect('../login.html');
+            }else{
+                res.render('postlisting.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: JSON.parse(data)
+                })
+            }
         })
     }
 })
@@ -332,10 +341,19 @@ app.get('/postTrailer', function(req,res){
 fs.readFile('items.json', function(error, data){
     if(error) {
       res.status(500).end()
-    } else{
-        res.render('posttrailer.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: JSON.parse(data)
+    }else{
+        const queryUser = "SELECT EmailAddress as email FROM admins"
+
+        helper1.getConnection().query(queryUser, (err, accountresult) => {
+            //if the user is not logged in, it will direct them to the login page
+            if(!req.session || !req.session.username) {
+                res.redirect('../login.html');
+            }else{
+                res.render('posttrailer.ejs', {
+                    stripePublicKey: stripePublicKey,
+                    items: JSON.parse(data)
+                })
+            }
         })
     }
 })
