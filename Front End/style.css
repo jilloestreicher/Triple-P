@@ -205,6 +205,7 @@ p.error {
 /*========================================*/
 
 .header-top-menu {
+    margin-top: 15px;
     text-align: right;
 }
 .top-social,
