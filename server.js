@@ -70,8 +70,12 @@ var attempts = 3;
 
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
+    
+    console.log('Starting Purchase')
+    
   fs.readFile('items.json', function(error, data) {
     if (error) {
+      console.log('Purchase Fail')
       res.status(500).end()
       return
     } 
@@ -332,7 +336,7 @@ fs.readFile('items.json', function(error, data){
             
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
-                res.redirect('../login.html');
+                res.redirect('../Front End/login.html');
             }else{
                 res.render('postlisting.ejs', {
                     stripePublicKey: stripePublicKey,
@@ -361,7 +365,7 @@ fs.readFile('items.json', function(error, data){
             
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
-                res.redirect('../login.html');
+                res.redirect('../Front End/login.html');
             }else{
                 res.render('posttrailer.ejs', {
                     stripePublicKey: stripePublicKey,
