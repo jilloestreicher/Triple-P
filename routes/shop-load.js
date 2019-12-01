@@ -336,29 +336,38 @@ fs.readFile('./items.json', function(error, data){
 })
 
 router.get('/manage-users', function(req,res){
-        
-        const connection = helper1.getConnection()
-        const queryString = "SELECT EmailAddress AS email, FirstName AS first, LastName as last, PhoneNumber as phone from accounts;"
-        
-        
-        connection.query(queryString, (err,result,fields) => {
-            if(err){
-                console.log("Failed to query: " +err)
-                res.redirect('/Front End/error-500.html')
-                return
-            }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
-            
-            res.render('manage-users.ejs', {
-            stripePublicKey: stripePublicKey,
-            items: result
+
+    const queryUser = "SELECT EmailAddress as email FROM admins"
+
+    helper1.getConnection().query(queryUser, (err, accountresult) => {
+        //if the user is not logged in, it will direct them back to the home page
+        if(!req.session || !req.session.username) {
+            res.redirect('../index');
+        }else{
+            const connection = helper1.getConnection()
+            const queryString = "SELECT EmailAddress AS email, FirstName AS first, LastName as last, PhoneNumber as phone from accounts;"
+
+
+            connection.query(queryString, (err,result,fields) => {
+                if(err){
+                  console.log("Failed to query: " +err)
+                  res.sendStatus(500);
+                  res.render('/Front End/error-500.html')
+                  return
+                }
+                fs.writeFile('test.json', result, function(err){
+                  if(err) throw err;
+                  console.log('Saved');
+                             })
+                console.log(result)
+
+                res.render('manage-users.ejs', {
+                stripePublicKey: stripePublicKey,
+                items: result
+                })
             })
-        })
-        
+        }
+    })
 })
 
 router.get('/parts/:id', (req, res) =>{
