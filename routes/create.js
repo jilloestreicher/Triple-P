@@ -52,19 +52,8 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
     helper1.getConnection().query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
-        if(err) {
-            console.log("Insert failed")
-            console.log(truckName)
-            console.log(truckBrand)
-            console.log(truckKM)
-            console.log(truckFuel)
-            console.log(truckDrive)
-            console.log(truckColor)
-            console.log(email)
-            console.log(truckDesc)
-            console.log(picture)
-            console.log(err)
-            //res.sendStatus(500)
+        if(err){
+            console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -91,17 +80,8 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
     helper1.getConnection().query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture, time], (err,results,fields) => {
-        if(err) {
-            console.log("Insert failed")
-            console.log(trailerName)
-            console.log(trailerBrand)
-            console.log(trailerLength)
-            console.log(trailerWidth)
-            console.log(trailerDesc)
-            console.log(trailerColor)
-            console.log(email)
-            console.log(picture)
-            console.log(err)
+        if(err){
+            console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -131,16 +111,8 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
     const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand, Picture) values (?,?,?,?,?,?)"
 
     helper1.getConnection().query(queryString, [partName, partBrand, partPrice, partDesc, partQuan, picture], (err, results, fields) => {
-        if(err) {
-            console.log("Insert failed")
-            console.log(results)
-            console.log(partName)
-            console.log(partDesc)
-            console.log(partPrice)
-            console.log(partBrand)
-            console.log(partQuan)
-            console.log(picture)
-            //res.sendStatus(500)
+        if(err){
+            console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -174,15 +146,8 @@ router.post('/create_account', [
     const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList, PhoneNumber) values (?,?,?,?,?,?)"
 
     helper1.getConnection().query(queryString, [accountFirst, accountLast, accountEmail, hashedPassword, elist, accountPhone], (err, results, fields) => {
-        if(err) {
-            console.log("Insert failed")
-            console.log(results)
-            console.log(accountFirst)
-            console.log(accountLast)
-            console.log(accountEmail)
-            console.log(accountPhone)
-            console.log(accountPass)
-
+        if(err){
+            console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -209,18 +174,9 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const queryString2 = "insert into shippingdetails (ShippingAddress, ShippingAddress2, ShippingFirstName, ShippingLastName, ShippingCountry, ShippingCity, ShippingState, ShippingZIP, ShippingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?)"
 
     helper1.getConnection().query(queryString2, [address, address2, firstName, lastName, country, town, state, zip, phoneNumber, emailAddress], (err, results, fields) => {
-        if(err) {
-            console.log("Insert failed ship")
-            console.log(emailAddress)
-             console.log(firstName)
-             console.log(lastName)
-                        console.log(country)
-                        console.log(state)
-                        console.log(town)
-                        console.log(address)
-                        console.log(address2)
-                        console.log(phoneNumber)
-            res.sendStatus(500)
+        if(err){
+            console.log("Failed to query: " +err)
+            res.redirect('/Front End/error-500.html')
             return
         }
 
@@ -247,23 +203,9 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const queryString = "insert into paymentdetails (CardNum, CardMonth, CardYear, SecurityCode, BillingAddress, BillingAddress2, BillingFirstName, BillingLastName, BillingCountry, BillingCity, BillingState, BillingZIP, BillingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
     helper1.getConnection().query(queryString, [cardNum, cardMonth, cardYear, securityCode, billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
-        if(err) {
-            console.log("Insert failed bill")
-            console.log(emailAddress)
-             console.log(cardNum)
-             console.log(cardMonth)
-                        console.log(cardYear)
-                        console.log(securityCode)
-                        console.log(billingFirstName)
-                        console.log(billingLastName)
-                        console.log(billingCountry)
-                        console.log(billingState)
-                        console.log(billingTown)
-                   console.log(billingZip)
-                   console.log(billingAddress)
-                    console.log(billingAddress2)
-                    console.log(billingPhone)
-            res.sendStatus(500)
+        if(err){
+            console.log("Failed to query: " +err)
+            res.redirect('/Front End/error-500.html')
             return
         }
 

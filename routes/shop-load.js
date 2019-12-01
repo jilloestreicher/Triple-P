@@ -24,16 +24,29 @@ router.get('/index', function(req,res){
    
     connection.query(newString, (err,result,fields) =>{
        if(err){
-        console.log("Failed to query: " +err)
-        res.sendStatus(500);
-        res.render('/Front End/error-500.html')
-        return
-       }
+            console.log("Failed to query: " +err)
+            res.redirect('/Front End/error-500.html')
+            return
+        }
         
        connection.query(popString, (err,resultp,fields) =>{
+           
+           if(err){
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
+            }
+           
        const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName, date(ListingTime) as date from trucks;"
         
        connection.query(truckString, (err,trucks,fields) =>{
+           
+           if(err){
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
+            }
+           
            res.render('index.ejs', {
                news: result,
                pops: resultp,
@@ -56,10 +69,9 @@ fs.readFile('./items.json', function(error, data){
         
         connection.query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              //res.render('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -70,6 +82,13 @@ fs.readFile('./items.json', function(error, data){
             const partString = "SELECT * from parts"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('shop.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -95,11 +114,9 @@ router.get('/shop/:offset', function(req,res){
         
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              console.log(offs)
-              //res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -110,6 +127,13 @@ router.get('/shop/:offset', function(req,res){
             const partString = "SELECT * from parts"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('shop.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -145,10 +169,9 @@ fs.readFile('./items.json', function(error, data){
         
         connection.query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              //res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -159,6 +182,13 @@ fs.readFile('./items.json', function(error, data){
             const partString = "SELECT * from trucks"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trucks.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -184,11 +214,9 @@ fs.readFile('./items.json', function(error, data){
         
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              console.log(offs)
-              //res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -199,6 +227,13 @@ fs.readFile('./items.json', function(error, data){
             const partString = "SELECT * from trucks"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trucks.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -223,10 +258,9 @@ fs.readFile('./items.json', function(error, data){
         
         connection.query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              //res.sendStatus(500);
-              res.redirect('../Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -237,6 +271,13 @@ fs.readFile('./items.json', function(error, data){
             const partString = "SELECT * from trailers"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trailers.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -262,10 +303,9 @@ fs.readFile('./items.json', function(error, data){
         
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              //res.sendStatus(500);
-              res.redirect('../Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -276,6 +316,13 @@ fs.readFile('./items.json', function(error, data){
             const partString = "SELECT * from trailers"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trailers.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -296,10 +343,9 @@ router.get('/manage-users', function(req,res){
         
         connection.query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.render('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -332,11 +378,10 @@ router.get('/parts/:id', (req, res) =>{
         
         //check if we succesfully queried
         if(err){
-            console.log("Failed to query: " +err)
-            res.sendStatus(500);
-            res.render('/Front End/error-500.html')
-            return
-        }
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
+            }
         console.log("Sucessfully queried parts")
         
         res.render('shop-details.ejs', {
@@ -356,6 +401,13 @@ router.get('/order/:id', (req,res) =>{
     console.log("Order lookup")
 
     helper1.getConnection().query(queryUser, [orderId], (err, accountresult) => {
+        
+        if(err){
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
+            }
+        
 
         //if the user is not logged in, it will direct them to the login page
         if(!req.session || !req.session.username) {
@@ -363,11 +415,35 @@ router.get('/order/:id', (req,res) =>{
         }else{
             if(req.session.username === accountresult[0].email){
                 helper1.getConnection().query(queryString, [orderId], (err, result, fields) => {
+                    
+                    if(err){
+                        console.log("Failed to query: " +err)
+                        res.redirect('/Front End/error-500.html')
+                        return
+                    }
+                    
+                    
                     const billString = "SELECT orders.OrderId as id, orders.PaymentId, paymentdetails.PaymentId, paymentdetails.BillingAddress as address, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.BillingCountry as country, paymentdetails.BillingCity as city, paymentdetails.BillingState as state, paymentdetails.BillingPhone as phone, orders.EmailAddress as email FROM orders, paymentdetails WHERE orders.OrderId = ? AND orders.PaymentId = paymentdetails.PaymentId"
                     helper1.getConnection().query(billString, [orderId], (err, billing, fields) => {
+                        
+                        if(err){
+                            console.log("Failed to query: " +err)
+                            res.redirect('/Front End/error-500.html')
+                            return
+                        }
+                        
+                        
                         const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone from orders, shippingdetails WHERE orders.OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
                         console.log(billing)
                         helper1.getConnection().query(shipString, [orderId], (err, shipping, fields) => {
+                            
+                        if(err){
+                            console.log("Failed to query: " +err)
+                            res.redirect('/Front End/error-500.html')
+                            return
+                        }    
+                            
+                            
                         console.log(shipping)
                             res.render('order-template.ejs', {
                                 items: result,
@@ -401,6 +477,13 @@ router.get('/orderHistory/:accounts', (req, res) => {
     }else{
         if(req.session.username === account){
             helper1.getConnection().query(queryString, [account], (err, result, fields) => {
+                
+                if(err){
+                   console.log("Failed to query: " +err)
+                   res.redirect('/Front End/error-500.html')
+                   return
+                 }    
+                
             
                 res.render('order-history.ejs',{
                     orders: result,
@@ -433,11 +516,10 @@ router.get('/trucks/:id', (req, res) =>{
         
         //check if we succesfully queried
         if(err){
-            console.log("Failed to query: " +err)
-            res.sendStatus(500);
-            res.render('/Front End/error-500.html')
-            return
-        }
+          console.log("Failed to query: " +err)
+          res.redirect('/Front End/error-500.html')
+          return
+        } 
         console.log("Sucessfully queried trucks")
         
         res.render('listing-details.ejs', {
@@ -466,11 +548,10 @@ router.get('/trailers/:id', (req, res) =>{
         
         //check if we succesfully queried
         if(err){
-            console.log("Failed to query: " +err)
-            res.sendStatus(500);
-            res.render('/Front End/error-500.html')
-            return
-        }
+          console.log("Failed to query: " +err)
+          res.redirect('/Front End/error-500.html')
+          return
+        } 
         console.log("Sucessfully queried trailers")
         
         res.render('trailer-details.ejs', {
@@ -492,8 +573,29 @@ router.get('/my-account/:email', (req, res) => {
     
     
     connection.query(accountString, [accountEmail], (err, resulta, fields) => {
+        
+        if(err){
+          console.log("Failed to query: " +err)
+          res.redirect('/Front End/error-500.html')
+          return
+        } 
+        
         connection.query(truckString, [accountEmail], (err, resultt, fields) => {
+            
+            if(err){
+              console.log("Failed to query: " +err)
+              res.redirect('/Front End/error-500.html')
+              return
+            } 
+            
             connection.query(trailerString, [accountEmail], (err, resultr, fields) => {
+                
+                if(err){
+                  console.log("Failed to query: " +err)
+                  res.redirect('/Front End/error-500.html')
+                  return
+                } 
+                
                 res.render('my-account.ejs' , {
                     accounts: resulta,
                     trucks: resultt,

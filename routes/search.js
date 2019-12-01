@@ -25,11 +25,10 @@ router.post('/search', (req,res) =>{
         
         helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
-            }
+            console.log("Failed to query: " +err)
+            res.redirect('/Front End/error-500.html')
+            return
+        }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
               console.log('Saved');
@@ -38,6 +37,13 @@ router.post('/search', (req,res) =>{
            const partString = "SELECT * from parts"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('shop.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -56,10 +62,9 @@ router.post('/searchTrailers', (req,res) =>{
     
     helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -69,6 +74,13 @@ router.post('/searchTrailers', (req,res) =>{
             const partString = "SELECT * from trailers"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trailers.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -87,10 +99,9 @@ router.post('/searchTrucks', (req,res) =>{
     
     helper1.getConnection().query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -100,6 +111,13 @@ router.post('/searchTrucks', (req,res) =>{
             const partString = "SELECT * from trucks"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trucks.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -128,10 +146,9 @@ router.post('/sort', (req,res) =>{
     
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -142,6 +159,13 @@ router.post('/sort', (req,res) =>{
             const partString = "SELECT * from parts"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('shop.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -170,10 +194,9 @@ router.post('/sortTrucks', (req,res) =>{
     
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.render('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -184,6 +207,13 @@ router.post('/sortTrucks', (req,res) =>{
             const partString = "SELECT * from trucks"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trucks.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
@@ -215,10 +245,9 @@ router.post('/sortTrailers', (req,res) =>{
     
     helper1.getConnection().query(queryString, (err,result,fields) => {
             if(err){
-              console.log("Failed to query: " +err)
-              res.sendStatus(500);
-              res.redirect('/Front End/error-500.html')
-              return
+                console.log("Failed to query: " +err)
+                res.redirect('/Front End/error-500.html')
+                return
             }
             fs.writeFile('test.json', result, function(err){
               if(err) throw err;
@@ -229,6 +258,13 @@ router.post('/sortTrailers', (req,res) =>{
             const partString = "SELECT * from trailers"
             
             helper1.getConnection().query(partString, (err,results,fields) => {
+                
+                if(err){
+                    console.log("Failed to query: " +err)
+                    res.redirect('/Front End/error-500.html')
+                    return
+                }
+                
                 res.render('trailers.ejs', {
                     stripePublicKey: stripePublicKey,
                     items: result,
