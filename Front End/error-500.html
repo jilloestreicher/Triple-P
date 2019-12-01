@@ -86,7 +86,7 @@
             <div class="header-top">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <!-- welcome message start -->
                             <div class="welcome-msg">
                                 <ul>
@@ -97,7 +97,16 @@
                             </div>
                             <!-- welcome message end -->
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-3">
+                            <!-- Search Bar -->
+                            <div class="header-top-menu">
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="header-top-menu">
 
                                 <!-- top social start -->
@@ -106,8 +115,6 @@
                                 <!-- cart menu start -->
                                 <div class="cart-menu">
                                     <ul>
-
-                                        <li> <input type="text" placeholder="Search..">
                                             <a href="#"> <i class="fa fa-shopping-cart"></i>(2)</a>
 
                                             <div class="cart-items">
