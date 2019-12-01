@@ -85,11 +85,6 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
             res.redirect('/Front End/error-500.html')
             return
         }
-        else{
-            if(req.file) {
-                res.json(req.file);
-            }
-        }
 
         res.redirect('/Front End/list-sucess.html')
     })

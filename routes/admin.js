@@ -1017,7 +1017,7 @@ router.get('/adminOrders', function(req,res) {
 
     helper1.getConnection().query(queryUser, (error, accountresult) => {
         
-        if(err){
+        if(error){
             console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
