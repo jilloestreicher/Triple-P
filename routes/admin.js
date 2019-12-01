@@ -387,7 +387,7 @@ router.post('/remove_user', (req,res) => {
                     }
                     else{
                         console.log("Deleted User")
-                        res.end()
+                        res.redirect('/manage-users')
                     }
                 })
             }else{
@@ -859,7 +859,7 @@ router.post('/delete_part', (req,res) => {
                         else{
 
                         console.log("Deleted Part")
-                        res.end()
+                        res.redirect('/adminParts')
                     }
                         })
                     }
@@ -905,7 +905,7 @@ router.post('/delete_truck', (req,res) => {
                 else{
 
                 console.log("Deleted Truck")
-                res.end()
+                res.redirect('/adminTrucks')
             }})}else{
                 res.redirect('../index');
                 }
@@ -949,7 +949,7 @@ router.post('/delete_trailer', (req,res) => {
                 else{
 
                 console.log("Deleted Trailer")
-                res.end()
+                res.redirect('/adminTrailers')
             }})}else{
                 res.redirect('../index');
             }
