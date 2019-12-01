@@ -120,14 +120,24 @@ function quantityChanged(event) {
 }
 
 function addToCartClicked(event) {
-    console.log("Adding to Cart")
-    var button = event.target
-    var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
-    var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
-    var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
-    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    var id = shopItem.dataset.itemId
     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
+    console.log("Adding to Cart")
+    if(pageCheck == "View Cart"){
+        var button = event.target
+        var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
+        var title = shopItem.getElementsByClassName('product-name')[0].innerText
+        var price = shopItem.getElementsByClassName('price-rating')[0].innerText
+        var imageSrc = shopItem.getElementsByClassName('product-img')[0].src
+        var id = shopItem.dataset.itemId
+    }
+    else{
+        var button = event.target
+        var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
+        var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
+        var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+        var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+        var id = shopItem.dataset.itemId
+    }
      if(pageCheck == "POST A LISTING"){
      id=9999
      var full = {
