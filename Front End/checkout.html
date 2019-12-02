@@ -133,37 +133,7 @@
                                     <li class="has-sub"><a href="index">Home</a></li>
                                     <!-- single menu -->
                                     <li><a href="about-us.html">About us</a></li>
-                                    <li class="has-mega"><a href="#">Parts<i class="icofont icofont-simple-down"></i></a>
-                                        <!-- mega-menu start -->
-                                        <div class="mega-menu">
-                                                    <span>
-                                                        <a href="shop">Parts</a>
-                                                        <a href="cart.html">View Cart</a>
-                                                        <a href="checkout.html">Checkout</a>
-                                                        <a href="create-account.html">Create Account</a>
-                                                    </span>
-                                            <span>
-                                                        <a href="edit-order-admin.html">Admin - Edit Order</a>
-                                                        <a href="editItem.html">Edit Item</a>
-                                                        <a href="EditListing.html">Edit Listing</a>
-                                                        <a href="postlisting.html">Post Listing</a>
-                                                    </span>
-                                            <span>
-                                                        <a href="listing-details.html">Listing Details</a>
-                                                        <a href="login.html">Login</a>
-                                                        <a href="manage-users">Admin - Manage Users</a>
-                                                        <a href="search-results.html">Search Results</a>
-                                                    </span>
-                                            <span>
-                                                        <a href="order-history.html">Order History</a>
-                                                        <a href="order-template.html">Order Template</a>
-                                                        <a href="postItem.html">Post Items</a>
-                                                        <a href="error-404.html">Error 404</a>
-                                                        <a href="error-500.html">Error 500</a>
-                                                    </span>
-                                        </div>
-                                        <!-- mega-menu end -->
-                                    </li>
+                                    <li><a href="shop">Parts</a></li>
                                     <li><a href="trucks">Trucks</a></li>
                                     <li><a href="trailers">Trailers</a></li>
                                 </ul>
@@ -217,27 +187,21 @@
                     <div class="client-address-form">
                         <form id="form" action="/collect_shippingandbilling" method="POST">
                             <!-- input name -->
-                            <input name="firstName" type="text" placeholder="First name">
+                            <input name="firstName" type="text" placeholder="First name" required>
                             <!-- input name -->
-                            <input name="lastName" type="text" placeholder="Last name">
+                            <input name="lastName" type="text" placeholder="Last name" required>
                             <!--input email address-->
-                            <input name="emailAddress" type="email" placeholder="email address">
+                            <input name="emailAddress" type="email" placeholder="email address" required>
                             <!-- input phone number -->
-                            <input name="phoneNumber" type="text" placeholder="Phone number">
+                            <input name="phoneNumber" type="text" placeholder="Phone number" required>
                             <!-- input country name -->
-                            <input name="country" type="text" placeholder="country">
-                            <input name="address" type="text" placeholder="Address">
-                            <input name="address2" type="text" placeholder="Address2">
+                            <input name="country" type="text" placeholder="country" required>
+                            <input name="address" type="text" placeholder="Address" required>
+                            <input name="address2" type="text" placeholder="Address2" required>
                             <!-- input state -->
-                            <input name="town" type="text" placeholder="town/city">
-                            <!-- input your details address -->
-                            <input name="state" type="text" placeholder="state">
-                            <!-- input town/city -->
-                            <input name="zip" type="text" placeholder="zipcode">
-                            <!-- input town/city -->
-
-
-
+                            <input name="town" type="text" placeholder="town/city" required>
+                            <input name="state" type="text" placeholder="state" required>
+                            <input name="zip" type="text" placeholder="zipcode" required>
                     </div>
                 </div>
                 <!-- client address end -->
@@ -252,31 +216,16 @@
                     <!-- section title start -->
                     <!-- client address form -->
                     <div class="client-address-form">
-                        <input name="billingFirstName" type="text" placeholder="First Name">
-                        <!-- input phone number -->
-                        <input name="billingLastName" type="text" placeholder="Last Name">
-                        <!-- input country name -->
-                        <input name="billingEmailAddress" type="text" placeholder="Email Address">
-                        <!-- input name -->
-                        <input name="billingPhone" type="text" placeholder="Phone Number">
-                        <!-- input your details address -->
-                        <input name="billingCountry" type="text" placeholder="country">
-                        <input name="billingAddress" type="text" placeholder="Billing Address">
-                        <!-- input name -->
-                        <input name="billingAddress2" type="text" placeholder="Billing Address2">
-                        <!--input email address-->
-                        <input name="billingTown" type="text" placeholder="town/city">
-                        <!-- input town/city -->
-
-                        <!-- input state -->
-                        <input name="billingState" type="text" placeholder="state">
-                        <!-- input town/city -->
-
-                        <input name="billingZip" type="text" placeholder="Zipcode">
-                        <!-- input town/city -->
-
-
-
+                        <input name="billingFirstName" type="text" placeholder="First Name" required>
+                        <input name="billingLastName" type="text" placeholder="Last Name"required>
+                        <input name="billingEmailAddress" type="text" placeholder="Email Address" required>
+                        <input name="billingPhone" type="text" placeholder="Phone Number" required>
+                        <input name="billingCountry" type="text" placeholder="country" required>
+                        <input name="billingAddress" type="text" placeholder="Billing Address" required>
+                        <input name="billingAddress2" type="text" placeholder="Billing Address2" required>
+                        <input name="billingTown" type="text" placeholder="town/city" required>
+                        <input name="billingState" type="text" placeholder="state" required>
+                        <input name="billingZip" type="text" placeholder="Zipcode" required>
                     </div>
                 </div>
                 <!-- client address end -->
