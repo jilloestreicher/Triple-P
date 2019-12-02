@@ -89,6 +89,7 @@ var stripeHandler = StripeCheckout.configure({
                 cartItems.removeChild(cartItems.firstChild)
             }
             updateCartTotal()
+            ClearAll()
             res.redirect('../index')
         }).catch(function(error) {
             console.error(error)
