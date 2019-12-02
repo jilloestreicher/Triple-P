@@ -127,7 +127,7 @@ function quantityChanged(event) {
 function addToCartClicked(event) {
     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
     console.log("Adding to Cart")
-    if(pageCheck == "View Cart"){
+    if(pageCheck == "View Par"){
         var button = event.target
         var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
         var title = shopItem.getElementsByClassName('product-name')[0].innerText
