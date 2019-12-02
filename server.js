@@ -488,4 +488,15 @@ app.get('/changeLoginButton', function(req,res){
     }
 })
 
+app.get('/accountButton', function(req,res){
+    //if the user is not logged in, it will direct them to the login page
+    if(!req.session || !req.session.username) {
+        res.redirect('../Front End/login.html');
+    }else{
+        var a = "../my-account/";
+        a += req.session.username;
+        res.redirect(a);
+    }
+})
+
 app.listen(3000)
