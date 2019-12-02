@@ -66,7 +66,7 @@ app.use(adminRouter)
 
 //Define number of login attempts allowed
 
-var attempts = 3;
+var attempts = 4;
 
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
