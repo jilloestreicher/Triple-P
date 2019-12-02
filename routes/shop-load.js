@@ -152,7 +152,7 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
-        var sql = "delete from trucks where current_timestamp() < RemoveTime"
+        var sql = "delete from trucks where current_timestamp() > RemoveTime"
 
         const connection = helper1.getConnection()
         connection.query(sql, 1, (error, results, fields) => {
