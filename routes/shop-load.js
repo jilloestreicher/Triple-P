@@ -252,7 +252,16 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
+        var sql = "delete from trailers where current_timestamp() > RemoveTime"
+
         const connection = helper1.getConnection()
+        connection.query(sql, 1, (error, results, fields) => {
+          if (error)
+            return console.error(error.message);
+
+          console.log('Deleted Row(s):', results.affectedRows);
+        });
+       
         const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10;"
         
         
