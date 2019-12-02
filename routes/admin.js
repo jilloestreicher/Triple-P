@@ -1070,7 +1070,7 @@ router.get('/adminOrder/:id', (req,res) =>{
 
     helper1.getConnection().query(queryUser, [orderId], (error, accountresult) => {
         
-        if(err){
+        if(error){
             console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
@@ -1078,7 +1078,7 @@ router.get('/adminOrder/:id', (req,res) =>{
 
         //if the user is not logged in, it will direct them to the login page
         if(!req.session || !req.session.username) {
-            res.redirect('../login.html');
+            res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
