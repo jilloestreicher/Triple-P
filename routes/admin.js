@@ -979,6 +979,13 @@ router.post('/adminCheck', [
             }
          
             else{
+                if(results.length == 0 || results == null){
+                console.log("Failed Login")
+                
+                res.redirect('../Front End/adminlogin.html');
+        
+
+            }else{
                 var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
                 if(correctPass === true){
                     hashedPassword = results[0].Password;
@@ -997,7 +1004,7 @@ router.post('/adminCheck', [
                     if(results.length === 0 || results == null){
                         console.log("Failed Login")
 
-                        res.redirect('adminCheck');
+                        res.redirect('/adminCheck');
 
                     }else{
                         console.log("Successful Login");
@@ -1006,6 +1013,7 @@ router.post('/adminCheck', [
                         res.redirect("../Front End/adminHome.html")
                     }
                 })
+            }
             }
      })
 })
