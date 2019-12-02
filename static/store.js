@@ -31,7 +31,7 @@ function ready() {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
-
+    console.log("Adding Buttons")
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (var i = 0; i < addToCartButtons.length; i++) {
         console.log("Button Added")
@@ -53,7 +53,9 @@ var stripeHandler = StripeCheckout.configure({
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
         for (var i = 0; i < cartRows.length; i++) {
             var cartRow = cartRows[i]
+            console.log(cartRow)
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+            console.log(quantityElement)
             var quantity = quantityElement.value
             var id = cartRow.dataset.itemId
 
@@ -79,12 +81,15 @@ var stripeHandler = StripeCheckout.configure({
         }).then(function(data) {
            // alert(data.message)
            console.log("Reached")
-           document.forms["payment"].submit();
+            if(document.getElementById('payment') != null){
+              document.forms["payment"].submit();
+            }
             var cartItems = document.getElementsByClassName('cart-items')[0]
             while (cartItems.hasChildNodes()) {
                 cartItems.removeChild(cartItems.firstChild)
             }
             updateCartTotal()
+            res.redirect('../index')
         }).catch(function(error) {
             console.error(error)
         })
@@ -177,7 +182,7 @@ function addItemToCart(title, price, imageSrc, id) {
     }
      var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
     
-
+        console.log(pageCheck)
          if(pageCheck == "POST A LISTING"){
               var chekr = document.getElementById("carto").value
     var cartRowContents = `
@@ -236,6 +241,7 @@ function updateCartTotal() {
     var numItems = $('.cart-row').length;
     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
     if (pageCheck == "CART"){}
+    else if(pageCheck == "checkout"){}
     else if(pageCheck == "POST A LISTING"){
      var total = 0
         var quantityElement = document.getElementById('carto').value
@@ -253,10 +259,11 @@ function updateCartTotal() {
 function populateCart() {
     if (CheckBrowser()) {
         var key = "";
-
+        console.log(localStorage.length)
         var i = 0;
         for (i = 0; i <= localStorage.length-1; i++) {
             key = localStorage.key(i);
+            console.log(key)
             if (key == "lsid"){
             }
             else{
@@ -270,10 +277,15 @@ function populateCart() {
                 var cartItems = document.getElementsByClassName('cart-items')[0]
                 var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
  var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
-     if(pageCheck == "CHECKOUT"){
+                
+    console.log(pageCheck)            
+                
+     if(pageCheck == "checkout"){
+                    console.log("correct")              
                  var cartRowContents = `
 
                          <div class="cart-item cart-column">
+                            <img class="cart-item-image" src="${parser.imageSrc}" width="100" height="100">
                              <span class="cart-item-title">${parser.title}</span>
                          </div>
                          <span class="pull-right"><span class="cart-price cart-column">${parser.price}</span></span>
@@ -281,7 +293,9 @@ function populateCart() {
                              <input class="cart-quantity-input" type="number" value="1" style="text-align: center">
                                 <p></p>
                          </div>`
+                    console.log(cartRow)
                      cartRow.innerHTML = cartRowContents
+                    console.log(cartRow.innerHTML)
                      cartItems.append(cartRow)
 
                      cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
@@ -316,6 +330,7 @@ function populateCart() {
 
 function allOnloads(){
     populateCart();
+    ready();
     fetch('/checkSession');
     fetch('/changeLoginButton');
 }
