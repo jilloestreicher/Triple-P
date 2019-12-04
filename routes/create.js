@@ -1,8 +1,7 @@
 require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const helper = require ('../helper.js');
-var helper1 = new helper();
+var helper1 = require ('./helper.js');
 const express = require('express')
 const { check, validationResult } = require('express-validator');
 const { body } = require('express-validator');
@@ -179,10 +178,6 @@ router.post('/collect_shippingandbilling', (req,res) => {
 
     console.log("Collecting billing info")
 
-    const cardNum = 555
-    const cardMonth = "cardmonth"
-    const cardYear = "cardyear"
-    const securityCode = "eseccode"
     const billingEmailAddress = req.session.username;
     const billingFirstName = req.body.billingFirstName
     const billingLastName = req.body.billingLastName
@@ -194,9 +189,9 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const billingAddress2 = req.body.billingAddress2
     const billingPhone = req.body.billingPhone
 
-    const queryString = "insert into paymentdetails (CardNum, CardMonth, CardYear, SecurityCode, BillingAddress, BillingAddress2, BillingFirstName, BillingLastName, BillingCountry, BillingCity, BillingState, BillingZIP, BillingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    const queryString = "insert into paymentdetails (BillingAddress, BillingAddress2, BillingFirstName, BillingLastName, BillingCountry, BillingCity, BillingState, BillingZIP, BillingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?)"
 
-    helper1.getConnection().query(queryString, [cardNum, cardMonth, cardYear, securityCode, billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
+    helper1.getConnection().query(queryString, [billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')

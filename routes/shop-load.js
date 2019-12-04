@@ -1,8 +1,7 @@
 require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const helper = require ('../helper.js');
-var helper1 = new helper();
+var helper1 = require ('./helper.js');
 const express = require('express')
 const { check, validationResult } = require('express-validator');
 const { body } = require('express-validator');
@@ -20,7 +19,7 @@ router.use(bodyParser.urlencoded({extended: false}))
 router.get('/index', function(req,res){
     const connection = helper1.getConnection()
     const newString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts ORDER BY PartId DESC LIMIT 4;"
-    const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) LIMIT 4;"
+    const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) DESC LIMIT 4;"
    
     connection.query(newString, (err,result,fields) =>{
        if(err){
@@ -37,7 +36,7 @@ router.get('/index', function(req,res){
                 return
             }
            
-       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName, date(ListingTime) as date from trucks;"
+       const truckString = "SELECT TruckId AS id, TruckName as name, EmailAddress as email, TruckDescription as blah, Picture as imgName, ListingTime as date from trucks;"
         
        connection.query(truckString, (err,trucks,fields) =>{
            
@@ -252,7 +251,7 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
-        var sql = "delete from trailers where current_timestamp() > RemoveTime"
+       var sql = "delete from trailers where current_timestamp() > RemoveTime"
 
         const connection = helper1.getConnection()
         connection.query(sql, 1, (error, results, fields) => {
@@ -261,7 +260,6 @@ fs.readFile('./items.json', function(error, data){
 
           console.log('Deleted Row(s):', results.affectedRows);
         });
-       
         const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10;"
         
         
@@ -491,7 +489,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
 
     //if the user is not logged in, it will direct them to the login page
     if(!req.session || !req.session.username) {
-        res.redirect('../login.html');
+        res.redirect('../Front End/login.html');
     }else{
         if(req.session.username === account){
             helper1.getConnection().query(queryString, [account], (err, result, fields) => {

@@ -1,8 +1,7 @@
 require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const helper = require ('../helper.js');
-var helper1 = new helper();
+var helper1 = require ('./helper.js');
 const express = require('express')
 const { check, validationResult } = require('express-validator');
 const { body } = require('express-validator');
