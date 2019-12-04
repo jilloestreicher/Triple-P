@@ -28,22 +28,24 @@ router.post('/edit_Part', [
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
-        //if the user is not logged in, it will direct them back to the home page
         if(err){
             console.log("Failed to query: " +err)
             res.redirect('/Front End/error-500.html')
             return
         }
         
+        //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
             res.redirect('../index');
         }else{
+            //check if the user is an admin
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
                 }
             }
             if(isAdmin){
+                //Retrieve the data from the update form and execute the query to update
                 const partId = req.body.part_id
                 const partName = req.body.part_name
                 const partPrice = req.body.part_price
@@ -61,11 +63,11 @@ router.post('/edit_Part', [
                         return
                     }
 
-                    console.log("Updated Part")
                     connection.end()
                     res.redirect('/adminParts')
                 })
             }else{
+                
                 res.redirect('../index');
             }
         }
@@ -97,6 +99,7 @@ router.post('/edit_truck', [
         if(!req.session || !req.session.username) {
             res.redirect('../index');
         }else{
+            //check if the user is an admin
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -104,6 +107,7 @@ router.post('/edit_truck', [
             }
             if(isAdmin){
     
+                //Retrieve the information from the update form
                 const truckId = req.body.truck_id
                 const truckName = req.body.truck_name
                 const truckDrive = req.body.truck_drive
@@ -122,8 +126,6 @@ router.post('/edit_truck', [
                         res.redirect('/Front End/error-500.html')
                         return
                     }
-
-                    console.log("Updated Truck")
                     connection.end()
                     res.redirect('/adminTrucks')
                 })
@@ -159,12 +161,15 @@ router.post('/edit_trailer', [
         if(!req.session || !req.session.username) {
             res.redirect('../index');
         }else{
+            //check to see if the user is an Admin
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
                 }
             }
             if(isAdmin){
+                
+                //Retrieve the information from the update form
                 const trailerId = req.body.trailer_id
                 const trailerName = req.body.trailer_name
                 const trailerDesc = req.body.trailer_desc
@@ -183,7 +188,6 @@ router.post('/edit_trailer', [
                         return
                     }
 
-                    console.log("Updated Trailer")
                     connection.end()
                     res.redirect('/adminTrailers')
                 })
@@ -195,7 +199,6 @@ router.post('/edit_trailer', [
 })
 
 router.get('/editPart/:id', (req, res) =>{
-    console.log("Finding part with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -216,6 +219,7 @@ router.get('/editPart/:id', (req, res) =>{
         if(!req.session || !req.session.username) {
             res.redirect('../index');
         }else{
+            //check if the user is an admin
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -236,8 +240,7 @@ router.get('/editPart/:id', (req, res) =>{
                         res.redirect('/Front End/error-500.html')
                         return
                     }
-                    console.log("Successfully queried parts")
-
+                    
                     connection.end()
                     res.render('editPart.ejs', {
                         items: result
@@ -252,7 +255,6 @@ router.get('/editPart/:id', (req, res) =>{
 })
 
 router.get('/editTruck/:id', (req, res) =>{
-    console.log("Finding truck with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -273,6 +275,7 @@ router.get('/editTruck/:id', (req, res) =>{
         if(!req.session || !req.session.username) {
             res.redirect('../index');
         }else{
+            //check if the user is an admin
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -293,8 +296,6 @@ router.get('/editTruck/:id', (req, res) =>{
                         res.redirect('/Front End/error-500.html')
                         return
                     }
-                    console.log("Sucsessfully queried trucks")
-
                     connection.end()
                     res.render('editListing.ejs', {
                         items: result
@@ -309,7 +310,6 @@ router.get('/editTruck/:id', (req, res) =>{
 })
 
 router.get('/editTrailer/:id', (req, res) =>{
-    console.log("Finding trailer with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -349,7 +349,6 @@ router.get('/editTrailer/:id', (req, res) =>{
                        res.redirect('/Front End/error-500.html')
                         return
                     }
-                    console.log("Successfully queried trailers")
 
                     connection.end()
                     res.render('editTrailer.ejs', {
@@ -394,7 +393,6 @@ router.post('/remove_user', (req,res) => {
                         return
                     }
                     else{
-                        console.log("Deleted User")
                         connection.end()
                         res.redirect('/manage-users')
                     }
@@ -434,7 +432,7 @@ fs.readFile('./items.json', function(error, data){
                       res.status(500).end()
                     } else{
 
-                        
+                        //Get only 10 trucks per page 
                         const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
 
 
@@ -444,11 +442,6 @@ fs.readFile('./items.json', function(error, data){
                               res.redirect('/Front End/error-500.html')
                               return
                             }
-                            fs.writeFile('test.json', result, function(err){
-                              if(err) throw err;
-                              console.log('Saved');
-                                         })
-                            console.log(result)
 
                             const partString = "SELECT * from trucks"
 
@@ -506,6 +499,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 }else{
                     
+                    //Get the number of pages required at the bottom of the page
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10 OFFSET ?;"
 
@@ -516,11 +510,6 @@ fs.readFile('./items.json', function(error, data){
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trucks"
 
@@ -577,7 +566,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 }else{
 
-                    
+                    //Get only 10 results
                     const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10;"
 
 
@@ -587,11 +576,6 @@ fs.readFile('./items.json', function(error, data){
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trailers"
 
@@ -648,6 +632,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 } else{
                     
+                    //Get only 10 results per page and the total number of pages required
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10 OFFSET ?;"
 
@@ -658,11 +643,6 @@ fs.readFile('./items.json', function(error, data){
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trailers"
 
@@ -720,7 +700,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 } else{
 
-                    
+                    //Only get 10 items per page
                     const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10;"
 
                     connection.query(queryString, (err,result,fields) => {
@@ -729,11 +709,6 @@ fs.readFile('./items.json', function(error, data){
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from parts"
 
@@ -791,7 +766,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 } else{
 
-                    
+                    //Get only 10 results per page and the required amount of pages
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10 OFFSET ?;"
 
@@ -802,11 +777,6 @@ fs.readFile('./items.json', function(error, data){
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from parts"
 
@@ -860,6 +830,7 @@ router.post('/delete_part', (req,res) => {
                 const partId = req.body.part_id.trim()
                 
 
+                //Deleting any orders that have the indicated part in them as well as the part
                 const queryString = "DELETE from parts where PartId = ?"
                 const orderString = "DELETE from orderedparts where PartId = ?"
                 connection.query(orderString, [partId], (err,result,fields) => {
@@ -877,7 +848,6 @@ router.post('/delete_part', (req,res) => {
                         }
                         else{
 
-                        console.log("Deleted Part")
                         connection.end()
                         res.redirect('/adminParts')
                     }
@@ -925,7 +895,6 @@ router.post('/delete_truck', (req,res) => {
                 }
                 else{
 
-                console.log("Deleted Truck")
                 connection.end()
                 res.redirect('/adminTrucks')
             }})}else{
@@ -971,7 +940,6 @@ router.post('/delete_trailer', (req,res) => {
                 }
                 else{
 
-                console.log("Deleted Trailer")
                 connection.end()
                 res.redirect('/adminTrailers')
             }})}else{
@@ -1004,8 +972,8 @@ router.post('/adminCheck', [
             }
          
             else{
+                //Make sure there are results otherwise the passwordHash module will fail
                 if(results.length == 0 || results == null){
-                console.log("Failed Login")
                 
                 res.redirect('../Front End/adminlogin.html');
         
@@ -1020,6 +988,7 @@ router.post('/adminCheck', [
 
                 var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
 
+                
                 connection.query(queryString, [username, hashedPassword], (err,results, field) =>{
                     if(err){
                         console.log("Failed to query: " +err)
@@ -1027,12 +996,11 @@ router.post('/adminCheck', [
                         return
                     }
                     if(results.length === 0 || results == null){
-                        console.log("Failed Login")
+                        
 
                         res.redirect('/adminCheck');
 
                     }else{
-                        console.log("Successful Login");
                         req.session.username = username;
                         connection.end()
                         res.redirect("../Front End/adminHome.html")
@@ -1099,10 +1067,10 @@ router.get('/adminOrder/:id', (req,res) =>{
     const orderId = req.params.id
     
     const connection = helper1.getConnection()
+    //Parts in the order
     const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
-    console.log("Order lookup")
 
     connection.query(queryUser, [orderId], (error, accountresult) => {
         
@@ -1135,7 +1103,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                         return
                     }
                     
-                    
+                    //Billing info for order
                     const billString = "SELECT orders.OrderId as id, orders.PaymentId, paymentdetails.PaymentId, paymentdetails.BillingAddress as address, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.BillingCountry as country, paymentdetails.BillingCity as city, paymentdetails.BillingState as state, paymentdetails.BillingPhone as phone, orders.EmailAddress as email FROM orders, paymentdetails WHERE orders.OrderId = ? AND orders.PaymentId = paymentdetails.PaymentId"
                     connection.query(billString, [orderId], (err, billing, fields) => {
                         
@@ -1145,7 +1113,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                             return
                         }
                         
-                        
+                        //Shipping info for order
                         const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone from orders, shippingdetails WHERE orders.OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
                         console.log(billing)
                         connection.query(shipString, [orderId], (err, shipping, fields) => {
@@ -1204,7 +1172,7 @@ router.post('/adminSearchParts', (req,res) => {
                 var searchName = req.body.searchBar
                 const trimSearch = '%'+searchName+'%'
                 
-                
+                //Search by name, description, or brand
                 const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts WHERE ItemName LIKE ? OR PartDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
 
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
@@ -1213,11 +1181,6 @@ router.post('/adminSearchParts', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from parts"
 
@@ -1271,7 +1234,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                 var searchName = req.body.searchBar
                 const trimSearch = '%'+searchName+'%'
                 
-                
+                //Search by name, description, or brand
                 const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks WHERE TruckName LIKE ? OR TruckDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
 
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
@@ -1280,11 +1243,6 @@ router.post('/adminSearchTrucks', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trucks"
 
@@ -1338,7 +1296,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                 var searchName = req.body.searchBar
                 const trimSearch = '%'+searchName+'%'
                 
-                
+                //Search by name, description, or brand
                 const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers WHERE TrailerName LIKE ? OR TrailerDescription LIKE ? OR Brand LIKE ? LIMIT 10;"
 
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
@@ -1347,11 +1305,6 @@ router.post('/adminSearchTrailers', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trailers"
 
@@ -1403,6 +1356,8 @@ router.post('/adminSortParts', (req,res) => {
             if(isAdmin){
                 
                 var sortType = req.body.sortlist
+                
+                //Since you can only sort by one 
                 var queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts"
                 console.log(sortType)
                 if(sortType === 'name'){
@@ -1423,11 +1378,6 @@ router.post('/adminSortParts', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from parts"
 
@@ -1501,11 +1451,6 @@ router.post('/adminSortTrucks', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trucks"
 
@@ -1582,11 +1527,6 @@ router.post('/adminSortTrailers', (req,res) => {
                             res.redirect('/Front End/error-500.html')
                             return
                         }
-                        fs.writeFile('test.json', result, function(err){
-                          if(err) throw err;
-                          console.log('Saved');
-                                     })
-                        console.log(result)
 
                         const partString = "SELECT * from trailers"
 

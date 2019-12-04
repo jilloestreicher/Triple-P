@@ -34,8 +34,7 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 router.post('/create_listing', upload.single("file"), (req,res) => {
 
-    console.log("Creating Listing")
-
+    //Retrieve information from update form
     const truckName = req.body.truck_name
     const truckBrand = req.body.truck_brand
     const truckKM = req.body.truck_km
@@ -64,6 +63,7 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
 
 router.post('/trailer_listing', upload.single("file"), (req,res) => {
 
+    //Retrieve information from update form
     const trailerName = req.body.trailer_name
     const trailerBrand = req.body.trailer_brand
     const trailerLength = req.body.trailer_length
@@ -74,7 +74,6 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     var picture = req.file.filename
     picture = picture.slice(0,-4)
 
-    //FIX TO PULL FROM SESSION
     const email = req.session.username;
 
     const connection = helper1.getConnection()
@@ -95,8 +94,7 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
 
 router.post('/create_part', upload.single("file"),  (req,res) => {
 
-    console.log("Creating Part")
-
+    //Retrieve information from form
     const partName = req.body.part_name
     const partDesc = req.body.part_desc
     const partPrice = req.body.part_price * 100
@@ -114,6 +112,7 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
             res.redirect('/Front End/error-500.html')
             return
         }
+        //Add the new part to items file
         fs.writeFile('../items.json', results, function(err){
               if(err) throw err;
               console.log('Saved');
@@ -159,9 +158,8 @@ router.post('/create_account', [
 
 router.post('/collect_shippingandbilling', (req,res) => {
 
-    console.log("Collecting shipping info")
+    //get email from session
     const emailAddress = req.session.username;
-   // const emailAddress = req.body.emailAddress
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const country = req.body.country
@@ -184,7 +182,6 @@ router.post('/collect_shippingandbilling', (req,res) => {
 
     })
 
-    console.log("Collecting billing info")
 
     const billingEmailAddress = req.session.username;
     const billingFirstName = req.body.billingFirstName

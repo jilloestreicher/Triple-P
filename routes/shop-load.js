@@ -18,6 +18,8 @@ router.use(bodyParser.urlencoded({extended: false}))
 
 router.get('/index', function(req,res){
     const connection = helper1.getConnection()
+    
+    //Only get 4 parts for both front page queries
     const newString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts ORDER BY PartId DESC LIMIT 4;"
     const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) DESC LIMIT 4;"
    
@@ -72,11 +74,6 @@ fs.readFile('./items.json', function(error, data){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
             
             const partString = "SELECT * from parts"
             
@@ -117,11 +114,6 @@ router.get('/shop/:offset', function(req,res){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
             
             const partString = "SELECT * from parts"
             
@@ -152,6 +144,7 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
+        //For removing out of date listings
         var sql = "delete from trucks where current_timestamp() > RemoveTime"
 
         const connection = helper1.getConnection()
@@ -173,11 +166,7 @@ fs.readFile('./items.json', function(error, data){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
+        
             
             const partString = "SELECT * from trucks"
             
@@ -219,11 +208,7 @@ fs.readFile('./items.json', function(error, data){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
+            
             
             const partString = "SELECT * from trucks"
             
@@ -254,6 +239,7 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
+       //For deleteing out of date listings
        var sql = "delete from trailers where current_timestamp() > RemoveTime"
 
         const connection = helper1.getConnection()
@@ -272,11 +258,7 @@ fs.readFile('./items.json', function(error, data){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
+            
             
             const partString = "SELECT * from trailers"
             
@@ -318,11 +300,7 @@ fs.readFile('./items.json', function(error, data){
                 res.redirect('/Front End/error-500.html')
                 return
             }
-            fs.writeFile('test.json', result, function(err){
-              if(err) throw err;
-              console.log('Saved');
-                         })
-            console.log(result)
+        
             
             const partString = "SELECT * from trailers"
             
@@ -367,11 +345,7 @@ router.get('/manage-users', function(req,res){
                   res.render('/Front End/error-500.html')
                   return
                 }
-                fs.writeFile('test.json', result, function(err){
-                  if(err) throw err;
-                  console.log('Saved');
-                             })
-                console.log(result)
+                
 
                 connection.end()
                 res.render('manage-users.ejs', {
@@ -384,7 +358,6 @@ router.get('/manage-users', function(req,res){
 })
 
 router.get('/parts/:id', (req, res) =>{
-    console.log("Finding part with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -404,7 +377,6 @@ router.get('/parts/:id', (req, res) =>{
                 res.redirect('/Front End/error-500.html')
                 return
             }
-        console.log("Sucessfully queried parts")
         
         connection.end()
         res.render('shop-details.ejs', {
@@ -423,7 +395,7 @@ router.get('/order/:id', (req,res) =>{
     const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM orders WHERE OrderId = ?"
 
-    console.log("Order lookup")
+    
 
     connection.query(queryUser, [orderId], (err, accountresult) => {
         
@@ -492,11 +464,11 @@ router.get('/orderHistory/:accounts', (req, res) => {
 
     const connection = helper1.getConnection()
     const account = req.params.accounts
+    //Use distinct to not get duplicates since we are searching by orderedpart
     const queryString = "SELECT DISTINCT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND orders.ShippingId = shippingdetails.ShippingId"
     
     const quanString = "SELECT parts.ItemName as name, orderedparts.PartId, parts.PartId, orderedparts.OrderId, orders.OrderId, orders.EmailAddress from orders, parts, orderedparts where orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND parts.PartId = orderedParts.PartId"
     
-    //COUNT(orderedparts.PartId) as quan,
 
     //if the user is not logged in, it will direct them to the login page
     if(!req.session || !req.session.username) {
@@ -514,20 +486,17 @@ router.get('/orderHistory/:accounts', (req, res) => {
                 connection.end()
                 res.render('order-history.ejs',{
                     orders: result,
-                   // part: parts
                 })
                 
             })
         }else{
           console.log(req.session.username)
           console.log(result[0].email)
-          //res.redirect('../error-500.html');
         }
     }
 })
 
 router.get('/trucks/:id', (req, res) =>{
-    console.log("Finding truck with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -547,7 +516,6 @@ router.get('/trucks/:id', (req, res) =>{
           res.redirect('/Front End/error-500.html')
           return
         } 
-        console.log("Sucessfully queried trucks")
         
         connection.end()
         res.render('listing-details.ejs', {
@@ -560,7 +528,6 @@ router.get('/trucks/:id', (req, res) =>{
 })
 
 router.get('/trailers/:id', (req, res) =>{
-    console.log("Finding trailer with id: " + req.params.id)
     
     //Establish connection to DB
     const connection = helper1.getConnection()
@@ -580,7 +547,6 @@ router.get('/trailers/:id', (req, res) =>{
           res.redirect('/Front End/error-500.html')
           return
         } 
-        console.log("Sucessfully queried trailers")
         
         connection.end()
         res.render('trailer-details.ejs', {
