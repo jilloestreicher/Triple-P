@@ -32,10 +32,9 @@ function ready() {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
-    console.log("Adding Buttons")
+   
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (var i = 0; i < addToCartButtons.length; i++) {
-        console.log("Button Added")
         var button = addToCartButtons[i]
         button.addEventListener('click', addToCartClicked)
     }
@@ -55,9 +54,7 @@ var stripeHandler = StripeCheckout.configure({
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
         for (var i = 0; i < cartRows.length; i++) {
             var cartRow = cartRows[i]
-            console.log(cartRow)
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-            console.log(quantityElement)
             var quantity = quantityElement.value
             var id = cartRow.dataset.itemId
 
@@ -82,7 +79,6 @@ var stripeHandler = StripeCheckout.configure({
             return res.json()
         }).then(function(data) {
            // alert(data.message)
-           console.log("Reached")
             if(document.getElementById('payment') != null){
               document.forms["payment"].submit();
             }
@@ -103,7 +99,6 @@ var stripeHandler = StripeCheckout.configure({
 function purchaseClicked() {
     var priceElement = document.getElementsByClassName('cart-total-price')[0]
     var price = parseFloat(priceElement.innerHTML.replace('$', '')) * 100
-    console.log(price)
     stripeHandler.open({
         amount: price
 
@@ -131,24 +126,14 @@ function quantityChanged(event) {
 
 //Sends all item information to the cart
 function addToCartClicked(event) {
-    var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
-    console.log("Adding to Cart")
-    if(pageCheck == "View Par"){
-        var button = event.target
-        var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
-        var title = shopItem.getElementsByClassName('product-name')[0].innerText
-        var price = shopItem.getElementsByClassName('price-rating')[0].innerText
-        var imageSrc = shopItem.getElementsByClassName('product-img')[0].src
-        var id = shopItem.dataset.itemId
-    }
-    else{
+    
         var button = event.target
         var shopItem = button.parentElement.parentElement.parentElement.parentElement.parentElement
         var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
         var id = shopItem.dataset.itemId
-    }
+
     //Specific item for post listing
      if(pageCheck == "POST A LISTING"){
      id=9999
@@ -237,13 +222,10 @@ function updateCartTotal() {
     for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i]
         var priceElement = cartRow.getElementsByClassName('cart-price cart-column')[0]
-        console.log(priceElement.innerHTML)
         var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-        console.log(quantityElement)
         var price = parseInt(priceElement.innerHTML.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
-        console.log("cart total price"+ price + "  " + quantity );
     }
     total = Math.round(total * 100)/100
     document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + total
@@ -258,7 +240,6 @@ function updateCartTotal() {
         total = (500 * quantityElement)
         displayTotal = Math.round(total)/100
         document.getElementsByClassName('cart-total-price')[0].innerHTML = '$' + displayTotal
-        console.log("total= "+ displayTotal)
     }
     else{
     document.getElementsByClassName("cart-quantity")[0].innerHTML = "("+ (numItems) +")";
@@ -286,11 +267,9 @@ function populateCart() {
               var cartItems = document.getElementsByClassName('cart-items')[0]
               var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
               var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
-            
-     if(pageCheck == "checkout"){
-                    console.log("correct")              
+     //Checks to see what page the user is on to determine which type of cart to use (post listing or part checkout)
+     if(pageCheck == "checkout"){             
                  var cartRowContents = `
-
                          <div class="cart-item cart-column">
                             <img class="cart-item-image" src="${parser.imageSrc}" width="100" height="100">
                              <span class="cart-item-title">${parser.title}</span>
@@ -300,11 +279,8 @@ function populateCart() {
                              <input class="cart-quantity-input" type="number" value="1" style="text-align: center">
                                 <p></p>
                          </div>`
-                    console.log(cartRow)
                      cartRow.innerHTML = cartRowContents
-                    console.log(cartRow.innerHTML)
                      cartItems.append(cartRow)
-
                      cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
                      updateCartTotal();
                }
@@ -335,6 +311,7 @@ function populateCart() {
 
 }
 
+//Has the function for page loads
 function allOnloads(){
     populateCart();
     ready();
@@ -342,6 +319,7 @@ function allOnloads(){
     fetch('/changeLoginButton');
 }
 
+//Clears cart/localstorage and reloads the page
 function ClearAll() {
     localStorage.clear();
     location.reload();
