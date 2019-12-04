@@ -1,0 +1,448 @@
+ <!DOCTYPE html>
+<html class="no-js" lang="zxx">
+    <head>
+        <!-- Basic page needs
+        ============================================ -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Shop || ACSAS </title>
+        <meta name="description" content="">
+
+        <!-- Mobile specific metas
+        ============================================ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- favicon.ico -->
+        <link rel="shortcut icon" type="image/x-icon" href="../Front End/img/favicon.ico">
+
+        <!-- ============== All CSS ================ -->
+        <!-- normalize css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/normalize.css">
+
+        <!-- animate css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/animate.css">
+
+        <!-- bootstrap css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/bootstrap.min.css">
+
+        <!-- meanmenu css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/meanmenu.min.css">
+
+        <!-- font-awesome css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/font-awesome.min.css">
+
+        <!-- icofont css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/icofont.css">
+
+        <!-- change-text css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/change-text.css">
+
+        <!-- YTPlayer css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/jquery.mb.YTPlayer.min.css">
+
+        <!-- main css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/main.css">
+
+        <!-- owl.carousel css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/owl.carousel.css">
+        <link rel="stylesheet" href="../Front End/css/owl.theme.css">
+        <link rel="stylesheet" href="../Front End/css/owl.transitions.css">
+
+        <!-- nivo-slider css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/lib/css/nivo-slider.css">
+        <link rel="stylesheet" href="../Front End/lib/css/preview.css">
+
+        <!-- style css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/style.css"/>
+
+        <!-- responsive css
+        ============================================ -->
+        <link rel="stylesheet" href="../Front End/css/responsive.css">
+
+        <!-- modernizr js
+        ============================================ -->
+        <script src="../Front End/js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="https://checkout.stripe.com/checkout.js" defer></script>
+        <script src="../static/store.js" defer></script>
+        <script>
+            var stripePublicKey = '<%= stripePublicKey %>'
+        </script>
+		
+				<!-- Global site tag (gtag.js) - Google Analytics -->
+				<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152418607-1"></script>
+				<script>
+  				window.dataLayer = window.dataLayer || [];
+  				function gtag(){dataLayer.push(arguments);}
+  				gtag('js', new Date());
+					gtag('config', 'UA-152418607-1');
+				</script>
+    </head>
+    <body onload="allOnloads()">
+        <!-- header area start -->
+        <header id="sticker">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <!-- welcome message start -->
+                            <div class="welcome-msg">
+                                <ul>
+                                    <li> <p>  Contact: (520) 223-3072</p></li>
+                                    <li> <p>acsassalesllc@hotmail.com</p></li>
+                                    <li><form action = "/accountButton">
+					<button>View Account</button>
+				    </form></li>
+                                </ul>
+                            </div>
+                            <!-- welcome message end -->
+                        </div>
+			<div class="col-md-3">
+                            <!-- Search Bar -->
+                            <div class="header-top-menu">
+                                <form action="/search" method="post">
+                                    <input type="text" placeholder="Search.." name="searchBar">
+                                    <button type="submit" value="search">Go</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- mainmenu area start -->
+            <div class="main-menu-area hidden-xs">
+                <div class="container">
+                    <div class="menu-position">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-2">
+                                <!-- logo start -->
+                                <div class="logo">
+                                    <a href="index">
+                                        <img src="../Front End/img/logo.png" alt="" height="100" width="200">
+                                    </a>
+                                </div>
+                                <!-- logo end -->
+                            </div>
+                            <div class="col-md-9 col-sm-10 static">
+                                <!-- main-menu start -->
+                                <div class="main-menu">
+                                    <nav>
+                                        <ul>
+                                            <!-- single menu -->
+                                            <li class="has-sub"><a href="index">Home</a></li>
+                                            <!-- single menu -->
+                                            <li><a href="../Front End/about-us.html">About us</a></li>
+                                            <li class="has-mega"><a href="shop">Parts</a></li>
+                                            <li><a href="trucks">Trucks</a></li>
+                                            <li><a href="trailers">Trailers</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <!-- main-menu start -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- mainmenu area end -->
+        </header>
+        <!-- header area end -->
+        <!-- page title area start -->
+        <div class="page-title-area overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- page title start -->
+                        <div class="page-title">
+                            <h2>Parts</h2>
+                        </div>
+                        <!-- page title end -->
+                        <!-- page title menu start -->
+                        <div class="page-title-menu">
+                            <ul>
+                                <li><a href="index">Home</a> <span> / </span> </li>
+                                <li><a href="adminParts">Parts</a></li>
+                            </ul>
+                        </div>
+                        <!-- page title menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page title area end -->
+        <!-- shop area start -->
+        <div class="shop-area pages section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="/adminSearchParts" method="post">
+                                <input type="text" placeholder="Search.." name="searchBar">
+                                <button type="submit" value="search">Go</button>
+                            </form>
+                        <!-- shop bar start -->
+                        <div class="shop-bar">
+                            <!-- shop tab bar start -->
+                            <div class="shop-nav width-33 pull-left">
+                                <ul class="shop-navigation" role="tablist">
+                                    <li role="presentation" class="active gird">
+                                        <a href="#gird" aria-controls="gird" role="tab" data-toggle="tab">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="list">
+                                        <a href="#list" aria-controls="list" role="tab" data-toggle="tab">
+                                            <i class="fa fa-bars"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- shop tab bar end -->
+                            <!-- shop sort start -->
+                            <div class="sort-by width-33 pull-left text-center">
+                                <label>Sort By: </label>
+                                <form action="/adminSortParts" method="post">
+                                <select name="sortlist">
+                                    <option value="name" selected >Name</option>
+                                    <option value="new">Newest</option>
+                                    <option value="price">Price</option>
+                                </select>
+                                <button type='submit'>Sort</button>
+                                </form>
+                            </div>
+                            <!-- shop sort end -->
+                            <!-- shop show product start -->
+                            <div class="limit-product width-33 pull-left text-right">
+                                <label>Show: </label>
+                                <select name="show">
+                                    <option value="#" selected>9</option>
+                                    <option value="#">12</option>
+                                    <option value="#">24</option>
+                                    <option value="#">36</option>
+                                </select>
+                            </div>
+                            <!-- shop show product end -->
+                        </div>
+                        <!-- shop bar end -->
+                    </div>
+                </div>
+                <!-- jsonjson -->
+                <div class="row">
+                    <!-- shop tab content start -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="list">
+                            <!-- list shop start -->
+                            <div class="list-shop">
+                                <!-- single list shop start -->
+                                <% items.forEach(function(item){ %>
+                                <form action="/delete_part" method="post">
+                                <div class="single-list-shop" data-item-id="<%= item.id %>">
+                                    <div class="col-md-3 col-sm-5">
+                                        <!-- product img start -->
+                                        <div class="product-img">
+                                            <a href="/editPart/<%= item.id%>"><img src="../Front End/img/product/<%=item.imgName %>.jpg" style="width:250px;height:250px;" class="shop-item-image"></a>
+                                        </div>
+                                        <!-- product img end -->
+                                    </div>
+                                    <div class="col-md-9 col-sm-7">
+                                        <div class="single-product">
+                                            <div class="product-name">
+                                                <a href="/editPart/<%= item.id%>" class="shop-item-title"><%= item.name %></a>
+                                                <input readonly value="<%= item.id %>" name="part_id">
+                                            </div>
+                                           
+                                            <div class="product-text">
+                                                <p><%= item.blah %></p>
+                                            </div>
+                                            <!-- cart plus minus start -->
+                                            <div class="contact-info">
+                                                <label class="shop-item-price">$<%= item.price / 100 %></label>
+                                            </div>
+                                            <!-- cart plus minus end -->
+                                            
+                                            <a href="/editPart/<%= item.id%>">Edit</a>
+                                            <button type="submit">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                    </form>
+                                <% }) %>
+                            </div>
+                            <!-- list shop end -->
+                        </div>
+                    </div>
+                    <!-- shop tab content end -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- toolbar start -->
+                        <div class="toolbar-bottom">
+                            <ul>
+                                <li><a href="#"> <i class="fa fa-angle-left"></i> </a></li>
+                                <% for(var i=10; i < parts.length+10; i=i+10){ %>
+                                <li class="current"><a href="/adminParts/<%= i/10 %>"><%= i/10 %></a></li>
+                                <% } %>
+                                <li><a href="#"> <i class="fa fa-angle-right"></i> </a></li>
+                            </ul>
+                        </div>
+                        <!-- toolbar end -->
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- shop area end -->
+        
+        <!-- footer top start -->
+        <div class="footer-top-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4">
+                        <!-- FILL SPACE -->
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <!-- single footer start -->
+                        <div class="single-footer-top">
+                            <div class="footer-about-us">
+                                <!-- address start -->
+
+                                <div class="footer-address">
+                                    <p> <span> ADDRESS: </span>Rico Rico Arizona </p>
+                                    <p>USA 85648</p>
+                                </div>
+                                <!-- address end -->
+                                <!-- contact info start -->
+                                <div class="footer-contact-info">
+                                    <p> <span> Telephone:</span> (520) 223-3072 </p>
+                                    <p> <span> Email:</span> acsassalesllc@hotmail.com </p>
+                                </div>
+                                <!-- contact info end -->
+                            </div>
+                        </div>
+                        <!-- single footer end -->
+                    </div>
+                    <div class="col-md-2 col-md-offset-1 col-sm-3">
+                        <!-- single footer start -->
+                        <div class="single-footer-top">
+                            <!-- section title start -->
+                            <div class="footer-top-title">
+                                <h3>USEFUL LINKS</h3>
+                            </div>
+                            <!-- section title end -->
+                            <!-- footer menu start -->
+                            <div class="footer-top-menu">
+                                <ul>
+                                    <li><a href="index">Home</a></li>
+                                    <li><a href="../Front%2520End/about-us.html">About Us</a></li>
+                                    <li><a href="shop">Shop Parts</a></li>
+                                    <li><a href="trucks">Shop Trucks & Trailers</a></li>
+                                </ul>
+                            </div>
+                            <!-- footer menu end -->
+                        </div>
+                        <!-- single footer end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- footer top end -->
+        <!-- footer area start -->
+        <div class="footer-area">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-3 col-sm-4">
+                        <!-- footer social start -->
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="https://www.facebook.com/AZCUSTOMSERVICEANDSALES"> <i class="fa fa-facebook"></i> </a></li>
+                                <li><a href="https://www.instagram.com/arizonacustomservicesandsales/"> <i class="fa fa-instagram"></i> </a></li>
+                            </ul>
+                        </div>
+                        <!-- footer social end -->
+                    </div>
+                    <div class="col-md-6 col-sm-4">
+                        <!-- copyright text start -->
+                        <div class="footer-copyright">
+                            <p>Copyright &copy; 2018- <a href="https://freethemescloud.com/">Free themes Cloud</a> </p>
+                        </div>
+                        <!-- copyright text end -->
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <!-- payment method start -->
+                        <div class="footer-payment-method">
+                            <img src="../Front End/img/payment-method.png" alt="">
+                        </div>
+                        <!-- payment method end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer area end -->
+
+
+        <!-- ============== All JS ================ -->
+        <!-- jquery js
+        =========================================== -->
+        <script src="../Front End//js/vendor/jquery-1.12.0.min.js"></script>
+
+        <!-- bootstrap js
+        =========================================== -->
+        <script src="../Front End/js/bootstrap.min.js"></script>
+
+        <!-- meanmenu js
+        =========================================== -->
+        <script src="../Front End/js/jquery.meanmenu.js"></script>
+
+        <!-- scrollUp js
+        =========================================== -->
+        <script src="../Front End/js/jquery.scrollUp.min.js"></script>
+
+        <!-- wow js
+        =========================================== -->
+        <script src="../Front End/js/wow.min.js"></script>
+
+        <!-- owl.carousel js
+        =========================================== -->
+        <script src="../Front End/js/owl.carousel.min.js"></script>
+
+        <!-- change-text js
+        =========================================== -->
+        <script src="../Front End/js/change-text.js"></script>
+
+        <!-- YTPlayer js
+        =========================================== -->
+        <script src="../Front End/js/jquery.mb.YTPlayer.min.js"></script>
+
+        <!-- textillate js
+        =========================================== -->
+        <script src="../Front End/js/jquery.lettering.js"></script>
+        <script src="../Front End/js/jquery.textillate.js"></script>
+
+        <!-- nivo.slider js
+        =========================================== -->
+        <script src="../Front End/lib/js/jquery.nivo.slider.js"></script>
+        <script src="../Front End/lib/home.js"></script>
+
+        <!-- plugins js
+        =========================================== -->
+        <script src="../Front End/js/plugins.js"></script>
+
+        <!-- main js
+        =========================================== -->
+        <script src="../Front End/js/main.js"></script>
+    </body>
+</html>
