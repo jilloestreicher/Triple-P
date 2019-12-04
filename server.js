@@ -18,8 +18,7 @@ console.log(stripePublicKey)
 
 //Require necessary node modules
 
-const helper = require ('./helper.js');
-var helper1 = new helper();
+var helper1 = require ('./helper.js');
 const express = require('express')
 const mysql = require('mysql')
 const { check, validationResult } = require('express-validator');
@@ -81,9 +80,16 @@ app.post('/purchase', function(req, res) {
     } 
     else {
       const itemsJson = JSON.parse(data)
+      console.log(itemsJson)
       const itemsArray = itemsJson.parts.concat(itemsJson.merch)
       let total = 0
-      const emailAddress = "example2@gmail.com"
+      var emailAddress
+      if(req.session.username != null){
+          emailAddress = req.session.username
+      }else{
+          emailAddress = 'Guest'
+      }
+      console.log(emailAddress)
       console.log("Collecting order info")
         
       var sql = "SELECT ShippingId AS ShippingId FROM shippingdetails ORDER BY ShippingId DESC LIMIT 1"
@@ -192,7 +198,7 @@ app.post('/purchase', function(req, res) {
       }).then(function() {
         console.log('Charge Successful')
         res.json({ message: 'Successfully purchased items' })
-
+        localStorage.clear();
       }).catch(function() {
         console.log('Charge Fail')
         res.status(500)
@@ -225,7 +231,7 @@ app.post('/loginCheck', [
                     console.log("3 failed attempts");
                     res.redirect('/index')
                 }else{
-                    res.redirect('/login.html');
+                    res.redirect('../Front End/login.html');
                 }
 
             }else{
@@ -245,7 +251,7 @@ app.post('/loginCheck', [
                         console.log("3 failed attempts");
                         res.redirect('/index')
                     }else{
-                        res.redirect('/login.html');
+                        res.redirect('../Front End/login.html');
                     }
                 }
             }
