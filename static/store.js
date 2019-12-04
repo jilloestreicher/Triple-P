@@ -11,14 +11,15 @@ if (document.readyState == 'loading') {
 } else {
     ready()
 }
+//Checks to see if local storage is usable on browser
 function CheckBrowser() {
     if ('localStorage' in window && window['localStorage'] !== null) {
-        // We can use localStorage object to store data.
         return true;
     } else {
             return false;
     }
 }
+//Sets up EventListeners for buttons
 function ready() {
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')
     for (var i = 0; i < removeCartItemButtons.length; i++) {
@@ -42,6 +43,7 @@ function ready() {
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
 }
 
+//Sets up the stripe handler
 var stripeHandler = StripeCheckout.configure({
 
     key: stripePublicKey,
@@ -97,6 +99,7 @@ var stripeHandler = StripeCheckout.configure({
     }
 })
 
+//Sends price of cart to Stripe handler when purchases
 function purchaseClicked() {
     var priceElement = document.getElementsByClassName('cart-total-price')[0]
     var price = parseFloat(priceElement.innerHTML.replace('$', '')) * 100
@@ -107,6 +110,7 @@ function purchaseClicked() {
     })
 }
 
+//Deletes item from cart when button is pushed
 function removeCartItem(event) {
     var buttonClicked = event.target
     var key = buttonClicked.parentElement.parentElement.id;
@@ -116,15 +120,16 @@ function removeCartItem(event) {
     updateCartTotal()
 }
 
+//Changes quantity when button is pushed and doesn't allow quantity to go below 0
 function quantityChanged(event) {
     var input = event.target
-
     if (isNaN(input.value) || input.value <= 0) {
         input.value = 1
     }
     updateCartTotal()
 }
 
+//Sends all item information to the cart
 function addToCartClicked(event) {
     var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
     console.log("Adding to Cart")
@@ -144,6 +149,7 @@ function addToCartClicked(event) {
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
         var id = shopItem.dataset.itemId
     }
+    //Specific item for post listing
      if(pageCheck == "POST A LISTING"){
      id=9999
      var full = {
@@ -155,12 +161,12 @@ function addToCartClicked(event) {
              addItemToCart(title, price, imageSrc, id)
                  updateCartTotal()
      }
-else{
-    var full = {
-            "title": title,
-            "price": price,
-            "imageSrc": imageSrc,
-            "id": id
+     else{
+       var full = {
+         "title": title,
+         "price": price,
+         "imageSrc": imageSrc,
+         "id": id
         }
     localStorage.setItem(id, JSON.stringify(full))
     addItemToCart(title, price, imageSrc, id)
@@ -169,6 +175,7 @@ else{
 
 }
 
+//Creates the cart item div
 function addItemToCart(title, price, imageSrc, id) {
     var cartRow = document.createElement('div')
     cartRow.classList.add('cart-row')
@@ -222,6 +229,7 @@ function addItemToCart(title, price, imageSrc, id) {
      
 }
 
+//Updates cart total price as well as number of items in cart
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
@@ -257,30 +265,28 @@ function updateCartTotal() {
     }
 }
 
+//Recreates cart on different page loads based on local storage
 function populateCart() {
     if (CheckBrowser()) {
         var key = "";
-        console.log(localStorage.length)
-        var i = 0;
-        for (i = 0; i <= localStorage.length-1; i++) {
+
+        for (var i = 0; i <= localStorage.length-1; i++) {
             key = localStorage.key(i);
-            console.log(key)
+            
             if (key == "lsid"){
             }
+            
             else{
-            keyer = localStorage.getItem(key);
-            var parser = JSON.parse(keyer);
-            console.log(parser.title+"  "+parser.price);
-            var cartRow = document.createElement('div')
-            cartRow.setAttribute("id", key);
-                cartRow.classList.add('cart-row')
-                cartRow.dataset.itemId = parser.id;
-                var cartItems = document.getElementsByClassName('cart-items')[0]
-                var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
- var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
-                
-    console.log(pageCheck)            
-                
+              keyer = localStorage.getItem(key);
+              var parser = JSON.parse(keyer);
+              var cartRow = document.createElement('div')
+              cartRow.setAttribute("id", key);
+              cartRow.classList.add('cart-row')
+              cartRow.dataset.itemId = parser.id;
+              var cartItems = document.getElementsByClassName('cart-items')[0]
+              var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+              var pageCheck = document.getElementsByClassName("page-title")[0].innerText;
+            
      if(pageCheck == "checkout"){
                     console.log("correct")              
                  var cartRowContents = `
