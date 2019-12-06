@@ -53,6 +53,7 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     connection.query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -82,6 +83,7 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     connection.query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture, time], (err,results,fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -109,6 +111,7 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
     connection.query(queryString, [partName, partBrand, partPrice, partDesc, partQuan, picture], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -116,7 +119,7 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
         fs.writeFile('../items.json', results, function(err){
               if(err) throw err;
               console.log('Saved');
-                         })
+        })
 
         connection.end()
         res.redirect('/Front End/list-sucess.html')
@@ -147,6 +150,7 @@ router.post('/create_account', [
     connection.query(queryString, [accountFirst, accountLast, accountEmail, hashedPassword, elist, accountPhone], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -176,6 +180,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
     connection.query(queryString2, [address, address2, firstName, lastName, country, town, state, zip, phoneNumber, emailAddress], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -199,6 +204,7 @@ router.post('/collect_shippingandbilling', (req,res) => {
     connection.query(queryString, [billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }

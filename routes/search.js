@@ -28,6 +28,7 @@ router.post('/search', (req,res) =>{
         connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -38,6 +39,7 @@ router.post('/search', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -64,6 +66,7 @@ router.post('/searchTrailers', (req,res) =>{
     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -74,6 +77,7 @@ router.post('/searchTrailers', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -100,6 +104,7 @@ router.post('/searchTrucks', (req,res) =>{
     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -110,6 +115,7 @@ router.post('/searchTrucks', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -146,6 +152,7 @@ router.post('/sort', (req,res) =>{
     connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -156,6 +163,7 @@ router.post('/sort', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -192,6 +200,7 @@ router.post('/sortTrucks', (req,res) =>{
     connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -202,6 +211,7 @@ router.post('/sortTrucks', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -241,6 +251,7 @@ router.post('/sortTrailers', (req,res) =>{
     connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -251,6 +262,7 @@ router.post('/sortTrailers', (req,res) =>{
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }

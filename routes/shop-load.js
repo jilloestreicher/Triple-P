@@ -26,6 +26,7 @@ router.get('/index', function(req,res){
     connection.query(newString, (err,result,fields) =>{
        if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -34,6 +35,7 @@ router.get('/index', function(req,res){
            
            if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -44,6 +46,7 @@ router.get('/index', function(req,res){
            
            if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -71,6 +74,7 @@ fs.readFile('./items.json', function(error, data){
         connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -81,6 +85,7 @@ fs.readFile('./items.json', function(error, data){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -111,6 +116,7 @@ router.get('/shop/:offset', function(req,res){
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -121,6 +127,7 @@ router.get('/shop/:offset', function(req,res){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -163,6 +170,7 @@ fs.readFile('./items.json', function(error, data){
         connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -174,6 +182,7 @@ fs.readFile('./items.json', function(error, data){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -205,6 +214,7 @@ fs.readFile('./items.json', function(error, data){
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -216,6 +226,7 @@ fs.readFile('./items.json', function(error, data){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -255,6 +266,7 @@ fs.readFile('./items.json', function(error, data){
         connection.query(queryString, (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -266,6 +278,7 @@ fs.readFile('./items.json', function(error, data){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -297,6 +310,7 @@ fs.readFile('./items.json', function(error, data){
         connection.query(queryString, [offs], (err,result,fields) => {
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -308,6 +322,7 @@ fs.readFile('./items.json', function(error, data){
                 
                 if(err){
                     console.log("Failed to query: " +err)
+                    connection.end()
                     res.redirect('/Front End/error-500.html')
                     return
                 }
@@ -341,7 +356,7 @@ router.get('/manage-users', function(req,res){
             connection.query(queryString, (err,result,fields) => {
                 if(err){
                   console.log("Failed to query: " +err)
-                  res.sendStatus(500);
+                  connection.end()
                   res.render('/Front End/error-500.html')
                   return
                 }
@@ -374,6 +389,7 @@ router.get('/parts/:id', (req, res) =>{
         //check if we succesfully queried
         if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -401,6 +417,7 @@ router.get('/order/:id', (req,res) =>{
         
         if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -408,6 +425,7 @@ router.get('/order/:id', (req,res) =>{
 
         //if the user is not logged in, it will direct them to the login page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../login.html');
         }else{
             if(req.session.username === accountresult[0].email){
@@ -415,6 +433,7 @@ router.get('/order/:id', (req,res) =>{
                     
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -425,6 +444,7 @@ router.get('/order/:id', (req,res) =>{
                         
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -436,6 +456,7 @@ router.get('/order/:id', (req,res) =>{
                             
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }    
@@ -454,6 +475,7 @@ router.get('/order/:id', (req,res) =>{
             }else{
                  console.log(req.session.username)
                  console.log(accountresult[0].email)
+                 connection.end()
                  res.redirect('../error-500.html');
             }
         }
@@ -472,6 +494,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
 
     //if the user is not logged in, it will direct them to the login page
     if(!req.session || !req.session.username) {
+        connection.end()
         res.redirect('../Front End/login.html');
     }else{
         if(req.session.username === account){
@@ -479,6 +502,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
                 
                 if(err){
                    console.log("Failed to query: " +err)
+                    connection.end()
                    res.redirect('/Front End/error-500.html')
                    return
                  }    
@@ -492,6 +516,8 @@ router.get('/orderHistory/:accounts', (req, res) => {
         }else{
           console.log(req.session.username)
           console.log(result[0].email)
+          connection.end()
+          res.redirect('/index')
         }
     }
 })
@@ -513,6 +539,7 @@ router.get('/trucks/:id', (req, res) =>{
         //check if we succesfully queried
         if(err){
           console.log("Failed to query: " +err)
+          connection.end()
           res.redirect('/Front End/error-500.html')
           return
         } 
@@ -544,6 +571,7 @@ router.get('/trailers/:id', (req, res) =>{
         //check if we succesfully queried
         if(err){
           console.log("Failed to query: " +err)
+          connection.end()
           res.redirect('/Front End/error-500.html')
           return
         } 
@@ -571,6 +599,7 @@ router.get('/my-account/:email', (req, res) => {
         
         if(err){
           console.log("Failed to query: " +err)
+          connection.end()
           res.redirect('/Front End/error-500.html')
           return
         } 
@@ -579,6 +608,7 @@ router.get('/my-account/:email', (req, res) => {
             
             if(err){
               console.log("Failed to query: " +err)
+              connection.end()
               res.redirect('/Front End/error-500.html')
               return
             } 
@@ -587,6 +617,7 @@ router.get('/my-account/:email', (req, res) => {
                 
                 if(err){
                   console.log("Failed to query: " +err)
+                  connection.end()
                   res.redirect('/Front End/error-500.html')
                   return
                 } 

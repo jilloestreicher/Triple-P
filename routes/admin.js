@@ -30,12 +30,14 @@ router.post('/edit_Part', [
     connection.query(queryUser, (err, accountresult) => {
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -59,6 +61,7 @@ router.post('/edit_Part', [
 
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -67,7 +70,7 @@ router.post('/edit_Part', [
                     res.redirect('/adminParts')
                 })
             }else{
-                
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -92,11 +95,13 @@ router.post('/edit_truck', [
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -123,6 +128,7 @@ router.post('/edit_truck', [
 
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -130,6 +136,7 @@ router.post('/edit_truck', [
                     res.redirect('/adminTrucks')
                 })
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -153,12 +160,14 @@ router.post('/edit_trailer', [
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             //check to see if the user is an Admin
@@ -184,6 +193,7 @@ router.post('/edit_trailer', [
 
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -192,6 +202,7 @@ router.post('/edit_trailer', [
                     res.redirect('/adminTrailers')
                 })
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -211,12 +222,14 @@ router.get('/editPart/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -248,6 +261,7 @@ router.get('/editPart/:id', (req, res) =>{
 
                 })
             }else{
+                connection.end()
                  res.redirect('../index');
             }
         }
@@ -267,12 +281,14 @@ router.get('/editTruck/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -293,6 +309,7 @@ router.get('/editTruck/:id', (req, res) =>{
                     //check if we succesfully queried
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -303,6 +320,7 @@ router.get('/editTruck/:id', (req, res) =>{
 
                 })
             }else{
+                connection.end()
                  res.redirect('../index');
             }
         }
@@ -322,12 +340,14 @@ router.get('/editTrailer/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -346,6 +366,7 @@ router.get('/editTrailer/:id', (req, res) =>{
                     //check if we successfully queried
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                        res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -356,6 +377,7 @@ router.get('/editTrailer/:id', (req, res) =>{
                     })
                 })
             }else{
+                connection.end()
                  res.redirect('../index');
             }
         }
@@ -372,11 +394,13 @@ router.post('/remove_user', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -389,6 +413,7 @@ router.post('/remove_user', (req,res) => {
                 connection.query(queryString, [userId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -398,6 +423,7 @@ router.post('/remove_user', (req,res) => {
                     }
                 })
             }else{
+                connection.end()
                  res.redirect('../index');
             }
         }
@@ -414,11 +440,13 @@ fs.readFile('./items.json', function(error, data){
             
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
             //if the user is not logged in, it will direct them back to the home page
             if(!req.session || !req.session.username) {
+                connection.end()
                 res.redirect('../index');
             }else{
                 for(var x = 0; x < accountresult.length; x++){
@@ -429,6 +457,7 @@ fs.readFile('./items.json', function(error, data){
                 if(isAdmin){
 
                     if(error) {
+                        connection.end()
                       res.status(500).end()
                     } else{
 
@@ -439,6 +468,7 @@ fs.readFile('./items.json', function(error, data){
                         connection.query(queryString, (err,result,fields) => {
                             if(err){
                               console.log("Failed to query: " +err)
+                                connection.end()
                               res.redirect('/Front End/error-500.html')
                               return
                             }
@@ -449,6 +479,7 @@ fs.readFile('./items.json', function(error, data){
                                 
                                 if(err){
                                     console.log("Failed to query: " +err)
+                                    connection.end()
                                     res.redirect('/Front End/error-500.html')
                                     return
                                 }
@@ -464,6 +495,7 @@ fs.readFile('./items.json', function(error, data){
 
                     }
                 }else{
+                    connection.end()
                     res.redirect('../index');
                 }
             }
@@ -481,12 +513,14 @@ fs.readFile('./items.json', function(error, data){
         
         if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -496,6 +530,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
+                  connection.end()
                   res.status(500).end()
                 }else{
                     
@@ -507,6 +542,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -517,6 +553,7 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -531,6 +568,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -548,12 +586,14 @@ fs.readFile('./items.json', function(error, data){
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -563,6 +603,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
+                  connection.end()
                   res.status(500).end()
                 }else{
 
@@ -573,6 +614,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -583,6 +625,7 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -597,6 +640,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -614,12 +658,14 @@ fs.readFile('./items.json', function(error, data){
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -629,6 +675,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
+                  connection.end()
                   res.status(500).end()
                 } else{
                     
@@ -640,6 +687,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                        if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -650,6 +698,7 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -665,6 +714,7 @@ fs.readFile('./items.json', function(error, data){
 
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -682,12 +732,14 @@ fs.readFile('./items.json', function(error, data){
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -697,6 +749,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
+                  connection.end()
                   res.status(500).end()
                 } else{
 
@@ -706,6 +759,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -716,6 +770,7 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -731,6 +786,7 @@ fs.readFile('./items.json', function(error, data){
 
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -748,12 +804,14 @@ fs.readFile('./items.json', function(error, data){
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -763,6 +821,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
+                  connection.end()
                   res.status(500).end()
                 } else{
 
@@ -774,6 +833,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -784,6 +844,7 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -798,6 +859,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -813,12 +875,14 @@ router.post('/delete_part', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -836,6 +900,7 @@ router.post('/delete_part', (req,res) => {
                 connection.query(orderString, [partId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -843,6 +908,7 @@ router.post('/delete_part', (req,res) => {
                         con.query(queryString, [partId], (err,result,fields) => {
                          if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -855,6 +921,7 @@ router.post('/delete_part', (req,res) => {
                     }
                 })
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -869,12 +936,14 @@ router.post('/delete_truck', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -888,18 +957,22 @@ router.post('/delete_truck', (req,res) => {
 
                 const queryString = "DELETE from trucks where TruckId = ?"
                 connection.query(queryString, [truckId], (err,result,fields) => {
-                if(err){
-                    console.log("Failed to query: " +err)
-                    res.redirect('/Front End/error-500.html')
-                    return
-                }
-                else{
+                    if(err){
+                        console.log("Failed to query: " +err)
+                        connection.end()
+                        res.redirect('/Front End/error-500.html')
+                        return
+                    }
+                    else{
 
+                        connection.end()
+                        res.redirect('/adminTrucks')
+                    }
+                })
+            }else{
                 connection.end()
-                res.redirect('/adminTrucks')
-            }})}else{
                 res.redirect('../index');
-                }
+            }
         
         }
     })
@@ -914,12 +987,14 @@ router.post('/delete_trailer', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -933,21 +1008,24 @@ router.post('/delete_trailer', (req,res) => {
 
                 const queryString = "DELETE from trailers where TrailerId = ?"
                 connection.query(queryString, [trailerId], (err,result,fields) => {
-                if(err){
-                    console.log("Failed to query: " +err)
-                    res.redirect('/Front End/error-500.html')
-                    return
-                }
-                else{
+                    if(err){
+                        console.log("Failed to query: " +err)
+                        connection.end()
+                        res.redirect('/Front End/error-500.html')
+                        return
+                    }
+                    else{
 
-                connection.end()
-                res.redirect('/adminTrailers')
-            }})}else{
+                    connection.end()
+                    res.redirect('/adminTrailers')
+                    }
+                })
+            }else{
+                connection.end()    
                 res.redirect('../index');
-            }
-                
+            }       
         }
-        })
+    })
 })
 
 router.post('/adminCheck', [
@@ -967,6 +1045,7 @@ router.post('/adminCheck', [
          
             if(err){
                 console.log("Failed to query: " +err)
+                connection.end()
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -974,39 +1053,37 @@ router.post('/adminCheck', [
             else{
                 //Make sure there are results otherwise the passwordHash module will fail
                 if(results.length == 0 || results == null){
-                
-                res.redirect('../Front End/adminlogin.html');
-        
-
-            }else{
-                var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
-                if(correctPass === true){
-                    hashedPassword = results[0].Password;
+                    connection.end()
+                    res.redirect('../Front End/adminlogin.html');
                 }else{
-                    console.log("Error -  wrong password");
-                }
-
-                var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
-
-                
-                connection.query(queryString, [username, hashedPassword], (err,results, field) =>{
-                    if(err){
-                        console.log("Failed to query: " +err)
-                        res.redirect('/Front End/error-500.html')
-                        return
-                    }
-                    if(results.length === 0 || results == null){
-                        
-
-                        res.redirect('/adminCheck');
-
+                    var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
+                    if(correctPass === true){
+                        hashedPassword = results[0].Password;
                     }else{
-                        req.session.username = username;
-                        connection.end()
-                        res.redirect("../Front End/adminHome.html")
+                        console.log("Error -  wrong password");
                     }
-                })
-            }
+
+                    var queryString = "SELECT EmailAddress, Password FROM admins WHERE EmailAddress = ? AND Password = ?"
+
+
+                    connection.query(queryString, [username, hashedPassword], (err,results, field) =>{
+                        if(err){
+                            console.log("Failed to query: " +err)
+                            connection.end()
+                            res.redirect('/Front End/error-500.html')
+                            return
+                        }
+                        if(results.length === 0 || results == null){
+                            connection.end()
+                            res.redirect('/adminCheck');
+
+                        }else{
+                            req.session.username = username;
+                            connection.end()
+                            res.redirect("../Front End/adminHome.html")
+                        }
+                    })
+                }
             }
      })
 })
@@ -1021,12 +1098,14 @@ router.get('/adminOrders', function(req,res) {
         
         if(error){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1037,6 +1116,7 @@ router.get('/adminOrders', function(req,res) {
             if(isAdmin){
                 if(error) {
                   console.log(error)
+                  connection.end()
                   res.status(500).end()
                 }else{
                      const queryString = "SELECT orders.OrderId as id, orders.EmailAddress as email, orders.ShippingId as ship, shippingdetails.ShippingId as ships, shippingdetails.ShippingAddress as address FROM orders, shippingdetails WHERE orders.ShippingId = shippingdetails.ShippingId"
@@ -1045,6 +1125,7 @@ router.get('/adminOrders', function(req,res) {
                           
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1057,6 +1138,7 @@ router.get('/adminOrders', function(req,res) {
                     })
                 }
             }else{
+                connection.end()
                 res.redirect('../index');
             }
         }
@@ -1076,12 +1158,14 @@ router.get('/adminOrder/:id', (req,res) =>{
         
         if(error){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
 
         //if the user is not logged in, it will direct them to the login page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1092,6 +1176,7 @@ router.get('/adminOrder/:id', (req,res) =>{
             if(isAdmin){
                 if(error) {
                   console.log(error)
+                  connection.end()
                   res.status(500).end()
                 }else{
             
@@ -1099,6 +1184,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                     
                     if(err){
                         console.log("Failed to query: " +err)
+                        connection.end()
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -1109,6 +1195,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                         
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1120,12 +1207,11 @@ router.get('/adminOrder/:id', (req,res) =>{
                             
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }    
-                            
-                            
-                        console.log(shipping)
+                            console.log(shipping)
                             connection.end()
                             res.render('order-template.ejs', {
                                 items: result,
@@ -1138,6 +1224,7 @@ router.get('/adminOrder/:id', (req,res) =>{
             }}else{
                  console.log(req.session.username)
                  console.log(accountresult[0].email)
+                 connection.end()
                  res.redirect('../error-500.html');
             }
         }
@@ -1154,12 +1241,14 @@ router.post('/adminSearchParts', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1178,6 +1267,7 @@ router.post('/adminSearchParts', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1188,6 +1278,7 @@ router.post('/adminSearchParts', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -1201,6 +1292,7 @@ router.post('/adminSearchParts', (req,res) => {
                         })
                     })
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
@@ -1216,12 +1308,14 @@ router.post('/adminSearchTrucks', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1240,6 +1334,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1250,6 +1345,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -1263,6 +1359,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                         })
                     })
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
@@ -1277,6 +1374,7 @@ router.post('/adminSearchTrailers', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -1284,6 +1382,7 @@ router.post('/adminSearchTrailers', (req,res) => {
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1302,6 +1401,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1312,6 +1412,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -1325,6 +1426,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                         })
                     })
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
@@ -1340,12 +1442,14 @@ router.post('/adminSortParts', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1375,6 +1479,7 @@ router.post('/adminSortParts', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1385,6 +1490,7 @@ router.post('/adminSortParts', (req,res) => {
                             
                             if(err){
                                     console.log("Failed to query: " +err)
+                                    connection.end()
                                     res.redirect('/Front End/error-500.html')
                                     return
                                 }
@@ -1400,6 +1506,7 @@ router.post('/adminSortParts', (req,res) => {
                 
                 
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
@@ -1415,12 +1522,14 @@ router.post('/adminSortTrucks', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1448,6 +1557,7 @@ router.post('/adminSortTrucks', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1458,6 +1568,7 @@ router.post('/adminSortTrucks', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -1473,6 +1584,7 @@ router.post('/adminSortTrucks', (req,res) => {
                 
                 
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
@@ -1488,12 +1600,14 @@ router.post('/adminSortTrailers', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
+            connection.end()
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
+            connection.end()
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1524,6 +1638,7 @@ router.post('/adminSortTrailers', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
+                            connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1534,6 +1649,7 @@ router.post('/adminSortTrailers', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
+                                connection.end()
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
@@ -1549,6 +1665,7 @@ router.post('/adminSortTrailers', (req,res) => {
                 
                 
             }else{
+                 connection.end()
                  res.redirect('../index');
             }
         }
