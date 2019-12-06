@@ -91,7 +91,7 @@ app.post('/purchase', function(req, res) {
       }
       console.log(emailAddress)
       console.log("Collecting order info")
-      var sql1 = "SELECT ShippingId AS ShippingId FROM shippingdetails WHERE EmailAddress.EmailAddress = " +"\"" +emailAddress + "\""+" ORDER BY ShippingId DESC LIMIT 1;"
+      var sql = "SELECT ShippingId AS ShippingId FROM shippingdetails WHERE EmailAddress.EmailAddress = " +"\"" +emailAddress + "\""+" ORDER BY ShippingId DESC LIMIT 1;"
       //var sql = "SELECT ShippingId AS ShippingId FROM shippingdetails ORDER BY ShippingId DESC LIMIT 1"
       var sql2 = var sql2 = "SELECT PaymentId AS PaymentId FROM paymentdetails WHERE EmailAddress.EmailAddress = " +"\"" +emailAddress + "\""+" ORDER BY PaymentId DESC LIMIT 1;"
       //var sql2 = "SELECT PaymentId AS PaymentId FROM paymentdetails ORDER BY PaymentId DESC LIMIT 1"
