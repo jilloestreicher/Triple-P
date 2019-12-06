@@ -65,18 +65,22 @@ app.use(adminRouter)
 
 //Define number of login attempts allowed
 
-var attempts = 3;
+var attempts = 4;
 
 //Stripe Purchase API Call
 app.post('/purchase', function(req, res) {
     
+    console.log('Starting Purchase')
+    
   fs.readFile('items.json', function(error, data) {
     if (error) {
+      console.log('Purchase Fail')
       res.status(500).end()
       return
     } 
     else {
       const itemsJson = JSON.parse(data)
+      console.log(itemsJson)
       const itemsArray = itemsJson.parts.concat(itemsJson.merch)
       let total = 0
       var emailAddress
@@ -85,6 +89,8 @@ app.post('/purchase', function(req, res) {
       }else{
           emailAddress = 'Guest'
       }
+      console.log(emailAddress)
+      console.log("Collecting order info")
         
       var sql = "SELECT ShippingId AS ShippingId FROM shippingdetails ORDER BY ShippingId DESC LIMIT 1"
       var sql2 = "SELECT PaymentId AS PaymentId FROM paymentdetails ORDER BY PaymentId DESC LIMIT 1"
@@ -94,8 +100,10 @@ app.post('/purchase', function(req, res) {
       var parsed3 = 0;
         
       const connection = helper1.getConnection()
+      console.log("Before Ship Query")
       connection.query(sql, 1, (error, results, fields) => {
         if (error){
+          connection.end()
           return console.error(error.message);
         }
           
@@ -103,14 +111,19 @@ app.post('/purchase', function(req, res) {
          var almost = parser.replace("[{\"ShippingId\":", "")
          var finished = almost.replace("}]", "")
          parsed = parsed + parseInt(finished, 10)
+         console.log("Before Pay Query")
          connection.query(sql2, 1, (error, results, fields) => {
            if (error){
+             connection.end()
              return console.error(error.message);
            }
              var parser2 = JSON.stringify(results)
              var almost2 = parser2.replace("[{\"PaymentId\":", "")
              var finished2 = almost2.replace("}]", "")
              parsed2 = parsed2 + parseInt(finished2, 10)
+             
+             console.log("shippingid = "+parsed)
+             console.log("payment id = "+parsed2)
              
              const shippingId = parsed+1
              const paymentId = parsed2+1
@@ -123,9 +136,11 @@ app.post('/purchase', function(req, res) {
                  console.log(err)
                  console.log(parsed)
                  console.log(parsed2)
-                 res.sendStatus(500)
+                 connection.end()
+                 res.redirect('/Front End/error-500.html')
                  return
                }
+               console.log("Order Inserted!!")
              });
            });
          })
@@ -137,6 +152,8 @@ app.post('/purchase', function(req, res) {
         const itemJson = itemsArray.find(function(i) {
           return i.id == item.id
         })
+
+        console.log(item.id)
           
         total = total + itemJson.price * item.quantity
           
@@ -155,6 +172,8 @@ app.post('/purchase', function(req, res) {
             var orderId= parsed3+1
             var partId = item.id
             var orderQuantity = item.quantity
+            
+            console.log("order id = "+orderId)
               
             const queryString3 = "insert into orderedparts (OrderId, PartId, OrderedQuantity) values (?,?,?)"
 
@@ -165,7 +184,8 @@ app.post('/purchase', function(req, res) {
                 console.log(err)
                 console.log(partId)
                 console.log(orderQuantity)
-                res.sendStatus(500)
+                connection.end()
+                res.redirect('/Front End/error-500.html')
                 return
               }
             })
@@ -185,14 +205,13 @@ app.post('/purchase', function(req, res) {
         localStorage.clear();
       }).catch(function() {
         console.log('Charge Fail')
-        res.status(500)
+        res.redirect('/Front End/error-500.html')
       })
       connection.end()
     }
   })
 })
 
-//Login Function
 app.post('/loginCheck', [
     body('username').trim().escape(),
     body('password').trim().escape()
@@ -203,41 +222,47 @@ app.post('/loginCheck', [
 
     //get hashed version of password
     const connection = helper1.getConnection()
-    
     var queryPass = "SELECT Password FROM accounts WHERE EmailAddress = ?";
 
     connection.query(queryPass, [username], (err,results, field) =>{
         if(err){
           console.log("Failed to query: " +err)
+          connection.end()
+          console.log(results)
           return
         }else{
-            //if there are no results from the query, then the username is incorrect
             if(results.length == 0 || results == null){
+                console.log("Failed Login")
                 attempts --;
                 if(attempts == 0){
+                    console.log("3 failed attempts");
+                    connection.end()
                     res.redirect('/index')
                 }else{
+                    connection.end()
                     res.redirect('../Front End/login.html');
                 }
 
             }else{
-                //if there are results, verify that the password is correct
-                var correctPass = passwordHash.verify(password, results[0].Password); 
-                
-                //if the password is correct, assign session
+                var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
+
                 if(correctPass === true){
                     hashedPassword = results[0].Password;
+                    console.log("Successful Login");
                     req.session.username = username;
 
                     //redirect user back to the home page
                     connection.end()
                     res.redirect('/index');
-                //incorrect password
                 }else{
+                    console.log("Error -  wrong password");
                     attempts --;
                     if(attempts == 0){
+                        console.log("3 failed attempts");
+                        connection.end()
                         res.redirect('/index')
                     }else{
+                        connection.end()
                         res.redirect('../Front End/login.html');
                     }
                 }
@@ -255,7 +280,6 @@ function checkAuth(req, res, next) {
   }
 }
 
-//Logout function
 app.post('/logout', function(req, res) {
     if (req.session) {
         // delete session object
@@ -263,6 +287,8 @@ app.post('/logout', function(req, res) {
           if(err) {
             return next(err);
           }else {
+            console.log("logged out")
+
             res.redirect('/index')
           }
         });
@@ -273,7 +299,6 @@ app.get('/checkSession', checkAuth, function(req,res){
     //calls function checkAuth which will authenticate the session
     console.log("checkSession - user is authorized!" + req.session.username);
 })
-
 
 app.get('/cart', function(req,res){
 fs.readFile('items.json', function(error, data){
@@ -313,12 +338,14 @@ fs.readFile('items.json', function(error, data){
             
             if(err){
               console.log("Failed to query: " +err)
+              connection.end()
               res.redirect('/Front End/error-500.html')
               return
             } 
             
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
+                connection.end()
                 res.redirect('../Front End/login.html');
             }else{
                 connection.end()
@@ -344,12 +371,14 @@ fs.readFile('items.json', function(error, data){
             
             if(err){
               console.log("Failed to query: " +err)
+              connection.end()
               res.redirect('/Front End/error-500.html')
               return
             } 
             
             //if the user is not logged in, it will direct them to the login page
             if(!req.session || !req.session.username) {
+                connection.end()
                 res.redirect('../Front End/login.html');
             }else{
                 connection.end() 
