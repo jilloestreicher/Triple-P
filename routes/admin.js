@@ -65,9 +65,19 @@ router.post('/edit_Part', [
                         res.redirect('/Front End/error-500.html')
                         return
                     }
+                    
+                    const refreshString = "select * from parts"
+                    
+                    //Add the new part to items file
+                    connection.query(refreshString, (err, resultp, fields) => {
+                        fs.writeFile('items.json', JSON.stringify(resultp), function(err){
+                          if(err) throw err;
+                          console.log('Saved');
+                        })
 
-                    connection.end()
-                    res.redirect('/adminParts')
+                        connection.end()
+                        res.redirect('/adminParts')
+                    })
                 })
             }else{
                 connection.end()
@@ -211,7 +221,6 @@ router.post('/edit_trailer', [
 
 router.get('/editPart/:id', (req, res) =>{
     
-    //Establish connection to DB
     const connection = helper1.getConnection()
     
     const partId = req.params.id.trim()
@@ -403,12 +412,14 @@ router.post('/remove_user', (req,res) => {
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
                 }
             }
             if(isAdmin){
+                //Remove the given account using the ? wildcard
                 const queryString = "DELETE from accounts where EmailAddress = ?"
                 connection.query(queryString, [userId], (err,result,fields) => {
                     if(err){
@@ -449,6 +460,7 @@ fs.readFile('./items.json', function(error, data){
                 connection.end()
                 res.redirect('../index');
             }else{
+                //Admin check
                 for(var x = 0; x < accountresult.length; x++){
                     if(req.session.username === accountresult[x].email){
                         var isAdmin = true;
@@ -473,6 +485,8 @@ fs.readFile('./items.json', function(error, data){
                               return
                             }
 
+                            //This is used to determine how many page buttons need to be created
+                            //For navigation at the bottom of the page
                             const partString = "SELECT * from trucks"
 
                             connection.query(partString, (err,results,fields) => {
@@ -523,6 +537,7 @@ fs.readFile('./items.json', function(error, data){
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -534,7 +549,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 }else{
                     
-                    //Get the number of pages required at the bottom of the page
+                    //10 per page, starting at the given page number
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10 OFFSET ?;"
 
@@ -547,6 +562,8 @@ fs.readFile('./items.json', function(error, data){
                             return
                         }
 
+                        //This is used to determine how many page buttons need to be created
+                        //For navigation at the bottom of the page
                         const partString = "SELECT * from trucks"
 
                         connection.query(partString, (err,results,fields) => {
@@ -596,6 +613,7 @@ fs.readFile('./items.json', function(error, data){
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin Check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -619,6 +637,8 @@ fs.readFile('./items.json', function(error, data){
                             return
                         }
 
+                        //This is used to determine how many page buttons need to be created
+                        //For navigation at the bottom of the page
                         const partString = "SELECT * from trailers"
 
                         connection.query(partString, (err,results,fields) => {
@@ -668,6 +688,7 @@ fs.readFile('./items.json', function(error, data){
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin Check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -679,7 +700,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 } else{
                     
-                    //Get only 10 results per page and the total number of pages required
+                    //Get only 10 results per page starting at the current page number
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers LIMIT 10 OFFSET ?;"
 
@@ -692,6 +713,9 @@ fs.readFile('./items.json', function(error, data){
                             return
                         }
 
+                        
+                        //This is used to determine how many page buttons need to be created
+                        //For navigation at the bottom of the page
                         const partString = "SELECT * from trailers"
 
                         connection.query(partString, (err,results,fields) => {
@@ -742,6 +766,7 @@ fs.readFile('./items.json', function(error, data){
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin Check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -764,6 +789,8 @@ fs.readFile('./items.json', function(error, data){
                             return
                         }
 
+                        //This is used to determine how many page buttons need to be created
+                        //For navigation at the bottom of the page
                         const partString = "SELECT * from parts"
 
                         connection.query(partString, (err,results,fields) => {
@@ -814,6 +841,7 @@ fs.readFile('./items.json', function(error, data){
             connection.end()
             res.redirect('../index');
         }else{
+            //Admin Check
             for(var x = 0; x < accountresult.length; x++){
                 if(req.session.username === accountresult[x].email){
                     var isAdmin = true;
@@ -825,7 +853,7 @@ fs.readFile('./items.json', function(error, data){
                   res.status(500).end()
                 } else{
 
-                    //Get only 10 results per page and the required amount of pages
+                    //Get only 10 results per page starting at the given page number
                     const offs = req.params.offset * 10 - 10
                     const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10 OFFSET ?;"
 
@@ -838,6 +866,8 @@ fs.readFile('./items.json', function(error, data){
                             return
                         }
 
+                        //This is used to determine how many page buttons need to be created
+                        //For navigation at the bottom of the page
                         const partString = "SELECT * from parts"
 
                         connection.query(partString, (err,results,fields) => {
@@ -905,18 +935,26 @@ router.post('/delete_part', (req,res) => {
                         return
                     }
                     else{
-                        con.query(queryString, [partId], (err,result,fields) => {
-                         if(err){
-                            console.log("Failed to query: " +err)
-                            connection.end()
-                            res.redirect('/Front End/error-500.html')
-                            return
-                        }
-                        else{
+                        connection.query(queryString, [partId], (err,result,fields) => {
+                             if(err){
+                                console.log("Failed to query: " +err)
+                                connection.end()
+                                res.redirect('/Front End/error-500.html')
+                                return
+                             }
+                            else{
+                                const refreshString = "select * from parts"
+                                //Update the current item file
+                                connection.query(refreshString, (err, resultp, fields) => {
+                                    fs.writeFile('items.json', JSON.stringify(resultp), function(err){
+                                      if(err) throw err;
+                                      console.log('Saved');
+                                    })
 
-                        connection.end()
-                        res.redirect('/adminParts')
-                    }
+                                    connection.end()
+                                    res.redirect('/adminParts')
+                                })
+                            }
                         })
                     }
                 })
@@ -1123,18 +1161,17 @@ router.get('/adminOrders', function(req,res) {
 
                       connection.query(queryString, (err, result, fields) => {
                           
-                        if(err){
+                      if(err){
                             console.log("Failed to query: " +err)
                             connection.end()
                             res.redirect('/Front End/error-500.html')
                             return
-                        }
+                       }
                           
-                            connection.end()
-                            res.render('adminOrders.ejs',{
-                                orders: result,
-                                // part: parts
-                            })            
+                       connection.end()
+                       res.render('adminOrders.ejs',{
+                            orders: result,
+                       })            
                     })
                 }
             }else{
@@ -1150,7 +1187,7 @@ router.get('/adminOrder/:id', (req,res) =>{
     
     const connection = helper1.getConnection()
     //Parts in the order
-    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
+    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ?-1 AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
 
@@ -1461,7 +1498,7 @@ router.post('/adminSortParts', (req,res) => {
                 
                 var sortType = req.body.sortlist
                 
-                //Since you can only sort by one 
+                //Since you can only sort by one, it can be added using an if statement
                 var queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts"
                 console.log(sortType)
                 if(sortType === 'name'){
@@ -1542,6 +1579,8 @@ router.post('/adminSortTrucks', (req,res) => {
                 var sortType = req.body.sortlist
                 var queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks"
                 console.log(sortType)
+                
+                //Since you can only sort by one, it can be added using an if statement
                 if(sortType === 'name'){
                     queryString = queryString + " ORDER BY TruckName"
                 }
@@ -1620,6 +1659,8 @@ router.post('/adminSortTrailers', (req,res) => {
                 var sortType = req.body.sortlist
                 var queryString = "SELECT TrailerId AS id, TrailerName AS name, EmailAddress as email, TrailerDescription as blah, Picture as imgName, Length as length, Width as width, Brand as brand from trailers"
                 console.log(sortType)
+                
+                //Since you can only sort by one, it can be added using an if statement
                 if(sortType === 'name'){
                     queryString = queryString + " ORDER BY TrailerName"
                 }

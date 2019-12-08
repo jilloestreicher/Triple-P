@@ -23,7 +23,7 @@ router.post('/search', (req,res) =>{
         const connection = helper1.getConnection()
         
         //Search by name, description, or brand
-        const queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts WHERE ItemName LIKE ? OR PartDescription LIKE ? OR Brand LIKE ?"
+        const queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts WHERE (ItemName LIKE ? OR PartDescription LIKE ? OR Brand LIKE ?) AND PartId != 9999"
         
         connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) =>{
             if(err){
@@ -33,6 +33,8 @@ router.post('/search', (req,res) =>{
             return
         }
             
+           //This is used to determine how many page buttons need to be created
+           //For navigation at the bottom of the page     
            const partString = "SELECT * from parts"
             
             connection.query(partString, (err,results,fields) => {
@@ -71,6 +73,9 @@ router.post('/searchTrailers', (req,res) =>{
                 return
             }
             
+        
+            //This is used to determine how many page buttons need to be created
+            //For navigation at the bottom of the page
             const partString = "SELECT * from trailers"
             
             connection.query(partString, (err,results,fields) => {
@@ -109,6 +114,8 @@ router.post('/searchTrucks', (req,res) =>{
                 return
             }
             
+            //This is used to determine how many page buttons need to be created
+            //For navigation at the bottom of the page
             const partString = "SELECT * from trucks"
             
             connection.query(partString, (err,results,fields) => {
@@ -135,7 +142,7 @@ router.post('/sort', (req,res) =>{
     var sortType = req.body.sortlist
     
     const connection = helper1.getConnection()
-    var queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts"
+    var queryString = "SELECT PartId as id, ItemName AS name, PriceUSD as price, PartDescription as blah, Brand as brand, Picture as imgName from parts WHERE PartId != 9999"
     console.log(sortType)
     if(sortType === 'name'){
         queryString = queryString + " ORDER BY ItemName"

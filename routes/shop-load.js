@@ -20,8 +20,9 @@ router.get('/index', function(req,res){
     const connection = helper1.getConnection()
     
     //Only get 4 parts for both front page queries
-    const newString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts ORDER BY PartId DESC LIMIT 4;"
-    const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) DESC LIMIT 4;"
+    //Don't include the Listing part
+    const newString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, Picture as imgName from parts WHERE PartId != 9999 ORDER BY PartId DESC LIMIT 4;"
+    const popString = "SELECT parts.PartId AS id, parts.ItemName AS name, parts.PriceUSD as price, parts.Picture as imgName, COUNT(orderedparts.PartId) from parts, orderedparts WHERE parts.PartId = orderedparts.PartId AND parts.PartId != 9999 GROUP BY parts.PartId ORDER BY COUNT(orderedparts.PartId) DESC LIMIT 4;"
    
     connection.query(newString, (err,result,fields) =>{
        if(err){
@@ -67,8 +68,10 @@ fs.readFile('./items.json', function(error, data){
       res.status(500).end()
     } else{
         
+        //Only 10 results per page
+        //Don't include the Listing
         const connection = helper1.getConnection()
-        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10;"
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts WHERE PartId != 9999 LIMIT 10;"
         
         
         connection.query(queryString, (err,result,fields) => {
@@ -110,7 +113,7 @@ router.get('/shop/:offset', function(req,res){
         
         const connection = helper1.getConnection()
         const offs = req.params.offset * 10 - 10
-        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts LIMIT 10 OFFSET ?;"
+        const queryString = "SELECT PartId AS id, ItemName AS name, PriceUSD as price, PartDescription as blah, Picture as imgName from parts WHERE PartId != 9999 LIMIT 10 OFFSET ?;"
         
         
         connection.query(queryString, [offs], (err,result,fields) => {
@@ -161,7 +164,6 @@ fs.readFile('./items.json', function(error, data){
 
           console.log('Deleted Row(s):', results.affectedRows);
         });
-        
         
         
         const queryString = "SELECT TruckId AS id, TruckName AS name, EmailAddress as email, TruckDescription as blah, Picture as imgName, DriveType as drive, KMPerHour as km, FuelType as fuel, Brand as brand from trucks LIMIT 10;"
@@ -400,7 +402,6 @@ router.get('/parts/:id', (req, res) =>{
         })
         
     })
-    //ending response
     
 })
 
@@ -408,7 +409,7 @@ router.get('/order/:id', (req,res) =>{
     
     const connection = helper1.getConnection()
     const orderId = req.params.id
-    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ? AND orderedparts.PartId = parts.PartId"
+    const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ?-1 AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM orders WHERE OrderId = ?"
 
     
@@ -438,7 +439,7 @@ router.get('/order/:id', (req,res) =>{
                         return
                     }
                     
-                    
+                    //Get billing info for the order
                     const billString = "SELECT orders.OrderId as id, orders.PaymentId, paymentdetails.PaymentId, paymentdetails.BillingAddress as address, paymentdetails.BillingFirstName as first, paymentdetails.BillingLastName as last, paymentdetails.BillingCountry as country, paymentdetails.BillingCity as city, paymentdetails.BillingState as state, paymentdetails.BillingPhone as phone, orders.EmailAddress as email FROM orders, paymentdetails WHERE orders.OrderId = ? AND orders.PaymentId = paymentdetails.PaymentId"
                     connection.query(billString, [orderId], (err, billing, fields) => {
                         
@@ -449,7 +450,7 @@ router.get('/order/:id', (req,res) =>{
                             return
                         }
                         
-                        
+                        //Get shipping info for the order
                         const shipString = "SELECT orders.OrderId as id, orders.ShippingId as ship, shippingdetails.ShippingId as shipping, shippingdetails.ShippingAddress as address, shippingdetails.ShippingFirstName as first, shippingdetails.ShippingLastName as last, shippingdetails.ShippingCountry as country, shippingdetails.ShippingCity as city, shippingdetails.ShippingState as state, shippingdetails.ShippingPhone as phone from orders, shippingdetails WHERE orders.OrderId = ? AND shippingdetails.ShippingId = orders.ShippingId;"
                         console.log(billing)
                         connection.query(shipString, [orderId], (err, shipping, fields) => {
@@ -487,7 +488,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
     const connection = helper1.getConnection()
     const account = req.params.accounts
     //Use distinct to not get duplicates since we are searching by orderedpart
-    const queryString = "SELECT DISTINCT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND orders.ShippingId = shippingdetails.ShippingId"
+    const queryString = "SELECT DISTINCT orders.EmailAddress as email, orderedparts.OrderId as partid, shippingdetails.ShippingId as ship, shippingdetails.ShippingAddress as address,  orders.OrderId as id from orders, shippingdetails, orderedparts WHERE orders.EmailAddress = ? AND orders.ShippingId = shippingdetails.ShippingId"
     
     const quanString = "SELECT parts.ItemName as name, orderedparts.PartId, parts.PartId, orderedparts.OrderId, orders.OrderId, orders.EmailAddress from orders, parts, orderedparts where orders.EmailAddress = ? AND orders.OrderId = orderedparts.OrderId AND parts.PartId = orderedParts.PartId"
     
@@ -497,6 +498,7 @@ router.get('/orderHistory/:accounts', (req, res) => {
         connection.end()
         res.redirect('../Front End/login.html');
     }else{
+        //Check if the order belongs to the current account
         if(req.session.username === account){
             connection.query(queryString, [account], (err, result, fields) => {
                 
@@ -550,7 +552,7 @@ router.get('/trucks/:id', (req, res) =>{
         })
         
     })
-    //ending response
+    
     
 })
 
@@ -582,7 +584,7 @@ router.get('/trailers/:id', (req, res) =>{
         })
         
     })
-    //ending response
+    
     
 })
 

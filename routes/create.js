@@ -43,10 +43,15 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     const truckColor = req.body.truck_color
     const truckDesc = req.body.truck_desc
     var picture = req.file.filename
+    
+    //Cut off the file extension when storing the image name
     picture = picture.slice(0,-4)
+    
+    
     const time = req.body.time
     const email = req.session.username;
 
+    //Since listings are paid in days, we can use the interval + the current time to generate the removal time
     const connection = helper1.getConnection()
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
@@ -73,10 +78,13 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     const trailerColor = req.body.trailer_color
     const time = req.body.time
     var picture = req.file.filename
+    
+    //Cut off the file extension when storing the image name
     picture = picture.slice(0,-4)
 
     const email = req.session.username;
 
+    //Since listings are paid in days, we can use the interval + the current time to generate the removal time
     const connection = helper1.getConnection()
     const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
@@ -103,6 +111,8 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
     const partBrand = req.body.part_brand
     const partQuan = req.body.part_quan
     var picture = req.file.filename
+    
+    //Cut off the file extension when storing the image name
     picture = picture.slice(0,-4)
 
     const connection = helper1.getConnection()
@@ -115,14 +125,18 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
             res.redirect('/Front End/error-500.html')
             return
         }
+        const refreshString = "select * from parts"
         //Add the new part to items file
-        fs.writeFile('../items.json', results, function(err){
+        connection.query(refreshString, (err, resultp, fields) => {
+            fs.writeFile('items.json', JSON.stringify(resultp), function(err){
               if(err) throw err;
+              console.log(resultp)
               console.log('Saved');
+            })
+            
+            connection.end()
+            res.redirect('/Front End/list-sucess.html')
         })
-
-        connection.end()
-        res.redirect('/Front End/list-sucess.html')
     })
 })
 
@@ -210,6 +224,8 @@ router.post('/collect_shippingandbilling', (req,res) => {
         }
 
         connection.end()
+        
+        //After successfully storing their info, move on to checkout
         res.redirect('/checkout');
     })
 })
