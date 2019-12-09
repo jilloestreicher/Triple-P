@@ -2,6 +2,7 @@ require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 var helper1 = require ('../helper.js');
+const connection = helper1.getConnection()
 const express = require('express')
 const { check, validationResult } = require('express-validator');
 const { body } = require('express-validator');
@@ -52,17 +53,17 @@ router.post('/create_listing', upload.single("file"), (req,res) => {
     const email = req.session.username;
 
     //Since listings are paid in days, we can use the interval + the current time to generate the removal time
-    const connection = helper1.getConnection()
+    
     const queryString = "insert into trucks (TruckName, Brand, KMPerHour, FuelType, DriveType, Color, EmailAddress, TruckDescription, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
     connection.query(queryString, [truckName, truckBrand, truckKM, truckFuel, truckDrive, truckColor, email, truckDesc, picture, time], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
-        connection.end()
+        
         res.redirect('/Front End/list-sucess.html')
     })
 })
@@ -85,18 +86,18 @@ router.post('/trailer_listing', upload.single("file"), (req,res) => {
     const email = req.session.username;
 
     //Since listings are paid in days, we can use the interval + the current time to generate the removal time
-    const connection = helper1.getConnection()
+    
     const queryString = "insert into trailers (TrailerName, Brand, Length, Width, TrailerDescription, Color, EmailAddress, Picture, ListingTime, RemoveTime) values (?,?,?,?,?,?,?,?, current_timestamp, current_timestamp + interval ? day)"
 
     connection.query(queryString, [trailerName, trailerBrand, trailerLength, trailerWidth, trailerDesc, trailerColor, email, picture, time], (err,results,fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
 
-        connection.end()
+        
         res.redirect('/Front End/list-sucess.html')
     })
 
@@ -115,13 +116,13 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
     //Cut off the file extension when storing the image name
     picture = picture.slice(0,-4)
 
-    const connection = helper1.getConnection()
+    
     const queryString = "insert into parts (ItemName, Brand, PriceUSD, PartDescription, QuantityOnHand, Picture) values (?,?,?,?,?,?)"
 
     connection.query(queryString, [partName, partBrand, partPrice, partDesc, partQuan, picture], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -134,7 +135,7 @@ router.post('/create_part', upload.single("file"),  (req,res) => {
               console.log('Saved');
             })
             
-            connection.end()
+            
             res.redirect('/Front End/list-sucess.html')
         })
     })
@@ -158,18 +159,18 @@ router.post('/create_account', [
     //hash user's password
     var hashedPassword = passwordHash.generate(accountPass);
 
-    const connection = helper1.getConnection()
+    
     const queryString = "insert into accounts (FirstName, LastName, EmailAddress, Password, EmailList, PhoneNumber) values (?,?,?,?,?,?)"
 
     connection.query(queryString, [accountFirst, accountLast, accountEmail, hashedPassword, elist, accountPhone], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
 
-        connection.end()
+        
         res.redirect('/Front End/account-created.html')
     })
 })
@@ -188,13 +189,13 @@ router.post('/collect_shippingandbilling', (req,res) => {
     const address2 = req.body.address
     const phoneNumber = req.body.phoneNumber
 
-    const connection = helper1.getConnection()
+    
     const queryString2 = "insert into shippingdetails (ShippingAddress, ShippingAddress2, ShippingFirstName, ShippingLastName, ShippingCountry, ShippingCity, ShippingState, ShippingZIP, ShippingPhone, EmailAddress) values (?,?,?,?,?,?,?,?,?,?)"
 
     connection.query(queryString2, [address, address2, firstName, lastName, country, town, state, zip, phoneNumber, emailAddress], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -218,12 +219,12 @@ router.post('/collect_shippingandbilling', (req,res) => {
     connection.query(queryString, [billingAddress, billingAddress2, billingFirstName, billingLastName, billingCountry, billingTown, billingState, billingZip, billingPhone, billingEmailAddress], (err, results, fields) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
 
-        connection.end()
+        
         
         //After successfully storing their info, move on to checkout
         res.redirect('/checkout');

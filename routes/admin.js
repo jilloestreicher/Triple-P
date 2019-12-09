@@ -2,6 +2,7 @@ require('dotenv').config({ path: './.env' })
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 var helper1 = require ('../helper.js');
+const connection = helper1.getConnection()
 const express = require('express')
 const { check, validationResult } = require('express-validator');
 const { body } = require('express-validator');
@@ -24,20 +25,20 @@ router.post('/edit_Part', [
     body('part_brand').trim(),
     body('part_quan').trim()], (req,res) => {
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -61,7 +62,7 @@ router.post('/edit_Part', [
 
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -75,12 +76,12 @@ router.post('/edit_Part', [
                           console.log('Saved');
                         })
 
-                        connection.end()
+                        
                         res.redirect('/adminParts')
                     })
                 })
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -98,20 +99,20 @@ router.post('/edit_truck', [
     body('truck_color').trim()
     ], (req,res) => {
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -138,15 +139,15 @@ router.post('/edit_truck', [
 
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
-                    connection.end()
+                    
                     res.redirect('/adminTrucks')
                 })
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -163,21 +164,21 @@ router.post('/edit_trailer', [
     body('trailer_color').trim()
     ], (req,res) => {
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
    connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //check to see if the user is an Admin
@@ -203,16 +204,16 @@ router.post('/edit_trailer', [
 
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
 
-                    connection.end()
+                    
                     res.redirect('/adminTrailers')
                 })
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -221,7 +222,7 @@ router.post('/edit_trailer', [
 
 router.get('/editPart/:id', (req, res) =>{
     
-    const connection = helper1.getConnection()
+    
     
     const partId = req.params.id.trim()
 
@@ -231,14 +232,14 @@ router.get('/editPart/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -263,14 +264,14 @@ router.get('/editPart/:id', (req, res) =>{
                         return
                     }
                     
-                    connection.end()
+                    
                     res.render('editPart.ejs', {
                         items: result
                     })
 
                 })
             }else{
-                connection.end()
+                
                  res.redirect('../index');
             }
         }
@@ -280,7 +281,7 @@ router.get('/editPart/:id', (req, res) =>{
 router.get('/editTruck/:id', (req, res) =>{
     
     //Establish connection to DB
-    const connection = helper1.getConnection()
+    
     
     const truckId = req.params.id.trim()
 
@@ -290,14 +291,14 @@ router.get('/editTruck/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //check if the user is an admin
@@ -318,18 +319,18 @@ router.get('/editTruck/:id', (req, res) =>{
                     //check if we succesfully queried
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
-                    connection.end()
+                    
                     res.render('editListing.ejs', {
                         items: result
                     })
 
                 })
             }else{
-                connection.end()
+                
                  res.redirect('../index');
             }
         }
@@ -339,7 +340,7 @@ router.get('/editTruck/:id', (req, res) =>{
 router.get('/editTrailer/:id', (req, res) =>{
     
     //Establish connection to DB
-    const connection = helper1.getConnection()
+    
     
     const trailerId = req.params.id.trim()
 
@@ -349,14 +350,14 @@ router.get('/editTrailer/:id', (req, res) =>{
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -375,18 +376,18 @@ router.get('/editTrailer/:id', (req, res) =>{
                     //check if we successfully queried
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                        res.redirect('/Front End/error-500.html')
                         return
                     }
 
-                    connection.end()
+                    
                     res.render('editTrailer.ejs', {
                         items: result
                     })
                 })
             }else{
-                connection.end()
+                
                  res.redirect('../index');
             }
         }
@@ -395,7 +396,7 @@ router.get('/editTrailer/:id', (req, res) =>{
 
 router.post('/remove_user', (req,res) => {
     const userId = req.body.user_id.trim()
-    const connection = helper1.getConnection()
+    
 
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
@@ -403,13 +404,13 @@ router.post('/remove_user', (req,res) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin check
@@ -424,17 +425,17 @@ router.post('/remove_user', (req,res) => {
                 connection.query(queryString, [userId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
                     else{
-                        connection.end()
+                        
                         res.redirect('/manage-users')
                     }
                 })
             }else{
-                connection.end()
+                
                  res.redirect('../index');
             }
         }
@@ -444,20 +445,20 @@ router.post('/remove_user', (req,res) => {
 router.get('/adminTrucks', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
         connection.query(queryUser, (err, accountresult) => {
             
             if(err){
                 console.log("Failed to query: " +err)
-                connection.end()
+                
                 res.redirect('/Front End/error-500.html')
                 return
             }
             //if the user is not logged in, it will direct them back to the home page
             if(!req.session || !req.session.username) {
-                connection.end()
+                
                 res.redirect('../index');
             }else{
                 //Admin check
@@ -469,7 +470,7 @@ fs.readFile('./items.json', function(error, data){
                 if(isAdmin){
 
                     if(error) {
-                        connection.end()
+                        
                       res.status(500).end()
                     } else{
 
@@ -480,7 +481,7 @@ fs.readFile('./items.json', function(error, data){
                         connection.query(queryString, (err,result,fields) => {
                             if(err){
                               console.log("Failed to query: " +err)
-                                connection.end()
+                                
                               res.redirect('/Front End/error-500.html')
                               return
                             }
@@ -493,12 +494,12 @@ fs.readFile('./items.json', function(error, data){
                                 
                                 if(err){
                                     console.log("Failed to query: " +err)
-                                    connection.end()
+                                    
                                     res.redirect('/Front End/error-500.html')
                                     return
                                 }
                                 
-                                connection.end()
+                                
                                 res.render('adminTrucks.ejs', {
                                     stripePublicKey: stripePublicKey,
                                     items: result,
@@ -509,7 +510,7 @@ fs.readFile('./items.json', function(error, data){
 
                     }
                 }else{
-                    connection.end()
+                    
                     res.redirect('../index');
                 }
             }
@@ -520,21 +521,21 @@ fs.readFile('./items.json', function(error, data){
 router.get('/adminTrucks/:offset', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
                 console.log("Failed to query: " +err)
-                connection.end()
+                
                 res.redirect('/Front End/error-500.html')
                 return
             }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin check
@@ -545,7 +546,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
-                  connection.end()
+                  
                   res.status(500).end()
                 }else{
                     
@@ -557,7 +558,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -570,12 +571,12 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrucks.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -585,7 +586,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -596,21 +597,21 @@ fs.readFile('./items.json', function(error, data){
 router.get('/adminTrailers', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin Check
@@ -621,7 +622,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
-                  connection.end()
+                  
                   res.status(500).end()
                 }else{
 
@@ -632,7 +633,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -645,12 +646,12 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrailers.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -660,7 +661,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -671,21 +672,21 @@ fs.readFile('./items.json', function(error, data){
 router.get('/adminTrailers/:offset', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin Check
@@ -696,7 +697,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
-                  connection.end()
+                  
                   res.status(500).end()
                 } else{
                     
@@ -708,7 +709,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                        if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -722,12 +723,12 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrailers.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -738,7 +739,7 @@ fs.readFile('./items.json', function(error, data){
 
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -749,21 +750,21 @@ fs.readFile('./items.json', function(error, data){
 router.get('/adminParts', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin Check
@@ -774,7 +775,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
-                  connection.end()
+                  
                   res.status(500).end()
                 } else{
 
@@ -784,7 +785,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -797,12 +798,12 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminParts.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -813,7 +814,7 @@ fs.readFile('./items.json', function(error, data){
 
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -824,21 +825,21 @@ fs.readFile('./items.json', function(error, data){
 router.get('/adminParts/:offset', function(req,res){
 fs.readFile('./items.json', function(error, data){
 
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             //Admin Check
@@ -849,7 +850,7 @@ fs.readFile('./items.json', function(error, data){
             }
             if(isAdmin){
                 if(error) {
-                  connection.end()
+                  
                   res.status(500).end()
                 } else{
 
@@ -861,7 +862,7 @@ fs.readFile('./items.json', function(error, data){
                     connection.query(queryString, [offs], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -874,12 +875,12 @@ fs.readFile('./items.json', function(error, data){
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminParts.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -889,7 +890,7 @@ fs.readFile('./items.json', function(error, data){
                     })
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -898,21 +899,21 @@ fs.readFile('./items.json', function(error, data){
 })
 
 router.post('/delete_part', (req,res) => {
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -930,7 +931,7 @@ router.post('/delete_part', (req,res) => {
                 connection.query(orderString, [partId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -938,7 +939,7 @@ router.post('/delete_part', (req,res) => {
                         connection.query(queryString, [partId], (err,result,fields) => {
                              if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                              }
@@ -951,7 +952,7 @@ router.post('/delete_part', (req,res) => {
                                       console.log('Saved');
                                     })
 
-                                    connection.end()
+                                    
                                     res.redirect('/adminParts')
                                 })
                             }
@@ -959,7 +960,7 @@ router.post('/delete_part', (req,res) => {
                     }
                 })
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -967,21 +968,21 @@ router.post('/delete_part', (req,res) => {
 })
 
 router.post('/delete_truck', (req,res) => {
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -997,18 +998,18 @@ router.post('/delete_truck', (req,res) => {
                 connection.query(queryString, [truckId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
                     else{
 
-                        connection.end()
+                        
                         res.redirect('/adminTrucks')
                     }
                 })
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         
@@ -1018,21 +1019,21 @@ router.post('/delete_truck', (req,res) => {
 })
 
 router.post('/delete_trailer', (req,res) => {
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1048,18 +1049,18 @@ router.post('/delete_trailer', (req,res) => {
                 connection.query(queryString, [trailerId], (err,result,fields) => {
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
                     else{
 
-                    connection.end()
+                    
                     res.redirect('/adminTrailers')
                     }
                 })
             }else{
-                connection.end()    
+                    
                 res.redirect('../index');
             }       
         }
@@ -1076,14 +1077,14 @@ router.post('/adminCheck', [
      var hashedPassword = ' ';
 
     //get hashed version of password
-    const connection = helper1.getConnection()
+    
     var queryPass = "SELECT Password FROM admins WHERE EmailAddress = ?";
 
      connection.query(queryPass, [username], (err,results, field) =>{
          
             if(err){
                 console.log("Failed to query: " +err)
-                connection.end()
+                
                 res.redirect('/Front End/error-500.html')
                 return
             }
@@ -1091,7 +1092,7 @@ router.post('/adminCheck', [
             else{
                 //Make sure there are results otherwise the passwordHash module will fail
                 if(results.length == 0 || results == null){
-                    connection.end()
+                    
                     res.redirect('../Front End/adminlogin.html');
                 }else{
                     var correctPass = passwordHash.verify(password, results[0].Password); //should return true or false
@@ -1107,17 +1108,17 @@ router.post('/adminCheck', [
                     connection.query(queryString, [username, hashedPassword], (err,results, field) =>{
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
                         if(results.length === 0 || results == null){
-                            connection.end()
+                            
                             res.redirect('/adminCheck');
 
                         }else{
                             req.session.username = username;
-                            connection.end()
+                            
                             res.redirect("../Front End/adminHome.html")
                         }
                     })
@@ -1129,21 +1130,21 @@ router.post('/adminCheck', [
 
 router.get('/adminOrders', function(req,res) {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (error, accountresult) => {
         
         if(error){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1154,7 +1155,7 @@ router.get('/adminOrders', function(req,res) {
             if(isAdmin){
                 if(error) {
                   console.log(error)
-                  connection.end()
+                  
                   res.status(500).end()
                 }else{
                      const queryString = "SELECT orders.OrderId as id, orders.EmailAddress as email, orders.ShippingId as ship, shippingdetails.ShippingId as ships, shippingdetails.ShippingAddress as address FROM orders, shippingdetails WHERE orders.ShippingId = shippingdetails.ShippingId"
@@ -1163,19 +1164,19 @@ router.get('/adminOrders', function(req,res) {
                           
                       if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                        }
                           
-                       connection.end()
+                       
                        res.render('adminOrders.ejs',{
                             orders: result,
                        })            
                     })
                 }
             }else{
-                connection.end()
+                
                 res.redirect('../index');
             }
         }
@@ -1185,7 +1186,7 @@ router.get('/adminOrders', function(req,res) {
 router.get('/adminOrder/:id', (req,res) =>{
     const orderId = req.params.id
     
-    const connection = helper1.getConnection()
+    
     //Parts in the order
     const queryString = "SELECT orderedparts.OrderId as id, orderedparts.PartId as part, parts.PartId as partIn, orderedparts.OrderedQuantity as quan, parts.PriceUSD as price, parts.ItemName as name, parts.Picture as imgName from orderedparts, parts WHERE orderedparts.OrderId = ?-1 AND orderedparts.PartId = parts.PartId"
     const queryUser = "SELECT EmailAddress as email FROM admins"
@@ -1195,14 +1196,14 @@ router.get('/adminOrder/:id', (req,res) =>{
         
         if(error){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
 
         //if the user is not logged in, it will direct them to the login page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1213,7 +1214,7 @@ router.get('/adminOrder/:id', (req,res) =>{
             if(isAdmin){
                 if(error) {
                   console.log(error)
-                  connection.end()
+                  
                   res.status(500).end()
                 }else{
             
@@ -1221,7 +1222,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                     
                     if(err){
                         console.log("Failed to query: " +err)
-                        connection.end()
+                        
                         res.redirect('/Front End/error-500.html')
                         return
                     }
@@ -1232,7 +1233,7 @@ router.get('/adminOrder/:id', (req,res) =>{
                         
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1244,12 +1245,12 @@ router.get('/adminOrder/:id', (req,res) =>{
                             
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }    
                             console.log(shipping)
-                            connection.end()
+                            
                             res.render('order-template.ejs', {
                                 items: result,
                                 bills: billing,
@@ -1261,7 +1262,7 @@ router.get('/adminOrder/:id', (req,res) =>{
             }}else{
                  console.log(req.session.username)
                  console.log(accountresult[0].email)
-                 connection.end()
+                 
                  res.redirect('../error-500.html');
             }
         }
@@ -1271,21 +1272,21 @@ router.get('/adminOrder/:id', (req,res) =>{
 
 router.post('/adminSearchParts', (req,res) => {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1304,7 +1305,7 @@ router.post('/adminSearchParts', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1315,12 +1316,12 @@ router.post('/adminSearchParts', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminParts.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1329,7 +1330,7 @@ router.post('/adminSearchParts', (req,res) => {
                         })
                     })
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
@@ -1338,21 +1339,21 @@ router.post('/adminSearchParts', (req,res) => {
 
 router.post('/adminSearchTrucks', (req,res) => {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1371,7 +1372,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1382,12 +1383,12 @@ router.post('/adminSearchTrucks', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrucks.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1396,7 +1397,7 @@ router.post('/adminSearchTrucks', (req,res) => {
                         })
                     })
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
@@ -1404,14 +1405,14 @@ router.post('/adminSearchTrucks', (req,res) => {
 })
 
 router.post('/adminSearchTrailers', (req,res) => {
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
@@ -1419,7 +1420,7 @@ router.post('/adminSearchTrailers', (req,res) => {
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1438,7 +1439,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                     connection.query(queryString, [trimSearch, trimSearch, trimSearch], (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1449,12 +1450,12 @@ router.post('/adminSearchTrailers', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrailers.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1463,7 +1464,7 @@ router.post('/adminSearchTrailers', (req,res) => {
                         })
                     })
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
@@ -1472,21 +1473,21 @@ router.post('/adminSearchTrailers', (req,res) => {
 
 router.post('/adminSortParts', (req,res) => {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1516,7 +1517,7 @@ router.post('/adminSortParts', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1527,12 +1528,12 @@ router.post('/adminSortParts', (req,res) => {
                             
                             if(err){
                                     console.log("Failed to query: " +err)
-                                    connection.end()
+                                    
                                     res.redirect('/Front End/error-500.html')
                                     return
                                 }
                             
-                            connection.end()
+                            
                             res.render('adminParts.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1543,7 +1544,7 @@ router.post('/adminSortParts', (req,res) => {
                 
                 
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
@@ -1552,21 +1553,21 @@ router.post('/adminSortParts', (req,res) => {
 
 router.post('/adminSortTrucks', (req,res) => {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1596,7 +1597,7 @@ router.post('/adminSortTrucks', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1607,12 +1608,12 @@ router.post('/adminSortTrucks', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrucks.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1623,7 +1624,7 @@ router.post('/adminSortTrucks', (req,res) => {
                 
                 
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
@@ -1632,21 +1633,21 @@ router.post('/adminSortTrucks', (req,res) => {
 
 router.post('/adminSortTrailers', (req,res) => {
     
-    const connection = helper1.getConnection()
+    
     const queryUser = "SELECT EmailAddress as email FROM admins"
 
     connection.query(queryUser, (err, accountresult) => {
         
         if(err){
             console.log("Failed to query: " +err)
-            connection.end()
+            
             res.redirect('/Front End/error-500.html')
             return
         }
         
         //if the user is not logged in, it will direct them back to the home page
         if(!req.session || !req.session.username) {
-            connection.end()
+            
             res.redirect('../index');
         }else{
             for(var x = 0; x < accountresult.length; x++){
@@ -1679,7 +1680,7 @@ router.post('/adminSortTrailers', (req,res) => {
                 connection.query(queryString, (err,result,fields) => {
                         if(err){
                             console.log("Failed to query: " +err)
-                            connection.end()
+                            
                             res.redirect('/Front End/error-500.html')
                             return
                         }
@@ -1690,12 +1691,12 @@ router.post('/adminSortTrailers', (req,res) => {
                             
                             if(err){
                                 console.log("Failed to query: " +err)
-                                connection.end()
+                                
                                 res.redirect('/Front End/error-500.html')
                                 return
                             }
                             
-                            connection.end()
+                            
                             res.render('adminTrailers.ejs', {
                                 stripePublicKey: stripePublicKey,
                                 items: result,
@@ -1706,7 +1707,7 @@ router.post('/adminSortTrailers', (req,res) => {
                 
                 
             }else{
-                 connection.end()
+                 
                  res.redirect('../index');
             }
         }
